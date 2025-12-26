@@ -2,138 +2,155 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Segoe UI", system-ui, sans-serif;
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   background: #0b0f1a;
-  color: #fff;
+  color: #ffffff;
   overflow: hidden;
 }
 
-/* Background glow */
+/* ===== Background Glow ===== */
 .bg-glow {
-  position: absolute;
+  position: fixed;
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, #00ffe0, transparent);
+  background: radial-gradient(circle, #00ffe0 0%, transparent 70%);
   top: -200px;
   left: -200px;
   filter: blur(120px);
+  z-index: -1;
 }
 
-/* Layout */
+/* ===== Layout ===== */
 .container {
   display: flex;
-  height: 100vh;
   align-items: center;
   justify-content: center;
-  gap: 50px;
+  height: 100vh;
+  gap: 60px;
 }
 
-/* Camera box */
+/* ===== Camera Preview ===== */
 .camera-box {
-  width: 350px;
+  width: 360px;
   height: 500px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 }
 
+.camera-box p {
+  opacity: 0.8;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
 .camera-glow {
   position: absolute;
   inset: 0;
-  border-radius: 20px;
-  box-shadow: 0 0 25px #00ffe0;
-  animation: pulse 2s infinite;
+  border-radius: 22px;
+  box-shadow: 0 0 22px #00ffe0;
+  animation: glow 2.2s infinite ease-in-out;
+  pointer-events: none;
 }
 
-@keyframes pulse {
-  0% { box-shadow: 0 0 15px #00ffe0; }
-  50% { box-shadow: 0 0 30px #00ffe0; }
-  100% { box-shadow: 0 0 15px #00ffe0; }
+@keyframes glow {
+  0% { box-shadow: 0 0 14px #00ffe0; }
+  50% { box-shadow: 0 0 32px #00ffe0; }
+  100% { box-shadow: 0 0 14px #00ffe0; }
 }
 
-/* Auth Card */
+/* ===== Auth Card ===== */
 .auth-card {
-  width: 320px;
-  padding: 30px;
-  border-radius: 20px;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(25px);
-  border: 1px solid rgba(255,255,255,0.15);
+  width: 340px;
+  padding: 30px 28px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(22px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+/* ===== Title ===== */
 .auth-card h1 {
   text-align: center;
   letter-spacing: 2px;
+  margin-bottom: 6px;
 }
 
 .tagline {
   text-align: center;
   font-size: 12px;
-  opacity: 0.8;
-  margin-bottom: 20px;
+  opacity: 0.75;
+  margin-bottom: 22px;
 }
 
+/* ===== Tabs ===== */
 .tabs {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .tab {
   flex: 1;
-  padding: 8px;
-  border: none;
-  border-radius: 10px;
+  padding: 9px 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
   background: transparent;
-  color: white;
+  color: #fff;
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.2);
+  font-size: 14px;
+  transition: 0.25s;
+}
+
+.tab:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .tab.active {
   background: #00ffe0;
   color: #000;
+  border-color: #00ffe0;
 }
 
-/* Forms */
+/* ===== Forms ===== */
 form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 input {
-  padding: 10px;
-  border-radius: 10px;
+  padding: 11px 14px;
+  border-radius: 12px;
   border: none;
   outline: none;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.9);
 }
 
-button {
-  padding: 10px;
-  border-radius: 10px;
+input::placeholder {
+  color: #444;
+}
+
+/* ===== Buttons ===== */
+button[type="submit"] {
+  margin-top: 4px;
+  padding: 11px;
+  border-radius: 12px;
   border: none;
   background: #00ffe0;
+  font-weight: 600;
   cursor: pointer;
-  font-weight: bold;
+  transition: 0.25s;
 }
 
-.hidden {
-  display: none;
-}
-
-.premium {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 13px;
-  color: #00ffe0;
-}
+button[type="submit
