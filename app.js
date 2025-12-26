@@ -1,8 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+/* ================= FIREBASE CONFIG ================= */
+
 const firebaseConfig = {
   apiKey: "AIzaSyBA6HoJ3TuuZI1Mx1Z38rxvdW9J9a9xu8A",
   authDomain: "merox-ai-mirror.firebaseapp.com",
@@ -17,26 +21,49 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// SIGN UP
-document.getElementById("signupForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+/* ================= UI TOGGLE (VERY IMPORTANT) ================= */
 
-  const email = e.target[1].value;
-  const password = e.target[2].value;
+window.showLogin = function () {
+  document.getElementById("loginForm").classList.remove("hidden");
+  document.getElementById("signupForm").classList.add("hidden");
+};
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(() => alert("Signup successful 🎉"))
-    .catch(err => alert(err.message));
-});
+window.showSignup = function () {
+  document.getElementById("signupForm").classList.remove("hidden");
+  document.getElementById("loginForm").classList.add("hidden");
+};
 
-// LOGIN
-document.getElementById("loginForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+/* ================= AUTH LOGIC ================= */
 
-  const email = e.target[0].value;
-  const password = e.target[1].value;
+document.addEventListener("DOMContentLoaded", () => {
 
-  signInWithEmailAndPassword(auth, email, password)
-    .then(() => alert("Login successful ✅"))
-    .catch(err => alert(err.message));
+  // SIGN UP
+  const signupForm = document.getElementById("signupForm");
+  signupForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = signupForm.querySelector('input[type="email"]').value;
+    const password = signupForm.querySelector('input[type="password"]').value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        alert("Signup successful 🎉");
+        showLogin();
+      })
+      .catch((err) => alert(err.message));
+  });
+
+  // LOGIN
+  const loginForm = document.getElementById("loginForm");
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = loginForm.querySelector('input[type="email"]').value;
+    const password = loginForm.querySelector('input[type="password"]').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => alert("Login successful ✅"))
+      .catch((err) => alert(err.message));
+  });
+
 });
