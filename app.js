@@ -2,7 +2,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 /* ================= FIREBASE CONFIG ================= */
@@ -13,8 +14,7 @@ const firebaseConfig = {
   projectId: "merox-ai-mirror",
   storageBucket: "merox-ai-mirror.firebasestorage.app",
   messagingSenderId: "69028024588",
-  appId: "1:69028024588:web:f374b0e927adfe839ff929",
-  measurementId: "G-2HKXY2ZRBF"
+  appId: "1:69028024588:web:f374b0e927adfe839ff929"
 };
 
 // Initialize Firebase
@@ -23,7 +23,7 @@ const auth = getAuth(app);
 
 /* ================= UI TOGGLE ================= */
 
-window.showLogin = function () {
+window.showLogin = () => {
   document.getElementById("loginForm")?.classList.remove("hidden");
   document.getElementById("signupForm")?.classList.add("hidden");
 
@@ -31,7 +31,7 @@ window.showLogin = function () {
   document.querySelectorAll(".tab")[1]?.classList.remove("active");
 };
 
-window.showSignup = function () {
+window.showSignup = () => {
   document.getElementById("signupForm")?.classList.remove("hidden");
   document.getElementById("loginForm")?.classList.add("hidden");
 
@@ -46,7 +46,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signupForm");
   const loginForm = document.getElementById("loginForm");
 
-  // SIGN UP
+  // 🔐 Auto redirect if already logged in
+  onAuthStateChanged(auth, (user) => {
+    if (user && window.location.pathname.includes("index")) {
+      window.location.href = "dashboard.html";
+    }
+  });
+
+  // ================= SIGN UP =================
   if (signupForm) {
     signupForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -57,13 +64,13 @@ document.addEventListener("DOMContentLoaded", () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
           alert("Signup successful 🎉");
-          showLogin();
+          window.location.href = "dashboard.html"; // ✅ REDIRECT
         })
         .catch((err) => alert(err.message));
     });
   }
 
-  // LOGIN
+  // ================= LOGIN =================
   if (loginForm) {
     loginForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -72,7 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = loginForm.querySelector('input[type="password"]').value;
 
       signInWithEmailAndPassword(auth, email, password)
-        .then(() => alert("Login successful ✅"))
+        .then(() => {
+          alert("Login successful ✅");
+          window.location.href = "dashboard.html"; // ✅ REDIRECT
+        })
         .catch((err) => alert(err.message));
     });
   }
