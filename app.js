@@ -2,12 +2,10 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
+  signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-/* ================= FIREBASE CONFIG ================= */
+/* ========== FIREBASE CONFIG ========== */
 
 const firebaseConfig = {
   apiKey: "AIzaSyBA6HoJ3TuuZI1Mx1Z38rxvdW9J9a9xu8A",
@@ -21,74 +19,57 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* ================= UI HELPERS ================= */
+/* ========== TAB SWITCH (IMPORTANT) ========== */
 
-function showDashboard() {
-  document.getElementById("authSection")?.classList.add("hidden");
-  document.getElementById("dashboard")?.classList.remove("hidden");
-}
+window.showLogin = function () {
+  document.getElementById("loginForm").classList.remove("hidden");
+  document.getElementById("signupForm").classList.add("hidden");
 
-function showAuth() {
-  document.getElementById("dashboard")?.classList.add("hidden");
-  document.getElementById("authSection")?.classList.remove("hidden");
-}
-
-window.showLogin = () => {
-  document.getElementById("loginForm")?.classList.remove("hidden");
-  document.getElementById("signupForm")?.classList.add("hidden");
+  document.querySelectorAll(".tab")[0].classList.add("active");
+  document.querySelectorAll(".tab")[1].classList.remove("active");
 };
 
-window.showSignup = () => {
-  document.getElementById("signupForm")?.classList.remove("hidden");
-  document.getElementById("loginForm")?.classList.add("hidden");
+window.showSignup = function () {
+  document.getElementById("signupForm").classList.remove("hidden");
+  document.getElementById("loginForm").classList.add("hidden");
+
+  document.querySelectorAll(".tab")[1].classList.add("active");
+  document.querySelectorAll(".tab")[0].classList.remove("active");
 };
 
-/* ================= AUTH STATE ================= */
+/* ========== AUTH LOGIC ========== */
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    showDashboard(); // ✅ SAME PAGE DASHBOARD
-  } else {
-    showAuth();
-  }
-});
+document.addEventListener("DOMContentLoaded", () => {
 
-/* ================= SIGNUP ================= */
+  // SIGN UP
+  const signupForm = document.getElementById("signupForm");
+  signupForm.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-document.getElementById("signupForm")?.addEventListener("submit", (e) => {
-  e.preventDefault();
+    const email = signupForm.querySelector('input[type="email"]').value;
+    const password = signupForm.querySelector('input[type="password"]').value;
 
-  const email = e.target.querySelector('input[type="email"]').value;
-  const password = e.target.querySelector('input[type="password"]').value;
-
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      alert("Signup successful 🎉");
-      showDashboard();
-    })
-    .catch(err => alert(err.message));
-});
-
-/* ================= LOGIN ================= */
-
-document.getElementById("loginForm")?.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const email = e.target.querySelector('input[type="email"]').value;
-  const password = e.target.querySelector('input[type="password"]').value;
-
-  signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      alert("Login successful ✅");
-      showDashboard();
-    })
-    .catch(err => alert(err.message));
-});
-
-/* ================= LOGOUT ================= */
-
-window.logout = () => {
-  signOut(auth).then(() => {
-    showAuth();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        alert("Signup successful 🎉");
+        showLogin();
+      })
+      .catch((err) => alert(err.message));
   });
-};
+
+  // LOGIN
+  const loginForm = document.getElementById("loginForm");
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const email = loginForm.querySelector('input[type="email"]').value;
+    const password = loginForm.querySelector('input[type="password"]').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        alert("Login successful ✅");
+      })
+      .catch((err) => alert(err.message));
+  });
+
+});
