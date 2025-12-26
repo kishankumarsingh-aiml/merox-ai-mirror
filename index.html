@@ -8,63 +8,54 @@
 </head>
 <body>
 
-  <!-- Background Glow -->
   <div class="bg-glow"></div>
 
   <div class="container">
 
-    <!-- Left: Camera Preview -->
+    <!-- Camera -->
     <div class="camera-box">
       <div class="camera-glow"></div>
       <p>Camera Preview</p>
     </div>
 
-    <!-- Right Card -->
-    <div class="auth-card">
+    <!-- ================= AUTH SECTION ================= -->
+    <div class="auth-card" id="authSection">
 
-      <!-- ========== AUTH SECTION ========== -->
-      <div id="authSection">
-        <h1>MeroX</h1>
-        <p class="tagline">AI Powered Smart Mirror</p>
+      <h1>MeroX</h1>
+      <p class="tagline">AI Powered Smart Mirror</p>
 
-        <!-- Tabs -->
-        <div class="tabs">
-          <button type="button" class="tab active" onclick="showLogin()">Login</button>
-          <button type="button" class="tab" onclick="showSignup()">Sign Up</button>
-        </div>
-
-        <!-- Login -->
-        <form id="loginForm">
-          <input type="email" placeholder="Email" required />
-          <input type="password" placeholder="Password" required />
-          <button type="submit">Login</button>
-        </form>
-
-        <!-- Signup -->
-        <form id="signupForm" class="hidden">
-          <input type="text" placeholder="Full Name" />
-          <input type="email" placeholder="Email" required />
-          <input type="password" placeholder="Password" required />
-          <button type="submit">Create Account</button>
-        </form>
-
-        <div class="premium">
-          ⭐ Premium Access – ₹399 / month
-        </div>
+      <div class="tabs">
+        <button type="button" class="tab active" onclick="showLogin()">Login</button>
+        <button type="button" class="tab" onclick="showSignup()">Sign Up</button>
       </div>
 
-      <!-- ========== DASHBOARD SECTION ========== -->
-      <div id="dashboard" class="hidden">
-        <h2>Welcome to MeroX Dashboard 🚀</h2>
-        <p>You are logged in successfully</p>
-        <br />
-        <button onclick="logout()">Logout</button>
-      </div>
+      <!-- LOGIN -->
+      <form id="loginForm">
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
 
+      <!-- SIGNUP -->
+      <form id="signupForm" class="hidden">
+        <input type="text" placeholder="Full Name" />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Create Account</button>
+      </form>
+
+      <div class="premium">⭐ Premium Access – ₹399 / month</div>
     </div>
+
+    <!-- ================= DASHBOARD ================= -->
+    <div class="auth-card hidden" id="dashboard">
+      <h1>Welcome to MeroX 🚀</h1>
+      <p>You are successfully logged in.</p>
+      <button onclick="logout()">Logout</button>
+    </div>
+
   </div>
 
-  <!-- Firebase Logic -->
   <script type="module" src="app.js"></script>
 </body>
 </html>
