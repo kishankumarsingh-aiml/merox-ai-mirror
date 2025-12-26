@@ -12,6 +12,7 @@
   <div class="bg-glow"></div>
 
   <div class="container">
+
     <!-- Left: Camera Preview -->
     <div class="camera-box">
       <div class="camera-glow"></div>
@@ -23,21 +24,22 @@
       <h1>MeroX</h1>
       <p class="tagline">AI Powered Smart Mirror</p>
 
+      <!-- Tabs -->
       <div class="tabs">
-        <button class="tab active" onclick="showLogin()">Login</button>
-        <button class="tab" onclick="showSignup()">Sign Up</button>
+        <button type="button" class="tab active" onclick="showLogin()">Login</button>
+        <button type="button" class="tab" onclick="showSignup()">Sign Up</button>
       </div>
 
-      <!-- Login -->
+      <!-- Login Form -->
       <form id="loginForm">
         <input type="email" placeholder="Email" required />
         <input type="password" placeholder="Password" required />
         <button type="submit">Login</button>
       </form>
 
-      <!-- Signup -->
+      <!-- Signup Form -->
       <form id="signupForm" class="hidden">
-        <input type="text" placeholder="Full Name" required />
+        <input type="text" placeholder="Full Name" />
         <input type="email" placeholder="Email" required />
         <input type="password" placeholder="Password" required />
         <button type="submit">Create Account</button>
@@ -47,8 +49,10 @@
         ⭐ Premium Access – ₹399 / month
       </div>
     </div>
+
   </div>
 
+  <!-- Firebase Logic -->
   <script type="module" src="app.js"></script>
 </body>
 </html>
