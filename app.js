@@ -1,69 +1,42 @@
-// ===== DEMO LOGIN / SIGNUP LOGIC (FRONTEND ONLY) =====
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-// Elements
-const loginBtn = document.getElementById("loginBtn");
-const signupBtn = document.getElementById("signupBtn");
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBA6HoJ3TuuZI1Mx1Z38rxvdW9J9a9xu8A",
+  authDomain: "merox-ai-mirror.firebaseapp.com",
+  projectId: "merox-ai-mirror",
+  storageBucket: "merox-ai-mirror.firebasestorage.app",
+  messagingSenderId: "69028024588",
+  appId: "1:69028024588:web:f374b0e927adfe839ff929",
+  measurementId: "G-2HKXY2ZRBF"
+};
 
-// Fake database (localStorage)
-function saveUser(email, password) {
-  localStorage.setItem("meroxUser", JSON.stringify({ email, password }));
-}
-
-function getUser() {
-  return JSON.parse(localStorage.getItem("meroxUser"));
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 // SIGN UP
-if (signupBtn) {
-  signupBtn.addEventListener("click", () => {
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
+document.getElementById("signupForm").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    if (!email || !password) {
-      alert("❌ Email aur Password required hai");
-      return;
-    }
+  const email = e.target[1].value;
+  const password = e.target[2].value;
 
-    saveUser(email, password);
-    alert("✅ Signup successful! Ab login karo.");
-  });
-}
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Signup successful 🎉"))
+    .catch(err => alert(err.message));
+});
 
 // LOGIN
-if (loginBtn) {
-  loginBtn.addEventListener("click", () => {
-    const email = emailInput.value.trim();
-    const password = passwordInput.value.trim();
-    const user = getUser();
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-    if (!email || !password) {
-      alert("❌ Email aur Password daalo");
-      return;
-    }
+  const email = e.target[0].value;
+  const password = e.target[1].value;
 
-    if (!user) {
-      alert("❌ Pehle Sign Up karo");
-      return;
-    }
-
-    if (email === user.email && password === user.password) {
-      alert("🎉 Login Successful! Welcome to MeroX");
-      document.body.innerHTML = `
-        <div style="color:white;text-align:center;margin-top:100px">
-          <h1>🚀 Welcome to MeroX Dashboard</h1>
-          <p>AI Mirror Prototype – Phase 1</p>
-          <button onclick="logout()" style="padding:10px 20px;margin-top:20px">Logout</button>
-        </div>
-      `;
-    } else {
-      alert("❌ Wrong Email or Password");
-    }
-  });
-}
-
-// LOGOUT
-function logout() {
-  location.reload();
-}
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Login successful ✅"))
+    .catch(err => alert(err.message));
+});
