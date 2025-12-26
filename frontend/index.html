@@ -1,11 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>MeroX – AI Mirror</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Welcome to MeroX</h1>
-  <p>Phase 1: UI + Authentication</p>
+
+  <!-- Background Glow -->
+  <div class="bg-glow"></div>
+
+  <div class="container">
+    <!-- Left: Camera Preview -->
+    <div class="camera-box">
+      <div class="camera-glow"></div>
+      <p>Camera Preview</p>
+    </div>
+
+    <!-- Right: Auth Card -->
+    <div class="auth-card">
+      <h1>MeroX</h1>
+      <p class="tagline">AI Powered Smart Mirror</p>
+
+      <div class="tabs">
+        <button class="tab active" onclick="showLogin()">Login</button>
+        <button class="tab" onclick="showSignup()">Sign Up</button>
+      </div>
+
+      <!-- Login -->
+      <form id="loginForm">
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
+
+      <!-- Signup -->
+      <form id="signupForm" class="hidden">
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Create Account</button>
+      </form>
+
+      <div class="premium">
+        ⭐ Premium Access – ₹399 / month
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
