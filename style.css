@@ -2,155 +2,119 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", system-ui, sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 body {
-  min-height: 100vh;
+  height: 100vh;
   background: #0b0f1a;
   color: #ffffff;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* ===== Background Glow ===== */
+/* Background Glow */
 .bg-glow {
   position: fixed;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, #00ffe0 0%, transparent 70%);
-  top: -200px;
-  left: -200px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #00ffe0, transparent);
+  top: -150px;
+  left: -150px;
   filter: blur(120px);
   z-index: -1;
 }
 
-/* ===== Layout ===== */
+/* Container */
 .container {
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 100vh;
-  gap: 60px;
-}
-
-/* ===== Camera Preview ===== */
-.camera-box {
-  width: 360px;
-  height: 500px;
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  display: flex;
   align-items: center;
-  justify-content: center;
-  position: relative;
 }
 
-.camera-box p {
-  opacity: 0.8;
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
-.camera-glow {
-  position: absolute;
-  inset: 0;
-  border-radius: 22px;
-  box-shadow: 0 0 22px #00ffe0;
-  animation: glow 2.2s infinite ease-in-out;
-  pointer-events: none;
-}
-
-@keyframes glow {
-  0% { box-shadow: 0 0 14px #00ffe0; }
-  50% { box-shadow: 0 0 32px #00ffe0; }
-  100% { box-shadow: 0 0 14px #00ffe0; }
-}
-
-/* ===== Auth Card ===== */
+/* Auth Card */
 .auth-card {
   width: 340px;
-  padding: 30px 28px;
-  border-radius: 22px;
+  padding: 30px;
+  border-radius: 18px;
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(22px);
+  backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 40px rgba(0, 255, 224, 0.2);
 }
 
-/* ===== Title ===== */
+/* Title */
 .auth-card h1 {
   text-align: center;
   letter-spacing: 2px;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
 .tagline {
   text-align: center;
   font-size: 12px;
-  opacity: 0.75;
-  margin-bottom: 22px;
+  opacity: 0.8;
+  margin-bottom: 20px;
 }
 
-/* ===== Tabs ===== */
+/* Tabs */
 .tabs {
   display: flex;
   gap: 10px;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .tab {
   flex: 1;
-  padding: 9px 0;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   background: transparent;
-  color: #fff;
+  color: white;
   cursor: pointer;
-  font-size: 14px;
-  transition: 0.25s;
-}
-
-.tab:hover {
-  background: rgba(255, 255, 255, 0.08);
 }
 
 .tab.active {
   background: #00ffe0;
   color: #000;
-  border-color: #00ffe0;
+  font-weight: bold;
 }
 
-/* ===== Forms ===== */
+/* Forms */
 form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 input {
-  padding: 11px 14px;
-  border-radius: 12px;
+  padding: 10px;
+  border-radius: 10px;
   border: none;
   outline: none;
   font-size: 14px;
-  background: rgba(255, 255, 255, 0.9);
 }
 
-input::placeholder {
-  color: #444;
-}
-
-/* ===== Buttons ===== */
-button[type="submit"] {
-  margin-top: 4px;
-  padding: 11px;
-  border-radius: 12px;
+button {
+  padding: 10px;
+  border-radius: 10px;
   border: none;
   background: #00ffe0;
-  font-weight: 600;
+  color: #000;
+  font-weight: bold;
   cursor: pointer;
-  transition: 0.25s;
 }
 
-button[type="submit
+/* Premium */
+.premium {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #00ffe0;
+}
+
+/* 🔑 IMPORTANT */
+.hidden {
+  display: none;
+}
