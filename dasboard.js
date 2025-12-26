@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signOut, onAuthStateChanged } 
+import { getAuth, onAuthStateChanged, signOut } 
 from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
@@ -17,13 +17,13 @@ const auth = getAuth(app);
 // 🔐 Protect dashboard
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.href = "index.html";
+    window.location.href = "index.html"; // ❌ No login → back to login
   }
 });
 
-// Logout
-document.getElementById("logoutBtn").addEventListener("click", () => {
+// Logout function
+window.logout = () => {
   signOut(auth).then(() => {
     window.location.href = "index.html";
   });
-});
+};
