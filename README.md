@@ -85,9 +85,7 @@ MeroX aims to become a *next-generation personal AI mirror* that can:
 
 ## 🌐 Live Demo
 
-👉 Hosted on *GitHub Pages*  
-(Access depends on authentication status)
-
+👉https://kishankumarsingh-aiml.github.io/merox-ai-mirror/
 ---
 
 ## 🧭 How It Works (Flow)
