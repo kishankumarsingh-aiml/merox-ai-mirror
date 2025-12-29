@@ -14,15 +14,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// 🔐 Protect dashboard
 onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    window.location.href = "./index.html";
+  if (!user || !user.emailVerified) {
+    window.location.href = "index.html";
   }
 });
 
 window.logout = () => {
   signOut(auth).then(() => {
-    window.location.href = "./index.html";
+    window.location.href = "index.html";
   });
 };
