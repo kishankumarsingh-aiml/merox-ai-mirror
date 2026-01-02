@@ -80,4 +80,4 @@ document.getElementById("loginForm")?.addEventListener("submit", async (e) => {
     alert(error.message);
   }
 });
-}
+
