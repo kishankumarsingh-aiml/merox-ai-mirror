@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBA6HoJ3TuuZI1Mx1Z38rxvdW9J9a9xu8A",
@@ -14,14 +13,13 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+/* ✅ SAFE AUTH CHECK */
 onAuthStateChanged(auth, (user) => {
-  if (!user || !user.emailVerified) {
+  if (!user) {
+    // user login nahi hai
     window.location.href = "index.html";
+  } else {
+    console.log("User logged in:", user.email);
+    // dashboard yahin rahega
   }
 });
-
-window.logout = () => {
-  signOut(auth).then(() => {
-    window.location.href = "index.html";
-  });
-};
