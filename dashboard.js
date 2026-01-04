@@ -1,25 +1,36 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+// Select all filter buttons
+const filters = document.querySelectorAll(".filter");
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBA6HoJ3TuuZI1Mx1Z38rxvdW9J9a9xu8A",
-  authDomain: "merox-ai-mirror.firebaseapp.com",
-  projectId: "merox-ai-mirror",
-  storageBucket: "merox-ai-mirror.firebasestorage.app",
-  messagingSenderId: "69028024588",
-  appId: "1:69028024588:web:f374b0e927adfe839ff929"
-};
+// Select status text
+const statusText = document.querySelector(".status-text");
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+filters.forEach(filter => {
+  filter.addEventListener("click", () => {
 
-/* ✅ SAFE AUTH CHECK */
-onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    // user login nahi hai
-    window.location.href = "index.html";
-  } else {
-    console.log("User logged in:", user.email);
-    // dashboard yahin rahega
-  }
+    // Remove active class from all
+    filters.forEach(btn => btn.classList.remove("active"));
+
+    // Add active class to clicked button
+    filter.classList.add("active");
+
+    const mode = filter.dataset.mode;
+
+    switch (mode) {
+      case "skin":
+        statusText.innerText = "Skin Mode Activated";
+        break;
+
+      case "fitness":
+        statusText.innerText = "Fitness Mode Activated";
+        break;
+
+      case "goggles":
+        statusText.innerText = "Goggles Mode Activated";
+        break;
+
+      case "clothes":
+        statusText.innerText = "Clothes Mode Activated";
+        break;
+    }
+  });
 });
