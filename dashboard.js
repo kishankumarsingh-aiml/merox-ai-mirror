@@ -1,36 +1,60 @@
-// Select all filter buttons
+// =======================
+// MODE SWITCHING
+// =======================
 const filters = document.querySelectorAll(".filter");
-
-// Select status text
 const statusText = document.querySelector(".status-text");
 
-filters.forEach(filter => {
-  filter.addEventListener("click", () => {
+filters.forEach(btn => {
+  btn.addEventListener("click", () => {
+    filters.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
 
-    // Remove active class from all
-    filters.forEach(btn => btn.classList.remove("active"));
-
-    // Add active class to clicked button
-    filter.classList.add("active");
-
-    const mode = filter.dataset.mode;
+    const mode = btn.dataset.mode;
 
     switch (mode) {
       case "skin":
-        statusText.innerText = "Skin Mode Activated";
+        statusText.innerText = "Skin Care Mode Activated";
         break;
-
       case "fitness":
         statusText.innerText = "Fitness Mode Activated";
         break;
-
       case "goggles":
-        statusText.innerText = "Goggles Mode Activated";
+        statusText.innerText = "Goggles Try-On Mode Activated";
         break;
-
       case "clothes":
-        statusText.innerText = "Clothes Mode Activated";
+        statusText.innerText = "Clothes Try-On Mode Activated";
         break;
     }
   });
 });
+
+
+// =======================
+// CAMERA PREVIEW (REAL)
+// =======================
+const cameraBox = document.querySelector(".camera-placeholder");
+
+const video = document.createElement("video");
+video.autoplay = true;
+video.playsInline = true;
+video.style.width = "100%";
+video.style.height = "100%";
+video.style.borderRadius = "14px";
+
+cameraBox.innerHTML = "";
+cameraBox.appendChild(video);
+
+async function startCamera() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: false
+    });
+    video.srcObject = stream;
+  } catch (err) {
+    cameraBox.innerHTML = "Camera access denied ❌";
+    console.error(err);
+  }
+}
+
+startCamera();
