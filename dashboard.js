@@ -1,75 +1,65 @@
-// ========== MODE SWITCH LOGIC ==========
-const filters = document.querySelectorAll(".filter");
-const statusText = document.querySelector(".status-text");
+// CAMERA LOGIC
+const camera = document.getElementById("camera");
+const startBtn = document.getElementById("startCamera");
+const placeholder = document.getElementById("mirrorPlaceholder");
 
-filters.forEach(btn => {
-  btn.addEventListener("click", () => {
-    filters.forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    const mode = btn.dataset.mode;
-
-    if (mode === "skin") statusText.innerText = "Skin Mode Activated";
-    if (mode === "fitness") statusText.innerText = "Fitness Mode Activated";
-    if (mode === "goggles") statusText.innerText = "MeroX Fashion Activated";
-    if (mode === "clothes") statusText.innerText = "MeroX Fashion Activated";
-  });
-});
-
-// ========== CAMERA PREVIEW ==========
-const cameraBox = document.querySelector(".camera-placeholder");
-
-async function startCamera() {
+startBtn.addEventListener("click", async () => {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    cameraBox.innerHTML = `<video autoplay playsinline></video>`;
-    cameraBox.querySelector("video").srcObject = stream;
+    camera.srcObject = stream;
+    camera.hidden = false;
+    placeholder.style.display = "none";
+    startBtn.innerText = "Camera Active";
+    startBtn.disabled = true;
   } catch (err) {
-    cameraBox.innerText = "Camera access denied";
+    alert("Camera access denied");
   }
-}
+});
 
-startCamera();
+// CHAT LOGIC
+const sendBtn = document.getElementById("sendBtn");
+const input = document.getElementById("userInput");
+const messages = document.getElementById("messages");
 
-// ========== roX-AI CHAT ==========
-const roxSend = document.getElementById("roxSend");
-const roxInput = document.getElementById("roxInput");
-const roxMessages = document.getElementById("roxMessages");
-
-function addMessage(text, type) {
-  const msg = document.createElement("div");
-  msg.className = type === "user" ? "user-msg" : "ai-msg";
-  msg.innerText = text;
-  roxMessages.appendChild(msg);
-  roxMessages.scrollTop = roxMessages.scrollHeight;
-}
-
-function roxReply(userText) {
-  let reply = "I am roX-AI. I am here to help you.";
-
-  if (userText.includes("premium"))
-    reply = "Premium gives you full access to Fashion, AI Coach & Try-On.";
-
-  if (userText.includes("fitness"))
-    reply = "Fitness mode includes calorie calculator and posture analysis.";
-
-  if (userText.includes("skin"))
-    reply = "Skin mode analyzes skin type and suggests care routine.";
-
-  setTimeout(() => addMessage(reply, "ai"), 500);
-}
+sendBtn.addEventListener("click", sendMessage);
+input.addEventListener("keypress", e => {
+  if (e.key === "Enter") sendMessage();
+});
 
 function sendMessage() {
-  const text = roxInput.value.trim().toLowerCase();
+  const text = input.value.trim();
   if (!text) return;
 
   addMessage(text, "user");
-  roxInput.value = "";
-  roxReply(text);
+  input.value = "";
+
+  setTimeout(() => {
+    addMessage(roXReply(text), "bot");
+  }, 600);
 }
 
-roxSend.addEventListener("click", sendMessage);
+function addMessage(text, type) {
+  const div = document.createElement("div");
+  div.className = type;
+  div.innerText = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
 
-roxInput.addEventListener("keypress", e => {
-  if (e.key === "Enter") sendMessage();
-});
+function roXReply(msg) {
+  msg = msg.toLowerCase();
+
+  if (msg.includes("fitness"))
+    return "🏋️ I can help with workouts, calorie calculator and fitness tips.";
+
+  if (msg.includes("skin"))
+    return "🧴 I analyze skin and suggest routine, diet and care tips.";
+
+  if (msg.includes("fashion") || msg.includes("clothes"))
+    return "👕 MeroX Fashion lets you try clothes virtually using AI Mirror.";
+
+  if (msg.includes("premium"))
+    return "⭐ Premium unlocks Fashion, AI Coach and advanced Try-On features.";
+
+  return "🤖 I am roX-AI. Ask me about Fitness, Skin, Fashion or Premium.";
+}
