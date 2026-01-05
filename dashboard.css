@@ -188,3 +188,73 @@ body {
   justify-content: center;
   opacity: 0.7;
 }
+
+/* ========== roX-AI CHAT ========== */
+.rox-chat {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 300px;
+  height: 380px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.rox-header {
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #00ffe0;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.rox-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 13px;
+}
+
+.rox-msg {
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+
+.rox-msg.bot {
+  background: rgba(0,255,224,0.15);
+}
+
+.rox-msg.user {
+  background: rgba(255,255,255,0.15);
+  text-align: right;
+}
+
+.rox-input {
+  display: flex;
+  gap: 6px;
+  padding: 10px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.rox-input input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+.rox-input button {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  background: #00ffe0;
+  font-weight: bold;
+  cursor: pointer;
+}
