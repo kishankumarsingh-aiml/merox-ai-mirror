@@ -1,90 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>MeroX Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="dashboard.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="dashboard.css">
 </head>
-
 <body>
 
-  <!-- Background -->
-  <div class="bg-glow"></div>
+<header class="topbar">
+  <h2>MeroX <span>AI Mirror</span></h2>
+</header>
 
-  <!-- Top Bar -->
-  <header class="topbar">
-    <div class="brand">
-      <span class="logo">MeroX</span>
-      <span class="badge">AI Mirror</span>
+<div class="main">
+
+  <!-- CAMERA SECTION -->
+  <div class="mirror-box">
+    <div class="mirror-frame">
+      <video id="camera" autoplay playsinline hidden></video>
+      <div id="mirrorPlaceholder">🪞 Try it – MeroX Mirror</div>
     </div>
-
-    <div class="actions">
-      <span class="plan">⭐ Premium</span>
-      <button class="logout">Logout</button>
-    </div>
-  </header>
-
-  <!-- Layout -->
-  <div class="layout">
-
-    <!-- LEFT : MODES -->
-    <aside class="filters">
-      <h3>Modes</h3>
-
-      <button class="filter active" data-mode="chat">🤖 roX-AI</button>
-      <button class="filter" data-mode="fitness">🏋️ Fitness</button>
-      <button class="filter" data-mode="skin">🧴 Skin Care</button>
-      <button class="filter" data-mode="fashion">👕 MeroX Fashion</button>
-
-      <div class="upgrade">
-        <p>Unlock all modes</p>
-        <button>Upgrade Premium</button>
-      </div>
-    </aside>
-
-    <!-- CENTER : MIRROR -->
-    <main class="mirror-area">
-      <div class="mirror-box">
-        <div class="mirror-glow"></div>
-
-        <p class="status-text" id="modeStatus">
-          roX-AI Assistant Active
-        </p>
-
-        <div class="camera-placeholder" id="cameraBox">
-          Camera Preview
-        </div>
-      </div>
-    </main>
-
-    <!-- RIGHT : roX-AI CHAT -->
-    <aside class="rox-chat">
-
-      <div class="rox-header">
-        🤖 roX-AI Assistant
-      </div>
-
-      <div class="rox-messages" id="roxMessages">
-        <div class="ai-msg">
-          Hi 👋 I am roX-AI. How can I help you today?
-        </div>
-      </div>
-
-      <div class="rox-input-area">
-        <input
-          type="text"
-          id="roxInput"
-          placeholder="Type your message..."
-        />
-        <button id="roxSend">Send</button>
-      </div>
-
-    </aside>
-
+    <button id="startCamera">Open Camera</button>
   </div>
 
-  <!-- JS -->
-  <script src="dashboard.js"></script>
+  <!-- CHAT SECTION -->
+  <div class="rox-chat">
+    <div class="rox-header">🤖 roX-AI Assistant</div>
+
+    <div class="rox-messages" id="messages">
+      <div class="bot">Hi 👋 I am roX-AI. Ask me about Fitness, Skin, Fashion or Premium.</div>
+    </div>
+
+    <div class="rox-input">
+      <input id="userInput" type="text" placeholder="Type your message...">
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="dashboard.js"></script>
 </body>
 </html>
