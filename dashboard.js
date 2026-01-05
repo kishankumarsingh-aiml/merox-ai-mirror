@@ -1,6 +1,4 @@
-// =======================
-// MODE SWITCHING
-// =======================
+// ========== MODE SWITCH LOGIC ==========
 const filters = document.querySelectorAll(".filter");
 const statusText = document.querySelector(".status-text");
 
@@ -11,93 +9,67 @@ filters.forEach(btn => {
 
     const mode = btn.dataset.mode;
 
-    switch (mode) {
-      case "skin":
-        statusText.innerText = "Skin Care Mode Activated";
-        break;
-      case "fitness":
-        statusText.innerText = "Fitness Mode Activated";
-        break;
-      case "goggles":
-        statusText.innerText = "Goggles Try-On Mode Activated";
-        break;
-      case "clothes":
-        statusText.innerText = "Clothes Try-On Mode Activated";
-        break;
-    }
+    if (mode === "skin") statusText.innerText = "Skin Mode Activated";
+    if (mode === "fitness") statusText.innerText = "Fitness Mode Activated";
+    if (mode === "goggles") statusText.innerText = "MeroX Fashion Activated";
+    if (mode === "clothes") statusText.innerText = "MeroX Fashion Activated";
   });
 });
 
-
-// =======================
-// CAMERA PREVIEW (REAL)
-// =======================
+// ========== CAMERA PREVIEW ==========
 const cameraBox = document.querySelector(".camera-placeholder");
-
-const video = document.createElement("video");
-video.autoplay = true;
-video.playsInline = true;
-video.style.width = "100%";
-video.style.height = "100%";
-video.style.borderRadius = "14px";
-
-cameraBox.innerHTML = "";
-cameraBox.appendChild(video);
 
 async function startCamera() {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: false
-    });
-    video.srcObject = stream;
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    cameraBox.innerHTML = `<video autoplay playsinline></video>`;
+    cameraBox.querySelector("video").srcObject = stream;
   } catch (err) {
-    cameraBox.innerHTML = "Camera access denied ❌";
-    console.error(err);
+    cameraBox.innerText = "Camera access denied";
   }
 }
 
 startCamera();
 
-// =======================
-// roX-AI CHAT LOGIC (DEMO)
-// =======================
-const roxInput = document.getElementById("roxInput");
+// ========== roX-AI CHAT ==========
 const roxSend = document.getElementById("roxSend");
+const roxInput = document.getElementById("roxInput");
 const roxMessages = document.getElementById("roxMessages");
 
-roxSend.addEventListener("click", sendMessage);
-roxInput.addEventListener("keypress", e => {
-  if (e.key === "Enter") sendMessage();
-});
+function addMessage(text, type) {
+  const msg = document.createElement("div");
+  msg.className = type === "user" ? "user-msg" : "ai-msg";
+  msg.innerText = text;
+  roxMessages.appendChild(msg);
+  roxMessages.scrollTop = roxMessages.scrollHeight;
+}
+
+function roxReply(userText) {
+  let reply = "I am roX-AI. I am here to help you.";
+
+  if (userText.includes("premium"))
+    reply = "Premium gives you full access to Fashion, AI Coach & Try-On.";
+
+  if (userText.includes("fitness"))
+    reply = "Fitness mode includes calorie calculator and posture analysis.";
+
+  if (userText.includes("skin"))
+    reply = "Skin mode analyzes skin type and suggests care routine.";
+
+  setTimeout(() => addMessage(reply, "ai"), 500);
+}
 
 function sendMessage() {
-  const text = roxInput.value.trim();
+  const text = roxInput.value.trim().toLowerCase();
   if (!text) return;
 
   addMessage(text, "user");
   roxInput.value = "";
-
-  // Demo AI replies (context-based)
-  setTimeout(() => {
-    let reply = "I can help you with Fitness, Skin Care and MeroX Fashion.";
-
-    if (text.toLowerCase().includes("fitness")) {
-      reply = "🏋️ Fitness mode helps with workouts, calories and posture.";
-    } else if (text.toLowerCase().includes("skin")) {
-      reply = "🧴 Skin Care mode analyzes skin and suggests routine.";
-    } else if (text.toLowerCase().includes("fashion")) {
-      reply = "👗 MeroX Fashion lets you try clothes and goggles virtually.";
-    }
-
-    addMessage(reply, "bot");
-  }, 600);
+  roxReply(text);
 }
 
-function addMessage(text, type) {
-  const div = document.createElement("div");
-  div.className = `rox-msg ${type}`;
-  div.innerText = text;
-  roxMessages.appendChild(div);
-  roxMessages.scrollTop = roxMessages.scrollHeight;
-}
+roxSend.addEventListener("click", sendMessage);
+
+roxInput.addEventListener("keypress", e => {
+  if (e.key === "Enter") sendMessage();
+});
