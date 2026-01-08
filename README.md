@@ -4,7 +4,7 @@
 authentication, real-time camera interaction, fitness guidance, skin analysis,  
 and upcoming AR-based virtual try-on features into a single intelligent platform.
 
-This project is developed using a *phase-based product development approach*,  
+-This project is developed using a *phase-based product development approach*,  
 similar to how real-world startups and scalable products are built.
 
 ---
