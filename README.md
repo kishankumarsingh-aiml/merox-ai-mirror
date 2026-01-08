@@ -124,7 +124,7 @@ Passionate about building *real-world AI products* and learning cutting-edge tec
 - Mobile application version
 - Dedicated smart mirror hardware
 - Advanced AI-driven personal assistant
-- Enterprise-level integrations
+- Enterprise-level integrations .
 
 ---
 
