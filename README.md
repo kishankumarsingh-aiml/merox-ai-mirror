@@ -113,7 +113,7 @@ MeroX aims to become a *next-generation personal AI mirror* that can:
 ## 👨‍💻 Author
 
 *Kishan Kumar Singh*  
-AI / ML Engineer (Learner) | Full-Stack Enthusiast  
+AI / ML Engineer (Learner) | Full-Stack Enthusiast.
 
 Passionate about building *real-world AI products* and learning cutting-edge technologies.
 
