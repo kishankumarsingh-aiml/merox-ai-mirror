@@ -12,7 +12,7 @@ similar to how real-world startups and scalable products are built.
 ## 📌 Project Status
 
 | Phase | Description | Status |
-|------|------------|--------|
+|------|-----------|--------|
 | Phase 1 | Authentication & UI Foundation | ✅ Completed |
 | Phase 2 | Camera, Fitness & Skin Analysis | 🚧 In Progress |
 | Phase 3 | Advanced AI & AR Try-On | 🔮 Planned |
@@ -128,7 +128,7 @@ Passionate about building *real-world AI products* and learning cutting-edge tec
 
 ---
 
-> *“MeroX is not just a project — it’s a product vision.”*
+> *“MeroX is not just a project — it’s a product vision”*
 ---
 
 ## 📂 Project Structure
