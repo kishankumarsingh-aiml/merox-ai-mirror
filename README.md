@@ -1,4 +1,4 @@
-# 🚀 MeroX – AI Powered Smart Mirror
+# 🚀 MeroX – AI Powered Smart Mirror.
 
 *MeroX* is a futuristic *AI-powered Smart Mirror web application* that combines  
 authentication, real-time camera interaction, fitness guidance, skin analysis,  
@@ -12,7 +12,7 @@ similar to how real-world startups and scalable products are built.
 ## 📌 Project Status
 
 | Phase | Description | Status |
-|------|------------|--------|
+|------|-----------|--------|
 | Phase 1 | Authentication & UI Foundation | ✅ Completed |
 | Phase 2 | Camera, Fitness & Skin Analysis | 🚧 In Progress |
 | Phase 3 | Advanced AI & AR Try-On | 🔮 Planned |
@@ -113,7 +113,7 @@ MeroX aims to become a *next-generation personal AI mirror* that can:
 ## 👨‍💻 Author
 
 *Kishan Kumar Singh*  
-AI / ML Engineer (Learner) | Full-Stack Enthusiast  
+AI / ML Engineer (Learner) | Full-Stack Enthusiast
 
 Passionate about building *real-world AI products* and learning cutting-edge technologies.
 
@@ -124,11 +124,11 @@ Passionate about building *real-world AI products* and learning cutting-edge tec
 - Mobile application version
 - Dedicated smart mirror hardware
 - Advanced AI-driven personal assistant
-- Enterprise-level integrations
+- Enterprise-level integrations 
 
 ---
 
-> *“MeroX is not just a project — it’s a product vision.”*
+> *“MeroX is not just a project — it’s a product vision”*
 ---
 
 ## 📂 Project Structure
