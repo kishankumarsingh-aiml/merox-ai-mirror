@@ -1,49 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>MeroX Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="dashboard.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
+
 <body>
 
-<header class="topbar">
-  <h2>MeroX <span>AI Mirror</span></h2>
-</header>
-
-<div class="main">
-
-  <!-- CAMERA SECTION -->
-  <div class="mirror-box">
-    <div class="mirror-frame">
-      <video id="camera" autoplay playsinline hidden></video>
-      <div id="mirrorPlaceholder">🪞 Try it – MeroX Mirror</div>
-    </div>
-    <button id="startCamera">Open Camera</button>
-  </div>
-
-  <!-- CHAT SECTION -->
-  <div class="rox-chat">
-    <div class="rox-header">🤖 roX-AI Assistant</div>
-
-    <div class="rox-messages" id="messages">
-      <div class="bot">Hi 👋 I am roX-AI. Ask me about Fitness, Skin, Fashion or Premium.</div>
+  <!-- ========== TOP BAR ========== -->
+  <header class="topbar">
+    <div class="brand">
+      <h2>MeroX</h2>
+      <span class="owner">Owner: Kishan Kumar Singh</span>
     </div>
 
-    <div class="rox-input">
-      <input id="userInput" type="text" placeholder="Type your message...">
-      <button id="sendBtn">Send</button>
+    <div class="top-actions">
+      <div class="search-box">
+        <input type="text" placeholder="Try it MeroX" />
+        <button>🔍</button>
+      </div>
+
+      <div class="icons">
+        <button class="icon-btn" title="roX AI">🤖</button>
+        <button class="icon-btn" title="My Collection">🪞</button>
+
+        <div class="profile">
+          <button class="icon-btn">👤</button>
+          <!-- dropdown future me -->
+        </div>
+      </div>
     </div>
-  </div>
+  </header>
 
-</div>
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="dashboard">
 
-<!-- 🔥 FIREBASE FIRST -->
-<script type="module" src="firebase.js"></script>
+    <!-- OPTIONS ROW -->
+    <section class="options-row">
+      <div class="option-card">🌟 Skin Care</div>
+      <div class="option-card">💪 Fitness</div>
+      <div class="option-card">🪞 Smart Mirror Demo</div>
+      <div class="option-card">🧘 Yoga Training</div>
+      <div class="option-card">💇 Hairstyle by Face</div>
+      <div class="option-card">👔 Best Cloth by Face</div>
+      <div class="option-card">🏢 Professional Outfits</div>
+      <div class="option-card">🎉 Festival & Occasion Wear</div>
+    </section>
 
-<!-- 🔥 DASHBOARD LOGIC -->
-<script type="module" src="dashboard.js"></script>
+    <!-- MIRROR + CHAT AREA -->
+    <section class="bottom-area">
+
+      <!-- MIRROR -->
+      <div class="mirror-section">
+        <h3>Try it – MeroX Mirror</h3>
+        <div class="mirror-box">
+          <button class="open-mirror-btn">Open Mirror</button>
+        </div>
+      </div>
+
+      <!-- roX AI CHAT -->
+      <div class="chat-section">
+        <h3>roX-AI Assistant</h3>
+        <div class="chat-box">
+          <p class="bot-msg">Hi 👋 I am roX-AI. Ask me about Fitness, Skin or Fashion.</p>
+        </div>
+        <div class="chat-input">
+          <input type="text" placeholder="Type your message..." />
+          <button>Send</button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
 
 </body>
 </html>

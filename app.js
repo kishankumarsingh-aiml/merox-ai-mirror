@@ -1,82 +1,96 @@
-// app.js
-// 🔥 Firebase v8 (simple & stable)
-
-// 🔐 Firebase config (APNA REAL DATA YAHI RAKHO)
+// 🔥 Firebase Config (client-safe)
 const firebaseConfig = {
   apiKey: "AIzaSyBA6HoJ3TuuZI1Mx1Z38rxvdW9J9a9xu8A",
   authDomain: "merox-ai-mirror.firebaseapp.com",
   projectId: "merox-ai-mirror",
-  storageBucket: "merox-ai-mirror.firebasestorage.app",
+  storageBucket: "merox-ai-mirror.appspot.com",
   messagingSenderId: "69028024588",
-  appId: "1:69028024588:web:f374b0e927adfe839ff929",
-  measurementId: "G-2HKXY2ZRBF"
+  appId: "1:69028024588:web:f374b0e927adfe839ff929"
 };
 
-// ✅ Initialize Firebase (SAFE)
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+// Init Firebase
+firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// 🚀 DOM READY (YE SABSE IMPORTANT THA)
 document.addEventListener("DOMContentLoaded", () => {
-  // ===== ELEMENTS =====
-  const loginTab = document.getElementById("loginTab");
-  const signupTab = document.getElementById("signupTab");
 
-  const loginForm = document.getElementById("loginForm");
+  // ================= ELEMENTS =================
+  const loginTab   = document.getElementById("loginTab");
+  const signupTab  = document.getElementById("signupTab");
+  const loginForm  = document.getElementById("loginForm");
   const signupForm = document.getElementById("signupForm");
 
-  // ===== TAB SWITCH LOGIC =====
-  loginTab.addEventListener("click", () => {
+  const authCard = document.getElementById("authCard");
+  const chatBox  = document.getElementById("chatBox");
+
+  const sendBtn   = document.getElementById("sendBtn");
+  const userInput = document.getElementById("userInput");
+  const messages  = document.getElementById("messages");
+
+  // ================= TAB SWITCH =================
+  loginTab.onclick = () => {
     loginTab.classList.add("active");
     signupTab.classList.remove("active");
-
     loginForm.classList.remove("hidden");
     signupForm.classList.add("hidden");
-  });
+  };
 
-  signupTab.addEventListener("click", () => {
+  signupTab.onclick = () => {
     signupTab.classList.add("active");
     loginTab.classList.remove("active");
-
     signupForm.classList.remove("hidden");
     loginForm.classList.add("hidden");
-  });
+  };
 
-  // ===== LOGIN =====
-  loginForm.addEventListener("submit", (e) => {
+  // ================= LOGIN =================
+  loginForm.onsubmit = (e) => {
     e.preventDefault();
 
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
-
     auth
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(
+        loginEmail.value,
+        loginPassword.value
+      )
       .then(() => {
-        alert("✅ Login successful");
-        window.location.href = "dashboard.html";
+        authCard.style.display = "none";
+        chatBox.classList.remove("hidden");
       })
-      .catch((error) => {
-        alert("❌ " + error.message);
-      });
-  });
+      .catch(err => alert(err.message));
+  };
 
-  // ===== SIGN UP =====
-  signupForm.addEventListener("submit", (e) => {
+  // ================= SIGNUP =================
+  signupForm.onsubmit = (e) => {
     e.preventDefault();
 
-    const email = document.getElementById("signupEmail").value;
-    const password = document.getElementById("signupPassword").value;
-
     auth
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(
+        signupEmail.value,
+        signupPassword.value
+      )
       .then(() => {
-        alert("🎉 Account created successfully");
-        window.location.href = "dashboard.html";
+        authCard.style.display = "none";
+        chatBox.classList.remove("hidden");
       })
-      .catch((error) => {
-        alert("❌ " + error.message);
-      });
-  });
+      .catch(err => alert(err.message));
+  };
+
+  // ================= DUMMY CHAT (SAFE) =================
+  sendBtn.onclick = () => {
+    const msg = userInput.value.trim();
+    if (!msg) return;
+
+    const userDiv = document.createElement("div");
+    userDiv.className = "user";
+    userDiv.textContent = msg;
+    messages.appendChild(userDiv);
+
+    const botDiv = document.createElement("div");
+    botDiv.className = "bot";
+    botDiv.textContent = "🤖 roX-AI: Feature coming soon.";
+    messages.appendChild(botDiv);
+
+    userInput.value = "";
+    messages.scrollTop = messages.scrollHeight;
+  };
+
 });

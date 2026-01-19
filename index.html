@@ -2,35 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>MeroX – AI Mirror</title>
+  <title>MeroX – AI Smart Mirror</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- UI Styles -->
   <link rel="stylesheet" href="style.css" />
+
+  <!-- 🔥 Firebase v8 CDN (SAFE & STABLE) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 </head>
+
 <body>
 
-  <!-- Background -->
+  <!-- 🌌 Background -->
   <div class="bg-glow"></div>
 
+  <!-- 🔐 AUTH SECTION (PHASE 1) -->
   <div class="container">
-    <div class="auth-card">
+    <div class="auth-card" id="authCard">
 
       <h1>MeroX</h1>
       <p class="tagline">AI Powered Smart Mirror</p>
 
-      <!-- Tabs -->
       <div class="tabs">
-        <button class="tab active" id="loginTab">Login</button>
-        <button class="tab" id="signupTab">Sign Up</button>
+        <button id="loginTab" class="tab active">Login</button>
+        <button id="signupTab" class="tab">Sign Up</button>
       </div>
 
-      <!-- Login -->
+      <!-- LOGIN -->
       <form id="loginForm">
         <input type="email" id="loginEmail" placeholder="Email" required />
         <input type="password" id="loginPassword" placeholder="Password" required />
         <button type="submit">Login</button>
       </form>
 
-      <!-- Signup -->
+      <!-- SIGNUP -->
       <form id="signupForm" class="hidden">
         <input type="email" id="signupEmail" placeholder="Email" required />
         <input type="password" id="signupPassword" placeholder="Password" required />
@@ -41,27 +48,21 @@
     </div>
   </div>
 
-  <!-- 🔥 FIREBASE CDN (v8 – STABLE) -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <!-- 🤖 roX-AI CHAT (PHASE 2 – LOGIN KE BAAD HI) -->
+  <div class="chat-box hidden" id="chatBox">
+    <div class="chat-header">🤖 roX-AI Assistant</div>
 
-  <!-- 🔥 FIREBASE CONFIG + INIT -->
-  <script>
-   const firebaseConfig = {
-  apiKey: "AIzaSyBA6HoJ3TuuZI1Mx1Z38rxvdW9J9a9xu8A",
-  authDomain: "merox-ai-mirror.firebaseapp.com",
-  projectId: "merox-ai-mirror",
-  storageBucket: "merox-ai-mirror.firebasestorage.app",
-  messagingSenderId: "69028024588",
-  appId: "1:69028024588:web:f374b0e927adfe839ff929",
-  measurementId: "G-2HKXY2ZRBF"
-};
-    // 🔥 MOST IMPORTANT
-    firebase.initializeApp(firebaseConfig);
-  </script>
+    <div class="chat-messages" id="messages">
+      <div class="bot">Hi 👋 I am roX-AI. Ask me about Fitness, Skin or Fashion.</div>
+    </div>
 
-  <!-- APP LOGIC -->
+    <div class="chat-input">
+      <input type="text" id="userInput" placeholder="Type your message..." />
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+
+  <!-- Logic -->
   <script src="app.js"></script>
-
 </body>
 </html>

@@ -12,6 +12,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
 /* Background Glow */
@@ -31,9 +32,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
-/* Auth Card */
+/* ================= AUTH CARD ================= */
+
 .auth-card {
   width: 340px;
   padding: 30px;
@@ -42,6 +45,7 @@ body {
   backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 40px rgba(0, 255, 224, 0.2);
+  z-index: 2;
 }
 
 /* Title */
@@ -114,8 +118,66 @@ button {
   color: #00ffe0;
 }
 
-/* 🔑 IMPORTANT */
+/* ================= CHAT BOX (PHASE 2) ================= */
+
+.chat-box {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 320px;
+  height: 420px;
+  background: rgba(15, 30, 40, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(0, 255, 224, 0.3);
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
+}
+
+.chat-header {
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+  background: #00ffe0;
+  color: #000;
+  border-radius: 16px 16px 0 0;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+.chat-messages .bot {
+  background: rgba(255,255,255,0.1);
+  padding: 8px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.chat-messages .user {
+  background: #00ffe0;
+  color: #000;
+  padding: 8px;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  align-self: flex-end;
+}
+
+.chat-input {
+  display: flex;
+  gap: 8px;
+  padding: 10px;
+}
+
+.chat-input input {
+  flex: 1;
+}
+
+/* ================= UTILITY ================= */
+
 .hidden {
   display: none;
 }
-
