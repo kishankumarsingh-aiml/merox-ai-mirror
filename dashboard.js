@@ -1,65 +1,69 @@
-// CAMERA LOGIC
+// ================= FIREBASE AUTH GUARD =================
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase.js";
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    // agar login nahi hai → index.html pe bhej do
+    window.location.href = "index.html";
+  }
+});
+
+// ================= CAMERA LOGIC =================
 const camera = document.getElementById("camera");
 const startBtn = document.getElementById("startCamera");
 const placeholder = document.getElementById("mirrorPlaceholder");
 
-startBtn.addEventListener("click", async () => {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    camera.srcObject = stream;
-    camera.hidden = false;
-    placeholder.style.display = "none";
-    startBtn.innerText = "Camera Active";
-    startBtn.disabled = true;
-  } catch (err) {
-    alert("Camera access denied");
-  }
-});
+if (startBtn) {
+  startBtn.addEventListener("click", async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      camera.srcObject = stream;
+      camera.hidden = false;
+      placeholder.style.display = "none";
+      startBtn.innerText = "Camera Active";
+      startBtn.disabled = true;
+    } catch (err) {
+      alert("Camera access denied");
+    }
+  });
+}
 
-// CHAT LOGIC
+// ================= CHAT + AI LOGIC =================
+import { askRoxAI } from "./rox-ai.js";
+
 const sendBtn = document.getElementById("sendBtn");
 const input = document.getElementById("userInput");
 const messages = document.getElementById("messages");
 
 sendBtn.addEventListener("click", sendMessage);
-input.addEventListener("keypress", e => {
+input.addEventListener("keypress", (e) => {
   if (e.key === "Enter") sendMessage();
 });
 
-function sendMessage() {
-  const text = input.value.trim();
-  if (!text) return;
+async function sendMessage() {
+  const userText = input.value.trim();
+  if (!userText) return;
 
-  addMessage(text, "user");
+  // user message
+  messages.innerHTML += `<div class="user-msg">${userText}</div>`;
   input.value = "";
 
-  setTimeout(() => {
-    addMessage(roXReply(text), "bot");
-  }, 600);
-}
-
-function addMessage(text, type) {
-  const div = document.createElement("div");
-  div.className = type;
-  div.innerText = text;
-  messages.appendChild(div);
+  // thinking
+  const thinkingDiv = document.createElement("div");
+  thinkingDiv.className = "ai-msg";
+  thinkingDiv.innerText = "🤖 roX-AI is thinking...";
+  messages.appendChild(thinkingDiv);
   messages.scrollTop = messages.scrollHeight;
-}
 
-function roXReply(msg) {
-  msg = msg.toLowerCase();
+  try {
+    const reply = await askRoxAI(userText);
+    thinkingDiv.remove();
+    messages.innerHTML += `<div class="ai-msg">${reply}</div>`;
+  } catch (err) {
+    thinkingDiv.innerText = "❌ Error connecting roX-AI";
+    console.error(err);
+  }
 
-  if (msg.includes("fitness"))
-    return "🏋️ I can help with workouts, calorie calculator and fitness tips.";
-
-  if (msg.includes("skin"))
-    return "🧴 I analyze skin and suggest routine, diet and care tips.";
-
-  if (msg.includes("fashion") || msg.includes("clothes"))
-    return "👕 MeroX Fashion lets you try clothes virtually using AI Mirror.";
-
-  if (msg.includes("premium"))
-    return "⭐ Premium unlocks Fashion, AI Coach and advanced Try-On features.";
-
-  return "🤖 I am roX-AI. Ask me about Fitness, Skin, Fashion or Premium.";
+  messages.scrollTop = messages.scrollHeight;
 }
