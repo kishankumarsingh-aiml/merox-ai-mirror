@@ -12,7 +12,7 @@ similar to how real-world startups and scalable products are built.
 ## 📌 Project Status
 
 | Phase | Description | Status |
-|-------|----------------|--------|
+|-------|---------------|--------|
 | Phase 1 | Authentication & UI Foundation | ✅ Completed |
 | Phase 2 | Camera, Fitness & Skin Analysis | 🚧 In Progress |
 | Phase 3 | Advanced AI & AR Try-On | 🔮 Planned |
