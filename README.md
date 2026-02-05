@@ -17,7 +17,7 @@ similar to how real-world startups and scalable products are built.
 | Phase 2 | Camera, Fitness & Skin Analysis | 🚧 In Progress |
 | Phase 3 | Advanced AI & AR Try-On | 🔮 Planned |
 
----
+----
 
 ## 🎯 Project Vision
 
