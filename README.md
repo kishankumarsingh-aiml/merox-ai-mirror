@@ -27,7 +27,7 @@ MeroX aims to become a *next-generation personal AI mirror* that can:
 - Enable virtual try-on of accessories and clothing
 - Provide premium, AI-powered personal recommendations
 
----
+----
 
 ## 🔐 Phase 1 – Authentication System (Completed)
 
