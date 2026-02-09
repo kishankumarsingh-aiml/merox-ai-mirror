@@ -46,7 +46,7 @@ MeroX aims to become a *next-generation personal AI mirror* that can:
 - Firebase Authentication
 - GitHub Pages
 
----
+----
 
 ## 🎥 Phase 2 – Smart Mirror Core (In Progress)
 
