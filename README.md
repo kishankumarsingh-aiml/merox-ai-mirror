@@ -63,7 +63,7 @@ MeroX aims to become a *next-generation personal AI mirror* that can:
 - Canvas API
 - TensorFlow.js (basic models)
 
----
+----
 
 ## 🤖 Phase 3 – Advanced AI & AR (Planned)
 
