@@ -81,7 +81,7 @@ MeroX aims to become a *next-generation personal AI mirror* that can:
 - Payment gateway integration
 
 
----
+----
 
 ## 🌐 Live Demo
 
