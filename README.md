@@ -97,7 +97,7 @@ MeroX aims to become a *next-generation personal AI mirror* that can:
 5. Camera-based features are enabled
 6. User can log out anytime
 
----
+----
 
 ## ⭐ Why This Project Is Valuable
 
