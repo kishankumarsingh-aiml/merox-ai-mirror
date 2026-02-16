@@ -108,7 +108,7 @@ MeroX aims to become a *next-generation personal AI mirror* that can:
 - Strong foundation for AI & ML integration
 - Portfolio and resume ready
 
----
+----
 
 ## 👨‍💻 Author
 
