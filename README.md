@@ -117,7 +117,7 @@ AI / ML Engineer (Learner) | Full-Stack Enthusiast
 
 Passionate about building *real-world AI products* and learning cutting-edge technologies.
 
----
+----
 
 ## 🚀 Future Scope
 
