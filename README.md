@@ -126,7 +126,7 @@ Passionate about building *real-world AI products* and learning cutting-edge tec
 - Advanced AI-driven personal assistant
 - Enterprise-level integrations 
 
----
+----
 
 > *“MeroX is not just a project — it’s a product vision”*
 ---
