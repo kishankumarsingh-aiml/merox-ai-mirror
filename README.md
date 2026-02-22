@@ -130,6 +130,6 @@ Passionate about building *real-world AI products* and learning cutting-edge tec
 
 > *“MeroX is not just a project — it’s a product vision”*
 
-----
+-----
 
 ## 📂 Project Structure
