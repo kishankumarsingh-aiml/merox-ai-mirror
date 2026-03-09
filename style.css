@@ -15,7 +15,7 @@ body {
   overflow: hidden;
 }
 
-//* Background Glow *//
+// * Background Glow *//
 .bg-glow {
   position: fixed;
   width: 500px;
