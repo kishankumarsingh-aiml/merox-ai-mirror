@@ -1,0 +1,46 @@
+body{
+font-family:Segoe UI;
+background:#f5f7f9;
+margin:0;
+}
+
+#loader{
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+background:white;
+z-index:999;
+}
+
+#loader video{
+width:240px;
+height:240px;
+}
+
+h2{
+padding:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+gap:20px;
+padding:30px;
+}
+
+.card{
+background:white;
+padding:10px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,.1);
+text-align:center;
+}
+
+.card img{
+width:100%;
+height:180px;
+object-fit:cover;
+border-radius:10px;
+}

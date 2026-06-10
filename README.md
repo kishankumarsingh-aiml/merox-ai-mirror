@@ -1,134 +1,218 @@
-# 🚀 MeroX – AI Powered Smart Mirror.
+🚀 MeroX – AI Powered Smart Mirror
 
-*MeroX* is a futuristic *AI-powered Smart Mirror web application* that combines  
-authentication, real-time camera interaction, fitness guidance, skin analysis,  
-and upcoming AR-based virtual try-on features into a single intelligent platform.
-
-This project is developed using a *phase-based product development approach*,  
-similar to how real-world startups and scalable products are built.
+«A futuristic AI-powered Smart Mirror platform designed to combine intelligent personalization, fitness assistance, skin analysis, smart recommendations, and future AI-driven experiences into a single ecosystem.»
 
 ---
 
-## 📌 Project Status
+⚠️ PROJECT STATUS
 
-| Phase | Description | Status |
-|------|-----------|--------|
-| Phase 1 | Authentication & UI Foundation | ✅ Completed |
-| Phase 2 | Camera, Fitness & Skin Analysis | 🚧 In Progress |
-| Phase 3 | Advanced AI & AR Try-On | 🔮 Planned |
+🟡 Development Temporarily Paused
+
+MeroX is currently under a temporary development pause.
+
+This project has NOT been abandoned, discontinued, or cancelled.
+
+The complete source code, development history, design concepts, implemented features, and future roadmap are being preserved for future continuation and expansion.
+
+Development will resume when the next phase of planning, resources, and implementation is finalized.
+
+Important Notice
+
+- ✅ Project is preserved
+- ✅ Repository remains active
+- ✅ Codebase is maintained
+- ✅ Future development is planned
+- ❌ Project is not discontinued
+- ❌ Project is not permanently closed
 
 ---
 
-## 🎯 Project Vision
+🌟 Vision
 
-MeroX aims to become a *next-generation personal AI mirror* that can:
-- Guide users in fitness and posture
-- Analyze skin and facial features
-- Enable virtual try-on of accessories and clothing
-- Provide premium, AI-powered personal recommendations
+MeroX is being developed as a next-generation intelligent mirror experience capable of assisting users in:
+
+- Personal wellness
+- Fitness guidance
+- Smart recommendations
+- Skin and facial analysis
+- Personalized AI interactions
+- Future AR-based virtual experiences
+
+The long-term vision is to transform a traditional mirror into an intelligent AI companion.
 
 ---
 
-## 🔐 Phase 1 – Authentication System (Completed)
+🏗 Development Journey
 
-### ✅ Features
-- Firebase Email & Password Authentication
-- Login & Signup with tab-based UI
-- Secure session handling
-- Auth-protected dashboard
-- Logout functionality
-- Hosted using GitHub Pages
+MeroX follows a structured phase-based product development approach.
 
-### 🛠 Tech Stack
+Phase 1 — Foundation & Authentication
+
+✅ Completed
+
+Features:
+
+- User Authentication
+- Login & Signup System
+- Firebase Integration
+- Dashboard Foundation
+- Secure Session Handling
+- GitHub Deployment
+
+---
+
+Phase 2 — Smart Mirror Experience
+
+⚙️ Partially Implemented
+
+Features:
+
+- Enhanced Dashboard UI
+- Search Module
+- Product Exploration System
+- Smart Navigation Experience
+- UI/UX Improvements
+- Camera Integration Research
+- Fitness Mode Concepts
+- Skin Analysis Concepts
+
+---
+
+Phase 3 — AI Personalization
+
+🔮 Planned
+
+Future Features:
+
+- Personalized Recommendations
+- Intelligent User Insights
+- AI Assistant Integration
+- Smart Wellness Suggestions
+- Advanced User Experience
+
+---
+
+Phase 4 — AR & Premium Ecosystem
+
+🚀 Future Roadmap
+
+Planned Features:
+
+- Virtual Try-On Experience
+- Smart Fashion Suggestions
+- AI-Based Personal Guidance
+- Premium Subscription Features
+- Smart Hardware Integration
+
+---
+
+🧠 Technologies
+
+Frontend
+
 - HTML5
-- CSS3 (Glassmorphism UI)
-- JavaScript (ES Modules)
+- CSS3
+- JavaScript
+
+Backend & Services
+
 - Firebase Authentication
-- GitHub Pages
+- Firebase Services
+
+Planned Technologies
+
+- TensorFlow.js
+- Computer Vision
+- Artificial Intelligence
+- Augmented Reality (AR)
 
 ---
 
-## 🎥 Phase 2 – Smart Mirror Core (In Progress)
+📂 Core Modules
 
-### 🚧 Features in Progress
-- Live camera preview using browser camera
-- Smart mirror-style UI with glowing borders
-- Fitness mode (basic posture & body visibility)
-- Skin & face detection (basic checks)
-- Mode selection UI (Skin / Fitness)
+Authentication System
 
-### 🧠 Technologies Used / Planned
-- JavaScript MediaDevices API
-- WebRTC Camera API
-- Canvas API
-- TensorFlow.js (basic models)
+- Login
+- Signup
+- Session Management
 
----
+Dashboard
 
-## 🤖 Phase 3 – Advanced AI & AR (Planned)
+- Smart Navigation
+- Personalized Interface
+- Interactive Experience
 
-### 🔮 Upcoming Features
-- Virtual try-on (glasses & accessories)
-- AI-based skin care recommendations
-- Advanced fitness guidance
-- Premium subscription-based features
-- Hardware smart mirror integration (future scope)
+Search System
 
-### 🧪 Planned Tech
-- TensorFlow.js (PoseNet, FaceMesh)
-- AR overlays
-- AI model integration
-- Payment gateway integration
+- Search Features
+- Discovery Experience
 
+Product Exploration
+
+- Product Display System
+- Recommendation Concepts
+
+Future AI Modules
+
+- AI Assistant
+- Smart Suggestions
+- Intelligent Analysis
 
 ---
 
-## 🌐 Live Demo
+🌐 Live Demo
 
-👉https://kishankumarsingh-aiml.github.io/merox-ai-mirror/
----
-
-## 🧭 How It Works (Flow)
-
-1. User opens the website
-2. User signs up or logs in
-3. Firebase authenticates the user
-4. Authenticated user accesses the dashboard
-5. Camera-based features are enabled
-6. User can log out anytime
+👉 https://kishankumarsingh-aiml.github.io/merox-ai-mirror/
 
 ---
 
-## ⭐ Why This Project Is Valuable
+💡 Why MeroX Matters
 
-- Demonstrates *real-world authentication flow*
-- Uses *modern web technologies*
-- Built with *scalability in mind*
-- Phase-wise structured development
-- Strong foundation for AI & ML integration
-- Portfolio and resume ready
+MeroX is more than a coding project.
 
----
+It represents:
 
-## 👨‍💻 Author
+- Product Thinking
+- User-Centric Design
+- AI Integration Vision
+- Scalable Architecture Planning
+- Real-World Development Experience
+- Future Smart Technology Exploration
 
-*Kishan Kumar Singh*  
-AI / ML Engineer (Learner) | Full-Stack Enthusiast
-
-Passionate about building *real-world AI products* and learning cutting-edge technologies.
+The project serves as a foundation for exploring how artificial intelligence can enhance everyday experiences through intelligent interfaces.
 
 ---
 
-## 🚀 Future Scope
+📈 Current State
 
-- Mobile application version
-- Dedicated smart mirror hardware
-- Advanced AI-driven personal assistant
-- Enterprise-level integrations 
+Category| Status
+Repository| ✅ Active
+Development| 🟡 Temporarily Paused
+Future Development| 🚀 Planned
+Project Type| 💡 Product Vision Prototype
 
 ---
 
-> *“MeroX is not just a project — it’s a product vision”*
+👨‍💻 Author
+
+Kishan Kumar Singh
+
+AI / ML Enthusiast
+AI-Assisted Web Developer
+Product Builder
+
+Passionate about building practical AI-powered products and learning modern technologies through real-world projects.
+
 ---
 
-## 📂 Project Structure
+🚀 Future Commitment
+
+MeroX remains an important long-term project.
+
+Although development is temporarily paused, the vision remains unchanged.
+
+Future versions will continue expanding toward a complete AI-powered Smart Mirror ecosystem with intelligent personalization, advanced AI features, and next-generation user experiences.
+
+---
+
+«"MeroX is not just a project — it is a long-term product vision."»

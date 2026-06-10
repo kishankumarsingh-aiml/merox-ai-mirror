@@ -1,177 +1,227 @@
-/* ===== RESET ===== */
-/* ========== RESET ======== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI;
 }
 
-body {
-  background: #f4f7fb;
-  color: #222;
+body{
+background:#f5f7f9;
 }
 
-/* ===== TOP BAR ===== */
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-  background: #ffffff;
-  border-bottom: 1px solid #ddd;
+/* ================= TOP BAR ================= */
+
+.topbar{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:16px 40px;
+background:white;
+box-shadow:0 2px 6px rgba(0,0,0,.08);
 }
 
-.brand h2 {
-  color: #00bfa6;
+/* LOGO */
+
+.logo h1{
+font-size:32px;
+font-weight:600;
 }
 
-.brand .owner {
-  font-size: 12px;
-  color: #666;
+.logo span{
+font-size:13px;
+color:#777;
 }
 
-/* ===== SEARCH + ICONS ===== */
-.top-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
+/* ================= SEARCH ================= */
+
+.search{
+display:flex;
+align-items:center;
+background:#f1f1f1;
+padding:10px 22px;
+border-radius:32px;
+width:440px;
+height:56px;
 }
 
-.search-box {
-  display: flex;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  overflow: hidden;
+.search-icon{
+font-size:18px;
 }
 
-.search-box input {
-  border: none;
-  padding: 8px 14px;
-  outline: none;
-  width: 220px;
+.search input{
+border:none;
+outline:none;
+background:none;
+width:100%;
+padding-left:12px;
+font-size:17px;
 }
 
-.search-box button {
-  border: none;
-  background: #00bfa6;
-  color: white;
-  padding: 0 14px;
-  cursor: pointer;
+/* ================= ICONS ================= */
+
+.icons{
+display:flex;
+gap:30px;
+align-items:center;
 }
 
-.icons {
-  display: flex;
-  gap: 10px;
+.icon{
+text-align:center;
 }
 
-.icon-btn {
-  border: none;
-  background: #e8f7f4;
-  padding: 8px 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 16px;
+.icon .emoji{
+font-size:30px;
+display:block;
 }
 
-/* ===== MAIN DASHBOARD ===== */
-.dashboard {
-  padding: 30px;
+.icon p{
+font-size:13px;
+margin-top:4px;
 }
 
-/* ===== OPTIONS ROW ===== */
-.options-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 15px;
+/* ================= CATEGORY ROW ================= */
+
+.category-row{
+display:flex;
+gap:26px;
+padding:30px 90px;
+justify-content:center;
 }
 
-.option-card {
-  background: #ffffff;
-  padding: 18px;
-  border-radius: 14px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  cursor: pointer;
-  transition: 0.3s;
+.category-card{
+min-width:150px;
+background:white;
+border-radius:18px;
+padding:16px;
+text-align:center;
+box-shadow:0 4px 10px rgba(0,0,0,.08);
 }
 
-.option-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+.category-card img{
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:12px;
 }
 
-/* ===== BOTTOM AREA ===== */
-.bottom-area {
-  margin-top: 40px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
+.category-card p{
+margin-top:10px;
+font-size:13px;
+font-weight:500;
 }
 
-/* ===== MIRROR ===== */
-.mirror-section h3 {
-  margin-bottom: 10px;
+/* ================= PRODUCTS ================= */
+
+.product-section{
+padding:20px 40px 50px;
 }
 
-.mirror-box {
-  height: 280px;
-  background: #ffffff;
-  border-radius: 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: inset 0 0 0 2px #00bfa6;
+.product-section h2{
+margin-bottom:20px;
+font-size:22px;
 }
 
-.open-mirror-btn {
-  padding: 10px 18px;
-  border-radius: 20px;
-  border: none;
-  background: #00bfa6;
-  color: white;
-  cursor: pointer;
+.product-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:30px;
 }
 
-/* ===== CHAT ===== */
-.chat-section h3 {
-  margin-bottom: 10px;
+.product-card{
+  background:white;
+  padding:22px;
+  border-radius:18px;
+  box-shadow:0 4px 10px rgba(0,0,0,.08);
+  text-align:center;
+  min-height:270px;   /* ⬅️ HEIGHT BADHA DI */
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
 
-.chat-box {
-  height: 200px;
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 12px;
-  overflow-y: auto;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+.product-card h4{
+margin-bottom:10px;
+font-size:18px;
 }
 
-.bot-msg {
-  background: #e8f7f4;
-  padding: 8px 10px;
-  border-radius: 10px;
-  font-size: 14px;
+.product-card p{
+font-size:15px;
 }
 
-.chat-input {
-  margin-top: 10px;
-  display: flex;
-  gap: 8px;
+.product-card img{
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  border-radius:14px;
+  margin-bottom:12px;
 }
 
-.chat-input input {
-  flex: 1;
-  padding: 8px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
+/* ===== RECOMMENDED HEADER ===== */
+
+.recommend-header{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:18px;
 }
 
-.chat-input button {
-  padding: 8px 14px;
-  border-radius: 10px;
-  border: none;
-  background: #00bfa6;
-  color: white;
-  cursor: pointer;
+/* Arrow wrapper */
+.arrow-horizontal{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
+
+  animation:arrowMove 1.2s infinite ease-in-out;
+}
+
+/* Horizontal line */
+.arrow-horizontal .arrow-line{
+  width:70px;        /* 🔥 visible length */
+  height:2px;
+  background:#ff9f1a;
+  border-radius:2px;
+}
+
+/* Arrow head (triangle) */
+.arrow-horizontal .arrow-head{
+  width:0;
+  height:0;
+  border-top:6px solid transparent;
+  border-bottom:6px solid transparent;
+  border-left:10px solid #ff9f1a;
+}
+
+/* Animation */
+@keyframes arrowMove{
+  0%{ transform:translateX(0); }
+  50%{ transform:translateX(8px); }
+  100%{ transform:translateX(0); }
+}
+
+/* ===== PRODUCT CARD IMAGE FIX ===== */
+
+.product-card{
+  min-height:270px; /* already locked by you */
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+
+.product-card img{
+  width:100%;
+  height:190px;
+  object-fit:cover;   /* FULL COVER */
+  border-radius:16px;
+}
+
+/* Text below image */
+.product-card h4{
+  margin-top:10px;
+  font-size:16px;
+}
+
+.product-card p{
+  font-size:14px;
+  color:#444;
 }

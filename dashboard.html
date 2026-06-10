@@ -1,80 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>MeroX Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="dashboard.css">
 </head>
 
 <body>
 
-  <!-- ========== TOP BAR ========== -->
-  <header class="topbar">
-    <div class="brand">
-      <h2>MeroX</h2>
-      <span class="owner">Owner: Kishan Kumar Singh</span>
+<header class="topbar">
+
+  <!-- LOGO -->
+  <div class="logo">
+    <h1>MeroX</h1>
+    <span>Owner: Kishan Kumar Singh</span>
+  </div>
+  
+  <link rel="icon" href="data:,">
+  
+  <!-- SEARCH -->
+  <form class="search" onsubmit="goToSearch(event)">
+    <span class="search-icon">🔍</span>
+    <input id="searchInput" type="text" placeholder="Try it MeroX" autocomplete="off">
+  </form>
+
+  <!-- ICONS (PERMANENT – DO NOT TOUCH) -->
+  <div class="icons">
+    <div class="icon">
+      <span class="emoji">🤖</span>
+      <p>roX-AI</p>
     </div>
 
-    <div class="top-actions">
-      <div class="search-box">
-        <input type="text" placeholder="Try it MeroX" />
-        <button>🔍</button>
-      </div>
-
-      <div class="icons">
-        <button class="icon-btn" title="roX AI">🤖</button>
-        <button class="icon-btn" title="My Collection">🪞</button>
-
-        <div class="profile">
-          <button class="icon-btn">👤</button>
-          <!-- dropdown future me -->
-        </div>
-      </div>
+    <div class="icon">
+      <span class="emoji">🪞</span>
+      <p>Your Store</p>
     </div>
-  </header>
 
-  <!-- ========== MAIN CONTENT ========== -->
-  <main class="dashboard">
+    <div class="icon">
+      <span class="emoji">👤</span>
+      <p>Hello Sign In</p>
+    </div>
+  </div>
 
-    <!-- OPTIONS ROW -->
-    <section class="options-row">
-      <div class="option-card">🌟 Skin Care</div>
-      <div class="option-card">💪 Fitness</div>
-      <div class="option-card">🪞 Smart Mirror Demo</div>
-      <div class="option-card">🧘 Yoga Training</div>
-      <div class="option-card">💇 Hairstyle by Face</div>
-      <div class="option-card">👔 Best Cloth by Face</div>
-      <div class="option-card">🏢 Professional Outfits</div>
-      <div class="option-card">🎉 Festival & Occasion Wear</div>
-    </section>
+</header>
 
-    <!-- MIRROR + CHAT AREA -->
-    <section class="bottom-area">
+<section class="category-row">
 
-      <!-- MIRROR -->
-      <div class="mirror-section">
-        <h3>Try it – MeroX Mirror</h3>
-        <div class="mirror-box">
-          <button class="open-mirror-btn">Open Mirror</button>
-        </div>
-      </div>
+  <div class="category-card">
+    <img src="skin.jpg">
+    <p>Skin Care</p>
+  </div>
 
-      <!-- roX AI CHAT -->
-      <div class="chat-section">
-        <h3>roX-AI Assistant</h3>
-        <div class="chat-box">
-          <p class="bot-msg">Hi 👋 I am roX-AI. Ask me about Fitness, Skin or Fashion.</p>
-        </div>
-        <div class="chat-input">
-          <input type="text" placeholder="Type your message..." />
-          <button>Send</button>
-        </div>
-      </div>
+  <div class="category-card">
+    <img src="fitness.jpg">
+    <p>Fitness</p>
+  </div>
 
-    </section>
+  <div class="category-card">
+    <img src="mirror.jpg">
+    <p>Smart Mirror Demo</p>
+  </div>
 
-  </main>
+  <div class="category-card">
+    <img src="yoga.jpg">
+    <p>Yoga Training</p>
+  </div>
+
+  <div class="category-card">
+    <img src="hair.jpg">
+    <p>Hairstyle by Face</p>
+  </div>
+
+  <div class="category-card">
+    <img src="cloth.jpg">
+    <p>Best Cloth by Face</p>
+  </div>
+
+  <div class="category-card">
+    <img src="professional.jpg">
+    <p>Professional Outfits</p>
+  </div>
+
+</section>
+
+<!-- RECOMMENDED (LOCKED FOREVER) -->
+<div class="recommend-header">
+  <h2>Recommended For You</h2>
+
+  <div class="arrow-horizontal">
+    <div class="arrow-line"></div>
+    <div class="arrow-head"></div>
+  </div>
+</div>
+
+<div class="product-grid">
+
+  <div class="product-card">
+    <img src="images/shirt1.jpeg" alt="Men Shirt">
+    <h4>Men Shirt</h4>
+    <p>₹899</p>
+  </div>
+
+  <div class="product-card">
+    <img src="images/tshirt1.jpeg" alt="T-Shirt">
+    <h4>T-Shirt</h4>
+    <p>₹499</p>
+  </div>
+
+  <div class="product-card">
+    <img src="images/jeans1.jpeg" alt="Cotton Pant">
+    <h4>Cotton Pant</h4>
+    <p>₹1,199</p>
+  </div>
+
+  <div class="product-card">
+    <img src="images/jeans5.jpeg" alt="Blue Jeans">
+    <h4>Blue Jeans</h4>
+    <p>₹1,499</p>
+  </div>
+
+  <div class="product-card">
+    <img src="images/goggles1.jpeg" alt="Goggles">
+    <h4>Goggles</h4>
+    <p>₹699</p>
+  </div>
+
+</div>
+
+<!-- JS -->
+<script src="dashboard.js"></script>
 
 </body>
 </html>

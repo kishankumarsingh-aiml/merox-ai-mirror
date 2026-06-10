@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="search.css">
+</head>
+
+<body>
+
+<div id="loader">
+  <video autoplay muted loop>
+    <source src="loader.mp4" type="video/mp4">
+  </video>
+</div>
+
+<h2 id="title"></h2>
+
+<div class="grid" id="results"></div>
+
+<script src="dashboard.js"></script>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const q = params.get("q").toLowerCase();
+
+document.getElementById("title").innerText = `Results for "${q}"`;
+
+setTimeout(()=>{
+
+document.getElementById("loader").style.display="none";
+
+const box=document.getElementById("results");
+
+const found=window.products.filter(p =>
+  p.category.includes(q) ||
+  p.name.toLowerCase().includes(q)
+);
+
+if(found.length===0){
+box.innerHTML="<h3>No products found</h3>";
+return;
+}
+
+found.forEach(p=>{
+box.innerHTML+=`
+<div class="card">
+<img src="${p.img}">
+<h4>${p.name}</h4>
+<p>₹${p.price}</p>
+</div>`;
+});
+
+},2000);
+</script>
+
+</body>
+</html>
