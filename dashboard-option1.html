@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MeroX Dashboard</title>
-  <link rel="stylesheet" href="dashboard.css">
-  <link rel="stylesheet" href="product-prototype.css">
+  <link rel="stylesheet" href="dashboard-option1.css">
   <link rel="icon" href="data:,">
 
   <!-- 🔥 Firebase v8 CDN (Auth Bridge) -->
@@ -23,50 +22,37 @@
     <span>Owner: Kishan Kumar Singh</span>
   </div>
   
-  <!-- DESKTOP GLOBAL NAVIGATION (CLEAN, FOCUSED ARCHITECTURE) -->
+  <!-- DESKTOP GLOBAL NAVIGATION (PREMIUM FASHION TECH) -->
   <nav class="topbar-nav" aria-label="Main Navigation">
-    <a href="dashboard.html" class="topbar-nav-link active">
-      <svg class="nav-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-      <span>Home</span>
-    </a>
-    <a href="search.html" class="topbar-nav-link">
-      <svg class="nav-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
-      <span>Discover</span>
-    </a>
-    <a href="admin.html" class="topbar-nav-link">
-      <svg class="nav-svg-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-      <span>Store Admin</span>
-    </a>
+    <a href="dashboard-option1.html" class="topbar-nav-link active">Home</a>
+    <a href="search.html" class="topbar-nav-link">Discover</a>
+    <button type="button" class="topbar-nav-link" onclick="toggleRetailKioskMode()">Smart Mirror</button>
+    <button type="button" class="topbar-nav-link" onclick="openFeatureModal('tryon')">Try-On</button>
+    <a href="pricing.html" class="topbar-nav-link nav-highlight">Membership ✨</a>
+    <a href="admin.html" class="topbar-nav-link">Store Admin</a>
+    <a href="dashboard-option2.html" class="topbar-nav-link" style="color: #00ffe0; border: 1px solid rgba(0,255,224,0.3); border-radius: 999px; padding: 4px 10px;" title="Experience Option 2: 3D Showroom">✨ Option 2 (3D)</a>
   </nav>
 
-  <!-- SEARCH (PROMINENT MEDIUM-LARGE CENTERED) -->
+  <!-- SEARCH -->
   <form class="search" onsubmit="goToSearch(event)" role="search">
-    <span class="search-icon" aria-hidden="true">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-    </span>
-    <input id="searchInput" type="text" placeholder="Search fashion, products or ask roX-AI..." autocomplete="off" aria-label="Search clothing and accessories">
+    <span class="search-icon" aria-hidden="true">🔍</span>
+    <input id="searchInput" type="text" placeholder="Try it MeroX" autocomplete="off" aria-label="Search clothing and accessories">
   </form>
 
-  <!-- ICONS (CONSISTENT MEROX VECTOR SYSTEM) -->
+  <!-- ICONS (PERMANENT – DO NOT TOUCH VISUALS) -->
   <div class="icons">
     <button type="button" class="icon-btn icon" id="roxAiBtn" aria-label="Open roX-AI Stylist Assistant" aria-haspopup="dialog" aria-expanded="false" title="Open roX-AI Assistant">
-      <span class="emoji" aria-hidden="true">
-        <svg class="utility-svg-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="3"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path><line x1="8" y1="16" x2="8.01" y2="16" stroke-width="3"></line><line x1="16" y1="16" x2="16.01" y2="16" stroke-width="3"></line></svg>
-      </span>
+      <span class="emoji" aria-hidden="true">🤖</span>
       <p>roX-AI</p>
     </button>
 
     <button type="button" class="icon-btn icon" id="yourStoreBtn" aria-label="Browse Your Store & Wishlist" aria-haspopup="dialog" aria-expanded="false" title="Browse Your Store">
-      <span class="emoji" aria-hidden="true">
-        <svg class="utility-svg-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-      </span>
+      <span class="emoji" aria-hidden="true">🪞</span>
       <p>Your Store</p>
     </button>
 
     <button type="button" class="icon-btn icon" id="authBtn" aria-label="Account Profile and Settings" aria-haspopup="menu" aria-expanded="false" title="Account & Profile">
-      <span class="emoji" aria-hidden="true">
-        <svg class="utility-svg-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-      </span>
+      <span class="emoji" aria-hidden="true">👤</span>
       <p id="authText">Hello Sign In</p>
     </button>
   </div>
@@ -134,52 +120,15 @@
       Discover what fits you, try it virtually, and build your personal look with MeroX AI.
     </p>
 
-    <div class="hero-primary-cta">
+    <div class="hero-actions">
       <a href="#recommendedSection" class="hero-btn hero-btn-primary">
         Explore MeroX ➔
       </a>
-    </div>
-
-    <!-- UNIFIED FEATURE ACTION CLUSTER -->
-    <div class="hero-action-cluster" role="group" aria-label="Key MeroX Experiences">
-      <button type="button" class="cluster-card" onclick="toggleRetailKioskMode()" title="Launch Smart Mirror Fullscreen Kiosk">
-        <div class="cluster-icon-box">
-          <svg class="cluster-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"></rect><circle cx="12" cy="6" r="1" fill="currentColor"></circle><line x1="12" y1="18" x2="12.01" y2="18" stroke-width="3"></line></svg>
-        </div>
-        <div class="cluster-text">
-          <span class="cluster-title">Try Smart Mirror</span>
-          <span class="cluster-subtitle">Retail Kiosk Experience</span>
-        </div>
+      <button type="button" class="hero-btn hero-btn-secondary" onclick="toggleRetailKioskMode()">
+        🪞 Try Smart Mirror
       </button>
-
-      <button type="button" class="cluster-card" onclick="openFeatureModal('tryon')" title="Launch Virtual Try-On AR Fitting Room">
-        <div class="cluster-icon-box">
-          <svg class="cluster-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="14" r="4"></circle><circle cx="18" cy="14" r="4"></circle><line x1="10" y1="14" x2="14" y2="14"></line><path d="M2 14c1.5-4 4-6 6-6h8c2 0 4.5 2 6 6"></path></svg>
-        </div>
-        <div class="cluster-text">
-          <span class="cluster-title">Virtual Try-On</span>
-          <span class="cluster-subtitle">AI Fitting Room</span>
-        </div>
-      </button>
-
-      <button type="button" class="cluster-card prototype-nav-link" onclick="openProductPrototypeModal()" title="Explore Physical Smart Mirror in 3D">
-        <div class="cluster-icon-box">
-          <svg class="cluster-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="18" rx="2.5"></rect><circle cx="12" cy="5" r="1" fill="currentColor"></circle><line x1="8" y1="8" x2="16" y2="8"></line><line x1="8" y1="12" x2="16" y2="12"></line><line x1="8" y1="16" x2="14" y2="16"></line><path d="M4 22h16"></path></svg>
-        </div>
-        <div class="cluster-text">
-          <span class="cluster-title">Product Prototype</span>
-          <span class="cluster-subtitle">Ultra HD 3D Studio</span>
-        </div>
-      </button>
-
-      <a href="pricing.html" class="cluster-card cluster-link" title="Explore Membership Tiers">
-        <div class="cluster-icon-box">
-          <svg class="cluster-svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-        </div>
-        <div class="cluster-text">
-          <span class="cluster-title">Membership Plans</span>
-          <span class="cluster-subtitle">VIP Styling Access</span>
-        </div>
+      <a href="pricing.html" class="hero-btn hero-btn-glass">
+        ✨ Membership Plans
       </a>
     </div>
 
@@ -336,7 +285,6 @@
   <div class="drawer-chips" aria-label="Quick prompts">
     <button type="button" class="chip-btn" onclick="sendRoxPrompt('Find my style')">✨ Find my style</button>
     <button type="button" class="chip-btn" onclick="sendRoxPrompt('Build an outfit')">👔 Build an outfit</button>
-    <button type="button" class="chip-btn" onclick="openProductPrototypeModal()" style="border-color: rgba(0, 255, 224, 0.45); color: #0284c7; background: rgba(0, 255, 224, 0.08);">◈ Product Prototype</button>
     <button type="button" class="chip-btn" onclick="sendRoxPrompt('What suits my face?')">💇 What suits my face?</button>
     <button type="button" class="chip-btn" onclick="sendRoxPrompt('Suggest something under ₹2000')">🏷️ Under ₹2,000</button>
     <button type="button" class="chip-btn" onclick="sendRoxPrompt('Complete my look')">🪞 Complete my look</button>
@@ -574,209 +522,6 @@
   </div>
 </div>
 
-<!-- ================= PRODUCT PROTOTYPE FULLSCREEN STUDIO ================= -->
-<div id="productPrototypeModal" class="prototype-modal hidden" role="dialog" aria-modal="true" aria-labelledby="protoMainTitle">
-  <div class="proto-ambient-glow" aria-hidden="true"></div>
-  <div class="proto-floor-circle" aria-hidden="true"></div>
-
-  <!-- Top Studio Bar -->
-  <header class="proto-topbar" role="banner">
-    <button class="proto-back-btn" onclick="closeProductPrototypeModal()">
-      <span>←</span>
-      <span>Back to MeroX</span>
-    </button>
-
-    <div class="proto-title-group">
-      <h2 id="protoMainTitle" class="proto-main-title">
-        <span>PRODUCT PROTOTYPE</span>
-        <span class="proto-status-pill">WORKING PROTOTYPE</span>
-      </h2>
-      <p class="proto-sub-title">MeroX Smart Mirror • AI-Powered Fashion Hardware</p>
-    </div>
-
-    <div class="proto-top-actions">
-      <button class="proto-icon-btn" onclick="protoToggleFullscreen()" title="Toggle Fullscreen (⛶)" aria-label="Toggle Fullscreen">⛶</button>
-      <button class="proto-icon-btn" onclick="closeProductPrototypeModal()" title="Close Prototype Studio" aria-label="Close Studio">✕</button>
-    </div>
-  </header>
-
-  <!-- Studio Main Workspace -->
-  <div class="proto-workspace">
-    <!-- 3D Hardware Stage Viewport -->
-    <div id="protoStagePane" class="proto-stage-pane" role="region" aria-label="Interactive 3D Hardware Viewport">
-      <div id="protoVisualContainer" class="proto-visual-container">
-        <img id="protoDisplayImg" class="proto-display-img" src="images/prototype-ultrahd-mirror.png" alt="MeroX Smart Mirror Hardware Prototype" />
-
-        <!-- Interactive Hotspots (Calibrated for Ultra HD Prototype) -->
-        <!-- 1. AI Camera -->
-        <div class="proto-hotspot" style="top: 7%; left: 44%;" onclick="protoToggleHotspot(1, this)" title="AI Camera System">
-          <span>1</span>
-        </div>
-        <div id="hotspotPop_1" class="proto-hotspot-popover hidden" style="top: 11%; left: 46%;">
-          <h4>AI Camera & Vision Sensor</h4>
-          <p>Wide-angle optical tracking sensor with illuminated blue halo. Powers real-time body tracking, facial landmark estimation, and low-latency virtual Try-On overlays.</p>
-        </div>
-
-        <!-- 2. 4K Dielectric Display -->
-        <div class="proto-hotspot" style="top: 35%; left: 45%;" onclick="protoToggleHotspot(2, this)" title="4K Ultra HD Display">
-          <span>2</span>
-        </div>
-        <div id="hotspotPop_2" class="proto-hotspot-popover hidden" style="top: 39%; left: 47%;">
-          <h4>4K Dielectric Mirror Display</h4>
-          <p>500-nit high-luminance commercial portrait panel bonded behind 70/30 optical dielectric glass, delivering vibrant AR fashion renders over true reflection.</p>
-        </div>
-
-        <!-- 3. PCAP Touch Interface -->
-        <div class="proto-hotspot" style="top: 60%; left: 46%;" onclick="protoToggleHotspot(3, this)" title="10-Point Touch Control">
-          <span>3</span>
-        </div>
-        <div id="hotspotPop_3" class="proto-hotspot-popover hidden" style="top: 64%; left: 48%;">
-          <h4>10-Point PCAP Multi-Touch</h4>
-          <p>Responsive capacitive touch interface with anti-fingerprint oleophobic coating for effortless look building, size selection, and garment filtering.</p>
-        </div>
-
-        <!-- 4. LED Lighting Rim -->
-        <div class="proto-hotspot" style="top: 45%; left: 24%;" onclick="protoToggleHotspot(4, this)" title="Perimeter LED Lighting">
-          <span>4</span>
-        </div>
-        <div id="hotspotPop_4" class="proto-hotspot-popover hidden" style="top: 49%; left: 26%;">
-          <h4>Adaptive LED Perimeter Halo</h4>
-          <p>Color-calibrated CRI 95+ vertical LED perimeter halo. Adapts lighting to simulate store fitting rooms, daylight, and evening occasions.</p>
-        </div>
-
-        <!-- 5. Pedestal Base -->
-        <div class="proto-hotspot" style="top: 86%; left: 44%;" onclick="protoToggleHotspot(5, this)" title="Illuminated Base">
-          <span>5</span>
-        </div>
-        <div id="hotspotPop_5" class="proto-hotspot-popover hidden" style="top: 76%; left: 46%;">
-          <h4>Illuminated Pedestal Mount</h4>
-          <p>Engineered weighted base with laser-etched illuminated MeroX branding, internal active cooling system, and secure floor anchoring.</p>
-        </div>
-      </div>
-
-      <!-- Bottom Control Toolbar -->
-      <div class="proto-bottom-bar" role="toolbar" aria-label="Hardware Inspection Controls">
-        <div class="proto-zoom-group">
-          <button class="proto-ctrl-btn proto-btn-circle" onclick="protoZoomOut()" title="Zoom Out (−)">−</button>
-          <button class="proto-ctrl-btn" onclick="protoResetView()" title="Reset View">Reset</button>
-          <button class="proto-ctrl-btn proto-btn-circle" onclick="protoZoomIn()" title="Zoom In (＋)">＋</button>
-        </div>
-
-        <button id="protoBtnAutoRotate" class="proto-ctrl-btn" onclick="protoToggleAutoRotate()" title="Cycle Through Angles">
-          ↺ Auto Rotate
-        </button>
-
-        <button class="proto-ctrl-btn proto-view-btn active" data-view="ultrahd" onclick="protoSetView('ultrahd')">
-          Ultra HD 3D
-        </button>
-        <button class="proto-ctrl-btn proto-view-btn" data-view="showroom" onclick="protoSetView('showroom')">
-          Showroom
-        </button>
-        <button class="proto-ctrl-btn proto-view-btn" data-view="front" onclick="protoSetView('front')">
-          Front
-        </button>
-        <button class="proto-ctrl-btn proto-view-btn" data-view="side" onclick="protoSetView('side')">
-          Side
-        </button>
-        <button class="proto-ctrl-btn proto-view-btn" data-view="back" onclick="protoSetView('back')">
-          Back
-        </button>
-        <button class="proto-ctrl-btn proto-view-btn" data-view="specs" onclick="protoSetView('specs')">
-          Specs
-        </button>
-
-        <button class="proto-ctrl-btn" onclick="protoToggleFullscreen()" title="Toggle Fullscreen">
-          ⛶
-        </button>
-      </div>
-    </div>
-
-    <!-- Right Specifications & Features Pane -->
-    <aside class="proto-info-pane" role="complementary" aria-label="Hardware Specifications">
-      <div class="proto-spec-header">
-        <h3>MEROX SMART MIRROR</h3>
-        <p>Commercial Retail Fashion Kiosk & Autonomous Style Assistant</p>
-      </div>
-
-      <!-- Dimensions Card -->
-      <div class="proto-dimension-card">
-        <div class="proto-dim-title">
-          <span>📐 Product Dimensions (Prototype)</span>
-        </div>
-        <div class="proto-dim-grid">
-          <div>
-            <div class="proto-dim-val">180 cm</div>
-            <div class="proto-dim-label">Height</div>
-          </div>
-          <div>
-            <div class="proto-dim-val">70 cm</div>
-            <div class="proto-dim-label">Width</div>
-          </div>
-          <div>
-            <div class="proto-dim-val">25 cm</div>
-            <div class="proto-dim-label">Depth</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Key Features List -->
-      <div class="proto-features-list">
-        <div class="proto-feature-item">
-          <span class="proto-feat-icon">🖥️</span>
-          <div class="proto-feat-text">
-            <h5>4K Display</h5>
-            <p>Ultra HD commercial 500-nit mirror display.</p>
-          </div>
-        </div>
-
-        <div class="proto-feature-item">
-          <span class="proto-feat-icon">📷</span>
-          <div class="proto-feat-text">
-            <h5>AI Camera</h5>
-            <p>Face & body tracking with pose estimation.</p>
-          </div>
-        </div>
-
-        <div class="proto-feature-item">
-          <span class="proto-feat-icon">👆</span>
-          <div class="proto-feat-text">
-            <h5>Touch Control</h5>
-            <p>Smooth 10-point capacitive multi-touch interaction.</p>
-          </div>
-        </div>
-
-        <div class="proto-feature-item">
-          <span class="proto-feat-icon">💡</span>
-          <div class="proto-feat-text">
-            <h5>LED Lighting</h5>
-            <p>Adaptive environment perimeter lighting rim.</p>
-          </div>
-        </div>
-
-        <div class="proto-feature-item">
-          <span class="proto-feat-icon">🛡️</span>
-          <div class="proto-feat-text">
-            <h5>Premium Build</h5>
-            <p>Modern elegant aircraft-grade aluminum chassis.</p>
-          </div>
-        </div>
-
-        <div class="proto-feature-item">
-          <span class="proto-feat-icon">🧩</span>
-          <div class="proto-feat-text">
-            <h5>Modular Design</h5>
-            <p>Engineered for effortless retail store installation.</p>
-          </div>
-        </div>
-      </div>
-
-      <p class="proto-honest-note">
-        ✦ Hardware Prototype Studio rendering authentic MeroX industrial design specifications and showroom reference imagery.
-      </p>
-    </aside>
-  </div>
-</div>
-
 <!-- ================= SCRIPTS ================= -->
 <script src="auth.js"></script>
 <script src="products.js"></script>
@@ -786,7 +531,6 @@
 <script src="camera.js"></script>
 <script src="rox-ai.js"></script>
 <script src="subscription.js"></script>
-<script src="product-prototype.js"></script>
 <script src="dashboard.js"></script>
 
 </body>

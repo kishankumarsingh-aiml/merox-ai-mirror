@@ -1,24 +1,29 @@
-const data={
-shirt:["shirt1","shirt2","shirt3","shirt4","shirt5"],
-tshirt:["tshirt1","tshirt2","tshirt3","tshirt4","tshirt5"],
-jeans:["jeans1","jeans2","jeans3","jeans4","jeans5"],
-cap:["cap1","cap2","cap3","cap4","cap5"],
-goggles:["goggles1","goggles2","goggles3","goggles4","goggles5"],
-shoe:["shoe1","shoe2","shoe3","shoe4","shoe5"]
-};
+/**
+ * MeroX Search Module
+ * Powered by MeroXCatalog in products.js
+ */
 
-setTimeout(()=>{
-document.getElementById("loader").style.display="none";
+(function (global) {
+  "use strict";
 
-let q=new URLSearchParams(location.search).get("q").toLowerCase();
-document.getElementById("title").innerText="Results for "+q;
+  const MeroXSearch = {
+    query: function (term) {
+      if (global.MeroXCatalog) {
+        return global.MeroXCatalog.search(term);
+      }
+      return [];
+    },
+    getByCategory: function (category) {
+      if (global.MeroXCatalog) {
+        return global.MeroXCatalog.getByCategory(category);
+      }
+      return [];
+    }
+  };
 
-let arr=data[q]||[];
+  global.MeroXSearch = MeroXSearch;
 
-arr.forEach(i=>{
-let img=document.createElement("img");
-img.src="images/"+i+".jpeg";
-results.appendChild(img);
-});
-
-},2000);
+  if (typeof module !== "undefined" && module.exports) {
+    module.exports = MeroXSearch;
+  }
+})(typeof window !== "undefined" ? window : globalThis);

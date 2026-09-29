@@ -138,6 +138,28 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+# Security & Private Credentials
+*.key
+*.pem
+*.pfx
+service-account*.json
+*service_account*.json
 
-config.js
+# Local Environment & Secrets
+.env
+.env.local
+.env.*
+!.env.example
 
+# Scratch and Python cache
+scratch/
+__pycache__/
+*.py[cod]
+
+# OS Generated
+Thumbs.db
+[Dd]esktop.ini
+.DS_Store
+
+# Local Backups
+backup_*/

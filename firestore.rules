@@ -1,0 +1,72 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions for Role-Based Access Control (RBAC)
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() && request.auth.token.role == 'SUPER_ADMIN';
+    }
+
+    function isStoreAdmin() {
+      return isAuthenticated() && (request.auth.token.role == 'STORE_ADMIN' || isSuperAdmin());
+    }
+
+    function isAssignedToStore(storeId) {
+      return isSuperAdmin() || (isStoreAdmin() && request.auth.token.storeId == storeId);
+    }
+
+    // ================= 1. PRODUCT CATALOG =================
+    // Customers can read active products. Only authorized store staff can create/update.
+    match /products/{productId} {
+      allow read: if true; // Public catalog browsing
+      allow create, update: if isStoreAdmin() && isAssignedToStore(request.resource.data.storeId);
+      allow delete: if isSuperAdmin(); // Permanent deletion reserved for Super Admin
+    }
+
+    // ================= 2. STORE INVENTORY & STOCK =================
+    match /inventory/{inventoryId} {
+      allow read: if true; // Available stock is public
+      allow write: if isStoreAdmin() && isAssignedToStore(request.resource.data.storeId);
+    }
+
+    // ================= 3. ANONYMOUS SAVED LOOKS (QR CONTINUATION) =================
+    // Customers can read/create their anonymized lookbook tokens (Zero PII)
+    match /saved_looks/{lookId} {
+      allow read: if true; // Mobile QR access via unguessable LK- token
+      allow create: if request.resource.data.keys().hasAll(['lookId', 'items', 'storeId', 'total'])
+                    && !request.resource.data.keys().hasAny(['password', 'email', 'token', 'userId', 'biometrics']);
+      allow update, delete: if isStoreAdmin();
+    }
+
+    // ================= 4. PRIVACY-SAFE STORE ANALYTICS =================
+    // Mirrors can write non-PII operational telemetry. Only staff can read reports.
+    match /analytics_events/{eventId} {
+      allow create: if request.resource.data.keys().hasAll(['eventType', 'timestamp', 'storeId', 'sessionId'])
+                    && !request.resource.data.keys().hasAny(['name', 'email', 'faceLandmarks', 'photo', 'cameraFrame']);
+      allow read: if isStoreAdmin() && isAssignedToStore(resource.data.storeId);
+      allow delete: if isSuperAdmin();
+    }
+
+    // ================= 5. USER PROFILES =================
+    match /users/{userId} {
+      allow read, write: if isAuthenticated() && request.auth.uid == userId;
+      allow read: if isStoreAdmin(); // Support staff lookup
+    }
+
+    // ================= 6. AUDIT ACTIVITY LOG =================
+    match /audit_logs/{logId} {
+      allow read: if isStoreAdmin();
+      allow create: if isAuthenticated();
+      allow update, delete: if false; // Append-only immutable audit trail
+    }
+
+    // Default deny all unmatched collections
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

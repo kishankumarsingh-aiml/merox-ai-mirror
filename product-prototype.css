@@ -1,0 +1,453 @@
+/* =========================================================================
+   MEROX PRODUCT PROTOTYPE — 3D HARDWARE VISUALIZATION STUDIO
+   Luxury Showroom • Industrial Design • 360° Multi-Angle Studio
+   ========================================================================= */
+
+.prototype-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  background: #060911;
+  color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.prototype-modal.hidden {
+  display: none !important;
+}
+
+/* Studio Ambient Lighting & Floor Pedestal */
+.proto-ambient-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 40%, rgba(0, 255, 224, 0.08) 0%, rgba(129, 140, 248, 0.04) 50%, transparent 80%);
+  z-index: 0;
+}
+
+.proto-floor-circle {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%) rotateX(75deg);
+  width: 580px;
+  height: 580px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 224, 0.25);
+  box-shadow: 0 0 40px rgba(0, 255, 224, 0.2), inset 0 0 40px rgba(0, 255, 224, 0.15);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Top Studio Navigation Bar */
+.proto-topbar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 28px;
+  background: rgba(11, 16, 26, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.proto-back-btn {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+}
+
+.proto-back-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateX(-2px);
+}
+
+.proto-title-group {
+  text-align: center;
+}
+
+.proto-main-title {
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.proto-status-pill {
+  background: rgba(0, 255, 224, 0.12);
+  border: 1px solid rgba(0, 255, 224, 0.35);
+  color: #00ffe0;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.proto-sub-title {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+.proto-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.proto-icon-btn {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.25s ease;
+}
+
+.proto-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: #00ffe0;
+  color: #00ffe0;
+}
+
+/* Studio Main Workspace */
+.proto-workspace {
+  position: relative;
+  z-index: 5;
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  overflow: hidden;
+}
+
+/* 3D Hardware Stage Viewport */
+.proto-stage-pane {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  cursor: grab;
+}
+
+.proto-stage-pane:active {
+  cursor: grabbing;
+}
+
+.proto-visual-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+}
+
+.proto-display-img {
+  max-width: 88%;
+  max-height: 72vh;
+  object-fit: contain;
+  border-radius: 16px;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.85));
+  transition: transform 0.2s ease-out, filter 0.3s ease;
+  pointer-events: none;
+}
+
+/* Interactive Hardware Hotspots */
+.proto-hotspot {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(0, 255, 224, 0.85);
+  box-shadow: 0 0 16px #00ffe0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #060911;
+  font-size: 12px;
+  font-weight: 900;
+  transition: transform 0.2s ease, background 0.2s ease;
+  z-index: 15;
+  animation: hotspotPulse 2.2s infinite;
+}
+
+.proto-hotspot:hover {
+  transform: scale(1.25);
+  background: #ffffff;
+  box-shadow: 0 0 24px #ffffff;
+}
+
+@keyframes hotspotPulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(0, 255, 224, 0.7); }
+  50% { box-shadow: 0 0 24px rgba(0, 255, 224, 1); }
+}
+
+/* Hotspot Callout Card */
+.proto-hotspot-popover {
+  position: absolute;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(0, 255, 224, 0.4);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8);
+  border-radius: 12px;
+  padding: 12px 16px;
+  width: 240px;
+  z-index: 25;
+  pointer-events: auto;
+  font-size: 12px;
+  line-height: 1.45;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: opacity 0.2s ease;
+}
+
+.proto-hotspot-popover h4 {
+  font-size: 13px;
+  font-weight: 800;
+  color: #00ffe0;
+  margin-bottom: 4px;
+}
+
+.proto-hotspot-popover p {
+  color: #cbd5e1;
+}
+
+/* Bottom Control Toolbar */
+.proto-bottom-bar {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(11, 17, 28, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 8px 16px;
+  border-radius: 999px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  z-index: 20;
+}
+
+.proto-ctrl-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.proto-ctrl-btn:hover {
+  background: rgba(0, 255, 224, 0.18);
+  border-color: #00ffe0;
+  color: #00ffe0;
+}
+
+.proto-ctrl-btn.active {
+  background: #00ffe0;
+  color: #060911;
+  border-color: #00ffe0;
+}
+
+.proto-zoom-group {
+  display: flex;
+  gap: 4px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  padding-right: 8px;
+}
+
+.proto-btn-circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 0;
+  justify-content: center;
+}
+
+/* Right Specifications & Features Pane */
+.proto-info-pane {
+  background: rgba(11, 16, 26, 0.95);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 10;
+}
+
+.proto-spec-header h3 {
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+.proto-spec-header p {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.proto-dimension-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(0, 255, 224, 0.25);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.proto-dim-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #00ffe0;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.proto-dim-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  text-align: center;
+}
+
+.proto-dim-val {
+  font-size: 17px;
+  font-weight: 900;
+  color: #fff;
+}
+
+.proto-dim-label {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 2px;
+}
+
+/* Feature Highlights Grid */
+.proto-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.proto-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.proto-feat-icon {
+  font-size: 18px;
+  color: #00ffe0;
+  flex-shrink: 0;
+}
+
+.proto-feat-text h5 {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.proto-feat-text p {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+.proto-honest-note {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.45;
+  text-align: center;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px) {
+  .proto-workspace {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+  .proto-info-pane {
+    max-height: 280px;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .proto-bottom-bar {
+    bottom: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .proto-topbar {
+    padding: 12px 16px;
+  }
+  .proto-sub-title {
+    display: none;
+  }
+  .proto-bottom-bar {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+  .proto-ctrl-btn {
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+}

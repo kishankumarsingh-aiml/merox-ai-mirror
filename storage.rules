@@ -1,0 +1,45 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isStoreAdmin() {
+      return isAuthenticated() && (request.auth.token.role == 'STORE_ADMIN' || request.auth.token.role == 'SUPER_ADMIN');
+    }
+
+    function isValidImage() {
+      return request.resource.contentType.matches('image/(jpeg|png|webp)')
+             && request.resource.size < 5 * 1024 * 1024; // 5MB limit
+    }
+
+    // ================= 1. PUBLIC PRODUCT ASSETS =================
+    match /products/{allPaths=**} {
+      allow read: if true; // Public catalog images
+      allow write: if isStoreAdmin() && isValidImage();
+    }
+
+    // ================= 2. TRY-ON ACCESSORY OVERLAYS =================
+    match /tryon/{allPaths=**} {
+      allow read: if true; // Public 2D AR transparent PNGs
+      allow write: if isStoreAdmin() && isValidImage();
+    }
+
+    // ================= 3. PRIVACY FORBIDDEN: ZERO BIOMETRICS =================
+    // Camera frames and face crops are NEVER permitted to be uploaded to cloud storage
+    match /faces/{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    match /snapshots/{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    // Default deny
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

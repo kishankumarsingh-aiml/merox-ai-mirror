@@ -1,96 +1,284 @@
-// 🔥 Firebase Config (client-safe)
-const firebaseConfig = {
-  apiKey: "AIzaSyBA6HoJ3TuuZI1Mx1Z38rxvdW9J9a9xu8A",
-  authDomain: "merox-ai-mirror.firebaseapp.com",
-  projectId: "merox-ai-mirror",
-  storageBucket: "merox-ai-mirror.appspot.com",
-  messagingSenderId: "69028024588",
-  appId: "1:69028024588:web:f374b0e927adfe839ff929"
-};
-
-// Init Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+/**
+ * MeroX Landing & Authentication Controller (Phase 4 Production Edition)
+ * Orchestrates login, registration with display name & password confirmation,
+ * password reset flow, password visibility toggles, and safe redirection to dashboard.html.
+ */
 
 document.addEventListener("DOMContentLoaded", () => {
+  "use strict";
 
-  // ================= ELEMENTS =================
-  const loginTab   = document.getElementById("loginTab");
-  const signupTab  = document.getElementById("signupTab");
-  const loginForm  = document.getElementById("loginForm");
+  // Navigation elements
+  const loginTab = document.getElementById("loginTab");
+  const signupTab = document.getElementById("signupTab");
+  const authTabs = document.getElementById("authTabs");
+  const loginForm = document.getElementById("loginForm");
   const signupForm = document.getElementById("signupForm");
+  const forgotForm = document.getElementById("forgotForm");
 
-  const authCard = document.getElementById("authCard");
-  const chatBox  = document.getElementById("chatBox");
+  // Feedback alerts
+  const authError = document.getElementById("authError");
+  const authSuccess = document.getElementById("authSuccess");
 
-  const sendBtn   = document.getElementById("sendBtn");
-  const userInput = document.getElementById("userInput");
-  const messages  = document.getElementById("messages");
+  // Form inputs
+  const loginEmail = document.getElementById("loginEmail");
+  const loginPassword = document.getElementById("loginPassword");
+  const signupName = document.getElementById("signupName");
+  const signupEmail = document.getElementById("signupEmail");
+  const signupPassword = document.getElementById("signupPassword");
+  const signupConfirmPassword = document.getElementById("signupConfirmPassword");
+  const forgotEmail = document.getElementById("forgotEmail");
 
-  // ================= TAB SWITCH =================
-  loginTab.onclick = () => {
-    loginTab.classList.add("active");
-    signupTab.classList.remove("active");
-    loginForm.classList.remove("hidden");
-    signupForm.classList.add("hidden");
+  // Buttons
+  const loginSubmitBtn = document.getElementById("loginSubmitBtn");
+  const signupSubmitBtn = document.getElementById("signupSubmitBtn");
+  const forgotSubmitBtn = document.getElementById("forgotSubmitBtn");
+  const forgotPasswordLink = document.getElementById("forgotPasswordLink");
+  const backToLoginBtn = document.getElementById("backToLoginBtn");
+  const guestBtn = document.getElementById("guestBtn");
+
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function showError(msg) {
+    if (!authError) return;
+    let clean = msg;
+    if (window.MeroXAuth && typeof window.MeroXAuth.formatAuthError === "function") {
+      clean = window.MeroXAuth.formatAuthError(msg);
+    }
+    authError.textContent = clean;
+    authError.classList.remove("hidden");
+    if (authSuccess) authSuccess.classList.add("hidden");
+  }
+
+  function showSuccess(msg) {
+    if (!authSuccess) return;
+    authSuccess.textContent = msg;
+    authSuccess.classList.remove("hidden");
+    if (authError) authError.classList.add("hidden");
+  }
+
+  function clearAlerts() {
+    if (authError) {
+      authError.textContent = "";
+      authError.classList.add("hidden");
+    }
+    if (authSuccess) {
+      authSuccess.textContent = "";
+      authSuccess.classList.add("hidden");
+    }
+  }
+
+  // Password visibility toggle helper
+  window.togglePasswordVisibility = function (inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    if (input.type === "password") {
+      input.type = "text";
+      if (btn) btn.textContent = "🙈";
+    } else {
+      input.type = "password";
+      if (btn) btn.textContent = "👁️";
+    }
   };
 
-  signupTab.onclick = () => {
-    signupTab.classList.add("active");
-    loginTab.classList.remove("active");
-    signupForm.classList.remove("hidden");
-    loginForm.classList.add("hidden");
-  };
+  // Redirect if already authenticated as a registered user
+  if (window.MeroXAuth) {
+    const currentUser = window.MeroXAuth.getUser();
+    if (currentUser && !window.MeroXAuth.isGuest()) {
+      window.location.replace("dashboard.html");
+      return;
+    }
+  }
 
-  // ================= LOGIN =================
-  loginForm.onsubmit = (e) => {
-    e.preventDefault();
+  // Tab switching: Login vs Sign Up
+  if (loginTab && signupTab) {
+    loginTab.onclick = () => {
+      clearAlerts();
+      loginTab.classList.add("active");
+      signupTab.classList.remove("active");
+      loginTab.setAttribute("aria-selected", "true");
+      signupTab.setAttribute("aria-selected", "false");
 
-    auth
-      .signInWithEmailAndPassword(
-        loginEmail.value,
-        loginPassword.value
-      )
-      .then(() => {
-        authCard.style.display = "none";
-        chatBox.classList.remove("hidden");
-      })
-      .catch(err => alert(err.message));
-  };
+      loginForm.classList.remove("hidden");
+      signupForm.classList.add("hidden");
+      if (forgotForm) forgotForm.classList.add("hidden");
+      if (authTabs) authTabs.classList.remove("hidden");
+    };
 
-  // ================= SIGNUP =================
-  signupForm.onsubmit = (e) => {
-    e.preventDefault();
+    signupTab.onclick = () => {
+      clearAlerts();
+      signupTab.classList.add("active");
+      loginTab.classList.remove("active");
+      signupTab.setAttribute("aria-selected", "true");
+      loginTab.setAttribute("aria-selected", "false");
 
-    auth
-      .createUserWithEmailAndPassword(
-        signupEmail.value,
-        signupPassword.value
-      )
-      .then(() => {
-        authCard.style.display = "none";
-        chatBox.classList.remove("hidden");
-      })
-      .catch(err => alert(err.message));
-  };
+      signupForm.classList.remove("hidden");
+      loginForm.classList.add("hidden");
+      if (forgotForm) forgotForm.classList.add("hidden");
+      if (authTabs) authTabs.classList.remove("hidden");
+    };
+  }
 
-  // ================= DUMMY CHAT (SAFE) =================
-  sendBtn.onclick = () => {
-    const msg = userInput.value.trim();
-    if (!msg) return;
+  // Forgot Password View Toggle
+  if (forgotPasswordLink) {
+    forgotPasswordLink.onclick = () => {
+      clearAlerts();
+      if (loginForm) loginForm.classList.add("hidden");
+      if (signupForm) signupForm.classList.add("hidden");
+      if (forgotForm) forgotForm.classList.remove("hidden");
+      if (authTabs) authTabs.classList.add("hidden");
+      if (forgotEmail && loginEmail && loginEmail.value) {
+        forgotEmail.value = loginEmail.value;
+      }
+    };
+  }
 
-    const userDiv = document.createElement("div");
-    userDiv.className = "user";
-    userDiv.textContent = msg;
-    messages.appendChild(userDiv);
+  if (backToLoginBtn) {
+    backToLoginBtn.onclick = () => {
+      clearAlerts();
+      if (forgotForm) forgotForm.classList.add("hidden");
+      if (loginForm) loginForm.classList.remove("hidden");
+      if (authTabs) authTabs.classList.remove("hidden");
+      if (loginTab) loginTab.click();
+    };
+  }
 
-    const botDiv = document.createElement("div");
-    botDiv.className = "bot";
-    botDiv.textContent = "🤖 roX-AI: Feature coming soon.";
-    messages.appendChild(botDiv);
+  // 1. SIGN IN SUBMISSION
+  if (loginForm) {
+    loginForm.onsubmit = async (e) => {
+      e.preventDefault();
+      clearAlerts();
 
-    userInput.value = "";
-    messages.scrollTop = messages.scrollHeight;
-  };
+      const email = loginEmail.value.trim();
+      const password = loginPassword.value;
 
+      if (!email || !password) {
+        showError("Please enter both your email address and password.");
+        return;
+      }
+
+      if (!EMAIL_REGEX.test(email)) {
+        showError("Please enter a valid email address (e.g. name@example.com).");
+        return;
+      }
+
+      if (loginSubmitBtn) {
+        loginSubmitBtn.disabled = true;
+        loginSubmitBtn.textContent = "Authenticating...";
+      }
+
+      try {
+        await window.MeroXAuth.login(email, password);
+        window.location.href = "dashboard.html";
+      } catch (err) {
+        showError(err.message || "Failed to sign in. Please verify your credentials.");
+      } finally {
+        if (loginSubmitBtn) {
+          loginSubmitBtn.disabled = false;
+          loginSubmitBtn.textContent = "Login to Dashboard";
+        }
+      }
+    };
+  }
+
+  // 2. SIGN UP SUBMISSION
+  if (signupForm) {
+    signupForm.onsubmit = async (e) => {
+      e.preventDefault();
+      clearAlerts();
+
+      const name = signupName.value.trim();
+      const email = signupEmail.value.trim();
+      const password = signupPassword.value;
+      const confirmPassword = signupConfirmPassword.value;
+
+      if (!name) {
+        showError("Please provide your full name or preferred display name.");
+        signupName.focus();
+        return;
+      }
+
+      if (!email || !EMAIL_REGEX.test(email)) {
+        showError("Please provide a valid email address (e.g. name@example.com).");
+        signupEmail.focus();
+        return;
+      }
+
+      if (!password || password.length < 6) {
+        showError("Password must be at least 6 characters long.");
+        signupPassword.focus();
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showError("Passwords do not match. Please verify both password fields.");
+        signupConfirmPassword.focus();
+        return;
+      }
+
+      if (signupSubmitBtn) {
+        signupSubmitBtn.disabled = true;
+        signupSubmitBtn.textContent = "Creating Account...";
+      }
+
+      try {
+        await window.MeroXAuth.signup(email, password, name);
+        showSuccess("Account created successfully! Redirecting to dashboard...");
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 350);
+      } catch (err) {
+        showError(err.message || "Failed to create account. Please try again.");
+      } finally {
+        if (signupSubmitBtn) {
+          signupSubmitBtn.disabled = false;
+          signupSubmitBtn.textContent = "Create MeroX Account";
+        }
+      }
+    };
+  }
+
+  // 3. FORGOT PASSWORD SUBMISSION
+  if (forgotForm) {
+    forgotForm.onsubmit = async (e) => {
+      e.preventDefault();
+      clearAlerts();
+
+      const email = forgotEmail.value.trim();
+      if (!email || !EMAIL_REGEX.test(email)) {
+        showError("Please enter a valid email address to receive reset instructions.");
+        return;
+      }
+
+      if (forgotSubmitBtn) {
+        forgotSubmitBtn.disabled = true;
+        forgotSubmitBtn.textContent = "Sending Reset Link...";
+      }
+
+      try {
+        const res = await window.MeroXAuth.resetPassword(email);
+        showSuccess(res.message || "Password reset instructions sent. Please check your inbox.");
+        forgotEmail.value = "";
+      } catch (err) {
+        showError(err.message || "Could not send reset email. Please try again.");
+      } finally {
+        if (forgotSubmitBtn) {
+          forgotSubmitBtn.disabled = false;
+          forgotSubmitBtn.textContent = "Send Reset Link";
+        }
+      }
+    };
+  }
+
+  // 4. GUEST BYPASS
+  if (guestBtn) {
+    guestBtn.onclick = () => {
+      if (window.MeroXAuth) {
+        window.MeroXAuth.continueAsGuest().then(() => {
+          window.location.href = "dashboard.html";
+        });
+      } else {
+        window.location.href = "dashboard.html";
+      }
+    };
+  }
 });

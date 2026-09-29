@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MeroX Store Admin — Retail Inventory & Smart Mirror Management</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏬</text></svg>">
+</head>
+<body class="admin-body">
+
+  <!-- ================= AUTHENTICATION / ACCESS GATE MODAL ================= -->
+  <div id="authGateModal" class="admin-modal-overlay">
+    <div class="admin-modal auth-gate-card">
+      <div class="auth-gate-header">
+        <span class="auth-gate-icon">🏬</span>
+        <h2>MeroX Store Admin Portal</h2>
+        <p class="auth-gate-subtitle">Enterprise Retail & Smart Mirror Inventory Management</p>
+      </div>
+
+      <div class="auth-gate-notice">
+        <span class="notice-icon">🔒</span>
+        <span>Restricted Area: Access is restricted to authorized retail staff, store inventory managers, and administrators.</span>
+      </div>
+
+      <form id="adminLoginForm" class="admin-auth-form" onsubmit="event.preventDefault(); handleAdminLogin();">
+        <div class="form-group">
+          <label for="adminEmailInput">Admin Email Address</label>
+          <input type="email" id="adminEmailInput" placeholder="storeadmin@merox.ai" required autocomplete="username">
+        </div>
+
+        <div class="form-group">
+          <label for="adminPasswordInput">Password</label>
+          <input type="password" id="adminPasswordInput" placeholder="••••••••" required autocomplete="current-password">
+        </div>
+
+        <div id="authErrorMsg" class="auth-error-msg hidden"></div>
+
+        <button type="submit" class="admin-btn admin-btn-primary admin-btn-block">
+          <span>🔐</span> Sign In to Store Portal
+        </button>
+      </form>
+
+      <div class="auth-gate-divider">
+        <span>OR QUICK DEMO ACCESS</span>
+      </div>
+
+      <div class="auth-gate-demo">
+        <button type="button" class="admin-btn admin-btn-emerald admin-btn-block" id="demoAdminBtn" onclick="authorizeDemoStoreAdmin()">
+          <span>⚡</span> Authorize Demo Store Admin (1-Click)
+        </button>
+        <button type="button" class="admin-btn admin-btn-purple admin-btn-block" id="demoSuperAdminBtn" onclick="authorizeDemoSuperAdmin()">
+          <span>👑</span> Authorize Platform Super Admin
+        </button>
+      </div>
+
+      <div class="auth-gate-footer">
+        <a href="dashboard.html" class="auth-gate-link">← Return to Smart Mirror Customer Kiosk</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN ADMIN APPLICATION SHELL ================= -->
+  <div id="adminApp" class="admin-layout hidden">
+
+    <!-- TOP HEADER BAR -->
+    <header class="admin-header">
+      <div class="admin-header-brand">
+        <span class="brand-logo">🏬</span>
+        <div class="brand-text">
+          <h1>MeroX <span class="brand-accent">Store Admin</span></h1>
+          <span class="brand-version">Retail Inventory & Smart Mirror Hub v11.0</span>
+        </div>
+      </div>
+
+      <!-- Live Store Selector -->
+      <div class="admin-header-store">
+        <label for="storeSelector">Active Store:</label>
+        <select id="storeSelector" class="admin-select store-select" onchange="handleStoreChange(this.value)">
+          <option value="STORE-MUM-01">STORE-MUM-01: Mumbai Phoenix Mall (Flagship)</option>
+          <option value="STORE-BLR-02">STORE-BLR-02: Bengaluru Orion Mall (Tech Kiosk)</option>
+          <option value="STORE-DEL-03">STORE-DEL-03: Delhi Select Citywalk (Select Kiosk)</option>
+          <option value="all">All Stores (Consolidated View)</option>
+        </select>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="admin-header-actions">
+        <a href="dashboard.html" target="_blank" class="admin-btn admin-btn-subtle" title="Open Customer Smart Mirror Kiosk in a new tab">
+          <span>🪞</span> Launch Smart Mirror Kiosk
+        </a>
+
+        <!-- Admin Profile Pill -->
+        <div class="admin-user-pill">
+          <div class="user-avatar" id="adminUserAvatar">A</div>
+          <div class="user-details">
+            <span class="user-name" id="adminUserName">Store Admin</span>
+            <span class="role-badge" id="adminRoleBadge">STORE_ADMIN</span>
+          </div>
+        </div>
+
+        <button type="button" class="admin-btn admin-btn-danger admin-btn-sm" onclick="handleAdminLogout()" title="Log out of Store Admin">
+          <span>🚪</span> Logout
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN BODY: SIDEBAR + CONTENT -->
+    <div class="admin-main">
+
+      <!-- LEFT NAVIGATION SIDEBAR -->
+      <aside class="admin-sidebar">
+        <nav class="sidebar-nav">
+          <button type="button" class="nav-item active" data-tab="overview" onclick="switchTab('overview')">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Dashboard & KPIs</span>
+          </button>
+
+          <button type="button" class="nav-item" data-tab="catalog" onclick="switchTab('catalog')">
+            <span class="nav-icon">🏷️</span>
+            <span class="nav-label">Product Catalog</span>
+            <span class="nav-badge" id="catalogCountBadge">30</span>
+          </button>
+
+          <button type="button" class="nav-item" data-tab="add-product" onclick="switchTab('add-product')">
+            <span class="nav-icon">➕</span>
+            <span class="nav-label">Add New Product</span>
+          </button>
+
+          <button type="button" class="nav-item" data-tab="inventory" onclick="switchTab('inventory')">
+            <span class="nav-icon">📦</span>
+            <span class="nav-label">Inventory & Stock</span>
+            <span class="nav-badge alert hidden" id="lowStockBadge">0</span>
+          </button>
+
+          <button type="button" class="nav-item" data-tab="tryon" onclick="switchTab('tryon')">
+            <span class="nav-icon">🕶️</span>
+            <span class="nav-label">Try-On Assets Hub</span>
+          </button>
+
+          <button type="button" class="nav-item" data-tab="import-export" onclick="switchTab('import-export')">
+            <span class="nav-icon">🔄</span>
+            <span class="nav-label">Import / Export</span>
+          </button>
+
+          <button type="button" class="nav-item" data-tab="analytics" onclick="switchTab('analytics')">
+            <span class="nav-icon">📈</span>
+            <span class="nav-label">Store Analytics</span>
+          </button>
+
+          <button type="button" class="nav-item" data-tab="audit" onclick="switchTab('audit')">
+            <span class="nav-icon">📜</span>
+            <span class="nav-label">Audit Activity Log</span>
+          </button>
+
+          <button type="button" class="nav-item" data-tab="settings" onclick="switchTab('settings')">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">Store Settings & Reset</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <div class="system-status">
+            <span class="status-indicator online"></span>
+            <span>Local Catalog Synced</span>
+          </div>
+          <small class="text-muted">MeroX Authoritative Single-Catalog Architecture</small>
+        </div>
+      </aside>
+
+      <!-- RIGHT VIEW CONTAINER -->
+      <main class="admin-content">
+
+        <!-- ================= TAB 1: OVERVIEW & KPIS ================= -->
+        <section id="tab-overview" class="admin-tab-pane active">
+          <div class="pane-header">
+            <div>
+              <h2>Store Dashboard & Inventory Analytics</h2>
+              <p class="text-secondary">Real-time health of physical retail catalog, Smart Mirror assets, and stock levels.</p>
+            </div>
+            <div class="pane-header-actions">
+              <button type="button" class="admin-btn admin-btn-emerald" onclick="switchTab('add-product')">
+                <span>➕</span> Add Product
+              </button>
+              <button type="button" class="admin-btn admin-btn-primary" onclick="exportCatalogFile('json')">
+                <span>📥</span> Export JSON
+              </button>
+            </div>
+          </div>
+
+          <!-- KPI Metric Cards Grid -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Total Registered Products</span>
+                <span class="kpi-icon">🏷️</span>
+              </div>
+              <div class="kpi-value" id="kpiTotalProducts">30</div>
+              <div class="kpi-footer text-emerald" id="kpiActiveProducts">30 Active in Mirror</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Total Inventory Valuation</span>
+                <span class="kpi-icon">💰</span>
+              </div>
+              <div class="kpi-value" id="kpiTotalValuation">₹684,200</div>
+              <div class="kpi-footer text-muted">Retail cost basis</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">In Stock Products</span>
+                <span class="kpi-icon">✅</span>
+              </div>
+              <div class="kpi-value text-emerald" id="kpiInStock">30</div>
+              <div class="kpi-footer">Stock &gt; 5 units</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Low Stock Alert</span>
+                <span class="kpi-icon">⚠️</span>
+              </div>
+              <div class="kpi-value text-amber" id="kpiLowStock">0</div>
+              <div class="kpi-footer">1–5 units remaining</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Out of Stock Alert</span>
+                <span class="kpi-icon">❌</span>
+              </div>
+              <div class="kpi-value text-rose" id="kpiOutOfStock">0</div>
+              <div class="kpi-footer">Replenishment required</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span class="kpi-title">Try-On AR Enabled</span>
+                <span class="kpi-icon">🪞</span>
+              </div>
+              <div class="kpi-value text-purple" id="kpiTryOnReady">30</div>
+              <div class="kpi-footer">AR Overlay / Silhouette Ready</div>
+            </div>
+          </div>
+
+          <!-- Category & Store Distribution Section -->
+          <div class="analytics-row">
+            <div class="analytics-card">
+              <h3>Category Breakdown</h3>
+              <div id="categoryBreakdownList" class="breakdown-list"></div>
+            </div>
+
+            <div class="analytics-card">
+              <h3>Multi-Store Stock Distribution</h3>
+              <div id="storeDistributionList" class="breakdown-list"></div>
+            </div>
+          </div>
+
+          <!-- Urgent Stock Alert Workbench -->
+          <div class="workbench-card">
+            <div class="workbench-header">
+              <h3>🚨 Low Stock &amp; Urgent Replenishment Workbench</h3>
+              <span class="text-muted">Items with 5 or fewer units needing immediate restock.</span>
+            </div>
+            <div id="urgentStockContainer">
+              <div class="empty-state text-muted">All products have healthy stock levels (&gt; 5 units). No urgent replenishment needed.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB 2: PRODUCT CATALOG ================= -->
+        <section id="tab-catalog" class="admin-tab-pane">
+          <div class="pane-header">
+            <div>
+              <h2>Authoritative Product Catalog</h2>
+              <p class="text-secondary">Search, filter, update stock, and modify retail metadata consumed by the Smart Mirror.</p>
+            </div>
+            <div class="pane-header-actions">
+              <button type="button" class="admin-btn admin-btn-emerald" onclick="switchTab('add-product')">
+                <span>➕</span> Add Product
+              </button>
+              <button type="button" class="admin-btn admin-btn-secondary" onclick="exportCatalogFile('csv')">
+                <span>📊</span> Export CSV
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter & Search Toolbar -->
+          <div class="catalog-toolbar">
+            <div class="search-box">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="catalogSearchInput" placeholder="Search by SKU, Barcode, Name, Brand, Tags..." oninput="debouncedSearch()">
+            </div>
+
+            <div class="filter-controls">
+              <select id="filterCategory" class="admin-select" onchange="refreshCatalogTable()">
+                <option value="all">All Categories</option>
+                <option value="jeans">Jeans / Bottoms</option>
+                <option value="shirt">Shirts</option>
+                <option value="tshirt">T-Shirts</option>
+                <option value="cap">Caps &amp; Hats</option>
+                <option value="goggles">Goggles / Eyewear</option>
+                <option value="shoe">Shoes &amp; Footwear</option>
+              </select>
+
+              <select id="filterStockStatus" class="admin-select" onchange="refreshCatalogTable()">
+                <option value="all">All Stock Statuses</option>
+                <option value="In Stock">In Stock (&gt;5)</option>
+                <option value="Low Stock">Low Stock (1-5)</option>
+                <option value="Out of Stock">Out of Stock (0)</option>
+              </select>
+
+              <select id="filterStatus" class="admin-select" onchange="refreshCatalogTable()">
+                <option value="all">All Statuses</option>
+                <option value="active">Active (Visible)</option>
+                <option value="inactive">Inactive (Hidden)</option>
+              </select>
+
+              <select id="filterTryOn" class="admin-select" onchange="refreshCatalogTable()">
+                <option value="all">All Try-On Types</option>
+                <option value="available">Try-On Available</option>
+                <option value="coming_soon">Coming Soon</option>
+                <option value="none">No Try-On</option>
+              </select>
+
+              <button type="button" class="admin-btn admin-btn-subtle" onclick="resetCatalogFilters()">Reset Filters</button>
+            </div>
+          </div>
+
+          <!-- Catalog Data Table -->
+          <div class="table-container">
+            <table class="admin-table" id="productsTable">
+              <thead>
+                <tr>
+                  <th style="width: 50px;">Item</th>
+                  <th>Product Details</th>
+                  <th>SKU &amp; Barcode</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Stock &amp; Status</th>
+                  <th>Store / Aisle</th>
+                  <th>Try-On AR</th>
+                  <th>Status</th>
+                  <th style="width: 140px;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="catalogTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Footer -->
+          <div class="pagination-footer">
+            <div class="pagination-info" id="paginationInfo">
+              Showing 1 to 10 of 30 products
+            </div>
+            <div class="pagination-controls">
+              <label for="pageSizeSelect">Rows per page:</label>
+              <select id="pageSizeSelect" class="admin-select admin-select-sm" onchange="changePageSize(this.value)">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+              <button type="button" class="admin-btn admin-btn-subtle admin-btn-sm" id="prevPageBtn" onclick="prevPage()">‹ Prev</button>
+              <span id="pageNumberDisplay" class="page-number-pill">Page 1 / 3</span>
+              <button type="button" class="admin-btn admin-btn-subtle admin-btn-sm" id="nextPageBtn" onclick="nextPage()">Next ›</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB 3: ADD NEW PRODUCT ================= -->
+        <section id="tab-add-product" class="admin-tab-pane">
+          <div class="pane-header">
+            <div>
+              <h2>Register New Retail Product</h2>
+              <p class="text-secondary">Add a new SKU, barcode, physical inventory allocation, and Virtual Try-On configuration.</p>
+            </div>
+            <div class="pane-header-actions">
+              <button type="button" class="admin-btn admin-btn-subtle" onclick="switchTab('catalog')">
+                ← Back to Catalog
+              </button>
+            </div>
+          </div>
+
+          <form id="addProductForm" class="product-form-grid" onsubmit="event.preventDefault(); handleAddProductSubmit();">
+
+            <!-- Section 1: Basic Information -->
+            <div class="form-section">
+              <h3 class="section-title">1. Basic Information</h3>
+
+              <div class="form-row">
+                <div class="form-group flex-2">
+                  <label for="addName">Product Title / Name *</label>
+                  <input type="text" id="addName" placeholder="e.g. Vintage Indigo Denim Jacket" required>
+                </div>
+                <div class="form-group flex-1">
+                  <label for="addBrand">Brand Name</label>
+                  <input type="text" id="addBrand" placeholder="e.g. MeroX Luxury" value="MeroX Retail">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label for="addCategory">Category *</label>
+                  <select id="addCategory" required onchange="handleCategoryChange(this.value)">
+                    <option value="">Select Category...</option>
+                    <option value="jeans">Jeans / Denim Bottoms</option>
+                    <option value="shirt">Shirts (Formal / Casual)</option>
+                    <option value="tshirt">T-Shirts / Tops</option>
+                    <option value="cap">Caps &amp; Hats</option>
+                    <option value="goggles">Goggles &amp; Eyewear</option>
+                    <option value="shoe">Shoes &amp; Footwear</option>
+                  </select>
+                </div>
+
+                <div class="form-group flex-1">
+                  <label for="addSubcategory">Subcategory</label>
+                  <input type="text" id="addSubcategory" placeholder="e.g. Slim Fit Denim">
+                </div>
+
+                <div class="form-group flex-1">
+                  <label for="addGender">Target Gender</label>
+                  <select id="addGender">
+                    <option value="Unisex">Unisex</option>
+                    <option value="Men">Men</option>
+                    <option value="Women">Women</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="addDescription">Product Description &amp; Fabric Notes</label>
+                <textarea id="addDescription" rows="2" placeholder="Detailed product marketing description, fabric blend, and care notes..."></textarea>
+              </div>
+            </div>
+
+            <!-- Section 2: Barcodes & Retail Identifiers -->
+            <div class="form-section">
+              <h3 class="section-title">2. Barcode, SKU &amp; RFID Identifiers</h3>
+
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label for="addSku">Stock Keeping Unit (SKU) *</label>
+                  <div class="input-with-button">
+                    <input type="text" id="addSku" placeholder="MEROX-JNS-031" required oninput="validateSkuUniqueness(this.value)">
+                    <button type="button" class="admin-btn admin-btn-subtle admin-btn-sm" onclick="autoGenerateSku()">Auto</button>
+                  </div>
+                  <span id="skuValidationFeedback" class="validation-feedback"></span>
+                </div>
+
+                <div class="form-group flex-1">
+                  <label for="addBarcode">EAN-13 Barcode *</label>
+                  <div class="input-with-button">
+                    <input type="text" id="addBarcode" placeholder="8901234000031" required oninput="validateBarcodeUniqueness(this.value)">
+                    <button type="button" class="admin-btn admin-btn-subtle admin-btn-sm" onclick="autoGenerateBarcode()">Auto</button>
+                  </div>
+                  <span id="barcodeValidationFeedback" class="validation-feedback"></span>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label for="addQrCode">QR Code Payload String</label>
+                  <input type="text" id="addQrCode" placeholder="Auto-generated if blank: MEROX:SKU:...">
+                </div>
+
+                <div class="form-group flex-1">
+                  <label for="addRfid">RFID EPC Tag</label>
+                  <input type="text" id="addRfid" placeholder="Auto-generated if blank: RFID-9901-...">
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 3: Pricing & Physical Inventory -->
+            <div class="form-section">
+              <h3 class="section-title">3. Pricing &amp; Inventory Allocation</h3>
+
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label for="addPrice">Retail Price (INR ₹) *</label>
+                  <input type="number" id="addPrice" min="1" step="1" placeholder="1499" required>
+                </div>
+
+                <div class="form-group flex-1">
+                  <label for="addDiscount">Promotional Discount (%)</label>
+                  <input type="number" id="addDiscount" min="0" max="90" step="1" placeholder="0" value="0">
+                </div>
+
+                <div class="form-group flex-1">
+                  <label for="addStock">Initial Stock Quantity *</label>
+                  <input type="number" id="addStock" min="0" step="1" placeholder="15" value="15" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label for="addStoreId">Assigned Retail Store</label>
+                  <select id="addStoreId">
+                    <option value="STORE-MUM-01">STORE-MUM-01: Mumbai Phoenix Mall</option>
+                    <option value="STORE-BLR-02">STORE-BLR-02: Bengaluru Orion Mall</option>
+                    <option value="STORE-DEL-03">STORE-DEL-03: Delhi Select Citywalk</option>
+                  </select>
+                </div>
+
+                <div class="form-group flex-1">
+                  <label for="addLocation">Aisle &amp; Shelf Location</label>
+                  <input type="text" id="addLocation" placeholder="e.g. Floor 2, Men's Section, Rack B3" value="Floor 2, Men's Section">
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 4: Variants, Media & Try-On Configuration -->
+            <div class="form-section">
+              <h3 class="section-title">4. Media, Sizing &amp; Virtual Try-On</h3>
+
+              <div class="form-row">
+                <div class="form-group flex-2">
+                  <label for="addImage">Product Image URL / Relative Path *</label>
+                  <div class="input-with-button">
+                    <input type="text" id="addImage" placeholder="images/jeans1.jpeg" required onchange="previewImage(this.value)">
+                    <select id="sampleImageSelect" class="admin-select admin-select-sm" onchange="pickSampleImage(this.value)">
+                      <option value="">Pick catalog image...</option>
+                      <option value="images/jeans1.jpeg">jeans1.jpeg</option>
+                      <option value="images/jeans2.jpeg">jeans2.jpeg</option>
+                      <option value="images/shirt1.jpeg">shirt1.jpeg</option>
+                      <option value="images/shirt2.jpeg">shirt2.jpeg</option>
+                      <option value="images/tshirt1.jpeg">tshirt1.jpeg</option>
+                      <option value="images/cap1.jpeg">cap1.jpeg</option>
+                      <option value="images/goggles1.jpeg">goggles1.jpeg</option>
+                      <option value="images/shoe1.jpeg">shoe1.jpeg</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group flex-1 image-preview-box">
+                  <img id="addImagePreview" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23334155%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%20fill%3D%22%2394a3b8%22%20font-size%3D%2210%22%3ENo%20Img%3C%2Ftext%3E%3C%2Fsvg%3E" alt="Preview">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label for="addTryOnType">Try-On AR Physics Mode</label>
+                  <select id="addTryOnType">
+                    <option value="garment_preview">Garment Preview (Silhouette Projection)</option>
+                    <option value="footwear_preview">Footwear Preview (Floor Placement)</option>
+                    <option value="goggles">Goggles (Face Mesh AR Overlay)</option>
+                    <option value="cap">Cap / Hat (Head Pose Tracking)</option>
+                    <option value="none">None (Standard Retail Only)</option>
+                  </select>
+                </div>
+
+                <div class="form-group flex-1">
+                  <label for="addTryOnStatus">Try-On Capability State</label>
+                  <select id="addTryOnStatus">
+                    <option value="available">Available in Smart Mirror (Live)</option>
+                    <option value="coming_soon">Coming Soon (In 3D Pipeline)</option>
+                    <option value="none">Not Available</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group flex-1">
+                  <label for="addSizes">Available Sizes (Comma Separated)</label>
+                  <input type="text" id="addSizes" placeholder="S, M, L, XL" value="S, M, L, XL">
+                </div>
+
+                <div class="form-group flex-1">
+                  <label for="addColors">Colors (Comma Separated)</label>
+                  <input type="text" id="addColors" placeholder="Blue, Navy, Indigo" value="Blue">
+                </div>
+
+                <div class="form-group flex-1">
+                  <label for="addTags">Search Tags (Comma Separated)</label>
+                  <input type="text" id="addTags" placeholder="casual, summer, premium" value="casual">
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Action Footer -->
+            <div class="form-actions">
+              <button type="submit" class="admin-btn admin-btn-emerald admin-btn-lg" id="submitProductBtn">
+                <span>💾</span> Register &amp; Publish to Store Catalog
+              </button>
+              <button type="button" class="admin-btn admin-btn-subtle" onclick="resetAddProductForm()">
+                Reset Form
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- ================= TAB 4: INVENTORY & STOCK MANAGER ================= -->
+        <section id="tab-inventory" class="admin-tab-pane">
+          <div class="pane-header">
+            <div>
+              <h2>Inventory Replenishment &amp; Stock Controller</h2>
+              <p class="text-secondary">Instant inline stock adjustments, replenishment thresholds, and multi-store allocation.</p>
+            </div>
+            <div class="pane-header-actions">
+              <button type="button" class="admin-btn admin-btn-primary" onclick="bulkRestockLowItems()">
+                <span>⚡</span> Quick Replenish All Low Stock (+15)
+              </button>
+            </div>
+          </div>
+
+          <!-- Stock Summary Strip -->
+          <div class="inventory-summary-strip">
+            <div class="strip-item">
+              <span class="strip-label">Healthy Stock (&gt;5 units):</span>
+              <span class="strip-val text-emerald" id="invHealthyCount">30</span>
+            </div>
+            <div class="strip-item">
+              <span class="strip-label">Low Stock (1–5 units):</span>
+              <span class="strip-val text-amber" id="invLowCount">0</span>
+            </div>
+            <div class="strip-item">
+              <span class="strip-label">Out of Stock (0 units):</span>
+              <span class="strip-val text-rose" id="invZeroCount">0</span>
+            </div>
+            <div class="strip-item">
+              <span class="strip-label">Total Units on Floor:</span>
+              <span class="strip-val text-purple" id="invTotalUnits">450</span>
+            </div>
+          </div>
+
+          <!-- Fast Stock Adjust Table -->
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>SKU</th>
+                  <th>Store / Shelf</th>
+                  <th>Current Stock</th>
+                  <th>Status</th>
+                  <th style="width: 280px;">Quick Stock Adjustments</th>
+                </tr>
+              </thead>
+              <tbody id="inventoryTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ================= TAB 5: TRY-ON ASSETS HUB ================= -->
+        <section id="tab-tryon" class="admin-tab-pane">
+          <div class="pane-header">
+            <div>
+              <h2>Smart Mirror Virtual Try-On Asset Matrix</h2>
+              <p class="text-secondary">Manage 2D AR face meshes, cap tracking, footwear previews, and garment silhouette assets.</p>
+            </div>
+            <div class="pane-header-actions">
+              <a href="dashboard.html" target="_blank" class="admin-btn admin-btn-purple">
+                <span>🪞</span> Test Try-On in Mirror
+              </a>
+            </div>
+          </div>
+
+          <div class="tryon-matrix-grid" id="tryonMatrixGrid">
+            <!-- Dynamically populated cards -->
+          </div>
+        </section>
+
+        <!-- ================= TAB 6: IMPORT / EXPORT ================= -->
+        <section id="tab-import-export" class="admin-tab-pane">
+          <div class="pane-header">
+            <div>
+              <h2>Catalog Import, Export &amp; Onboarding</h2>
+              <p class="text-secondary">Export the authoritative store catalog or bulk-import new merchandise via JSON or CSV.</p>
+            </div>
+          </div>
+
+          <div class="import-export-grid">
+
+            <!-- Export Panel -->
+            <div class="card-panel">
+              <div class="panel-header">
+                <h3>📥 Export Catalog</h3>
+                <span class="text-muted">Instant RFC-4180 CSV or formatted JSON export</span>
+              </div>
+              <p class="text-secondary">Download the entire active inventory dataset for ERP integration, backup, or retail reporting.</p>
+
+              <div class="export-actions">
+                <button type="button" class="admin-btn admin-btn-primary admin-btn-block" onclick="exportCatalogFile('json')">
+                  <span>📄</span> Download JSON Catalog (.json)
+                </button>
+                <button type="button" class="admin-btn admin-btn-emerald admin-btn-block" onclick="exportCatalogFile('csv')">
+                  <span>📊</span> Download CSV Catalog (.csv)
+                </button>
+                <button type="button" class="admin-btn admin-btn-subtle admin-btn-block" onclick="copyCatalogJsonToClipboard()">
+                  <span>📋</span> Copy JSON to Clipboard
+                </button>
+              </div>
+
+              <div class="export-preview-box">
+                <label>Export Schema Preview:</label>
+                <pre id="exportSchemaPreview" class="code-preview"></pre>
+              </div>
+            </div>
+
+            <!-- Import Panel -->
+            <div class="card-panel">
+              <div class="panel-header">
+                <h3>📤 Bulk Catalog Import</h3>
+                <span class="text-muted">Two-step validation matrix before committing</span>
+              </div>
+              <p class="text-secondary">Paste CSV/JSON data below or upload a file. The validation engine will detect duplicate SKUs, invalid prices, and missing fields.</p>
+
+              <div class="import-source-toolbar">
+                <button type="button" class="admin-btn admin-btn-subtle admin-btn-sm" onclick="loadSampleCsv()">Load Sample CSV</button>
+                <button type="button" class="admin-btn admin-btn-subtle admin-btn-sm" onclick="loadSampleJson()">Load Sample JSON</button>
+                <input type="file" id="importFileInput" accept=".csv,.json" style="display:none" onchange="handleImportFileUpload(event)">
+                <button type="button" class="admin-btn admin-btn-subtle admin-btn-sm" onclick="document.getElementById('importFileInput').click()">Upload File</button>
+              </div>
+
+              <div class="form-group">
+                <label for="importPayloadInput">Raw CSV or JSON Payload</label>
+                <textarea id="importPayloadInput" rows="7" placeholder="Paste CSV (sku,name,category,price,stock...) or JSON array here..."></textarea>
+              </div>
+
+              <div class="import-actions">
+                <button type="button" class="admin-btn admin-btn-primary" onclick="runImportPreview()">
+                  <span>🔍</span> Step 1: Validate &amp; Preview Matrix
+                </button>
+                <button type="button" class="admin-btn admin-btn-emerald" id="commitImportBtn" disabled onclick="commitImportBatch()">
+                  <span>✅</span> Step 2: Commit Valid Products
+                </button>
+              </div>
+
+              <!-- Import Validation Matrix -->
+              <div id="importValidationMatrix" class="validation-matrix-box hidden">
+                <div class="matrix-header" id="matrixHeaderSummary"></div>
+                <div class="table-container matrix-table-container">
+                  <table class="admin-table matrix-table">
+                    <thead>
+                      <tr>
+                        <th>Row</th>
+                        <th>SKU</th>
+                        <th>Product Title</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Validation Result</th>
+                      </tr>
+                    </thead>
+                    <tbody id="importMatrixBody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ================= TAB 7: AUDIT ACTIVITY LOG ================= -->
+        <section id="tab-audit" class="admin-tab-pane">
+          <div class="pane-header">
+            <div>
+              <h2>Audit Activity Log</h2>
+              <p class="text-secondary">Chronological audit trail of all catalog modifications, price updates, stock changes, and imports.</p>
+            </div>
+            <div class="pane-header-actions">
+              <button type="button" class="admin-btn admin-btn-subtle" onclick="exportAuditLogJson()">
+                <span>📥</span> Export Audit Log
+              </button>
+              <button type="button" class="admin-btn admin-btn-danger admin-btn-sm" onclick="clearAuditTrail()">
+                <span>🗑️</span> Clear Log
+              </button>
+            </div>
+          </div>
+
+          <div class="table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 170px;">Timestamp</th>
+                  <th style="width: 120px;">Action</th>
+                  <th style="width: 150px;">SKU / Target</th>
+                  <th>Change Details</th>
+                  <th style="width: 140px;">Actor</th>
+                </tr>
+              </thead>
+              <tbody id="auditTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ================= TAB 8: STORE SETTINGS & RESET ================= -->
+        <section id="tab-settings" class="admin-tab-pane">
+          <div class="pane-header">
+            <div>
+              <h2>Store Infrastructure &amp; System Configuration</h2>
+              <p class="text-secondary">Multi-store node registry and catalog factory reset operations.</p>
+            </div>
+          </div>
+
+          <div class="settings-grid">
+            <div class="card-panel">
+              <h3>Registered Store Nodes</h3>
+              <p class="text-secondary">Physical Smart Mirror kiosks connected to this retail catalog cluster.</p>
+              <div class="store-nodes-list" id="storeNodesList"></div>
+            </div>
+
+            <div class="card-panel danger-zone">
+              <h3 class="text-rose">⚠️ Danger Zone: Factory Catalog Reset</h3>
+              <p class="text-secondary">Reset the entire catalog back to the factory 30 baseline products. This clears all dynamically created items, custom stock updates, and overrides from local storage.</p>
+              <div class="danger-action-box">
+                <button type="button" class="admin-btn admin-btn-danger admin-btn-lg" onclick="promptFactoryReset()">
+                  <span>🔄</span> Reset Catalog to Factory Baseline (30 Items)
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= TAB: STORE ANALYTICS (PHASE 12) ================= -->
+        <section id="tab-analytics" class="admin-tab-pane">
+          <div class="tab-header">
+            <div>
+              <div class="flex-align-gap" style="display:flex; align-items:center; gap:12px;">
+                <h2>Privacy-Safe Store &amp; Mirror Analytics</h2>
+                <span id="anTelemetryBadge" class="analytics-telemetry-badge demo">⚡ Benchmark Prototype Data</span>
+              </div>
+              <p class="text-secondary">Live shopper conversion, try-on engagement, outfit building, and mobile QR handoffs (Zero PII)</p>
+            </div>
+            <div class="tab-header-actions">
+              <button type="button" class="admin-btn admin-btn-subtle" onclick="refreshAnalyticsDashboard()">
+                <span>🔄</span> Refresh
+              </button>
+              <button type="button" class="admin-btn admin-btn-purple" onclick="exportAnalyticsJson()">
+                <span>📥</span> Export Telemetry JSON
+              </button>
+              <button type="button" class="admin-btn admin-btn-danger admin-btn-sm" onclick="clearStoreAnalytics()">
+                <span>🗑️</span> Clear Analytics
+              </button>
+            </div>
+          </div>
+
+          <!-- KPI Summary Cards -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <span class="kpi-icon">👥</span>
+              <div class="kpi-body">
+                <span class="kpi-title">Shopper Sessions</span>
+                <span class="kpi-val" id="anTotalSessions">0</span>
+                <span class="kpi-subtext" id="anSessionSubtext">0 completed · 0 timed out</span>
+              </div>
+            </div>
+
+            <div class="kpi-card">
+              <span class="kpi-icon">🏷️</span>
+              <div class="kpi-body">
+                <span class="kpi-title">Product Scans</span>
+                <span class="kpi-val" id="anTotalScans">0</span>
+                <span class="kpi-subtext" id="anViewsSubtext">0 total catalog views</span>
+              </div>
+            </div>
+
+            <div class="kpi-card">
+              <span class="kpi-icon">🕶️</span>
+              <div class="kpi-body">
+                <span class="kpi-title">Try-On Launches</span>
+                <span class="kpi-val" id="anTryOns">0</span>
+                <span class="kpi-subtext" id="anTryOnRate">0% completion rate</span>
+              </div>
+            </div>
+
+            <div class="kpi-card">
+              <span class="kpi-icon">✨</span>
+              <div class="kpi-body">
+                <span class="kpi-title">Looks Created</span>
+                <span class="kpi-val" id="anLooksBuilt">0</span>
+                <span class="kpi-subtext" id="anConversionRate">0% session conversion</span>
+              </div>
+            </div>
+
+            <div class="kpi-card">
+              <span class="kpi-icon">📱</span>
+              <div class="kpi-body">
+                <span class="kpi-title">QR Phone Handoffs</span>
+                <span class="kpi-val" id="anQrTransfers">0</span>
+                <span class="kpi-subtext" id="anQrOpenedRate">0 opens (0%)</span>
+              </div>
+            </div>
+
+            <div class="kpi-card">
+              <span class="kpi-icon">⏱️</span>
+              <div class="kpi-body">
+                <span class="kpi-title">Avg Kiosk Time</span>
+                <span class="kpi-val" id="anAvgDuration">0s</span>
+                <span class="kpi-subtext" id="anRoxQueries">0 roX-AI interactions</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shopper Conversion Funnel -->
+          <div class="card-panel">
+            <h3>Smart Mirror Shopper Funnel</h3>
+            <p class="text-secondary">Track customer engagement from mirror arrival to mobile outfit handoff.</p>
+            <div class="funnel-container">
+              <div class="funnel-step">
+                <div class="funnel-step-name">1. Sessions</div>
+                <div class="funnel-step-val" id="funnelSessions">0</div>
+                <div class="funnel-step-rate">100% Entry</div>
+              </div>
+              <div class="funnel-step">
+                <div class="funnel-step-name">2. Scans</div>
+                <div class="funnel-step-val" id="funnelScans">0</div>
+                <div class="funnel-step-rate" id="funnelScanRate">0%</div>
+              </div>
+              <div class="funnel-step">
+                <div class="funnel-step-name">3. Try-On</div>
+                <div class="funnel-step-val" id="funnelTryons">0</div>
+                <div class="funnel-step-rate" id="funnelTryonRate">0%</div>
+              </div>
+              <div class="funnel-step">
+                <div class="funnel-step-name">4. Looks Built</div>
+                <div class="funnel-step-val" id="funnelLooks">0</div>
+                <div class="funnel-step-rate" id="funnelLookRate">0%</div>
+              </div>
+              <div class="funnel-step">
+                <div class="funnel-step-name">5. Mobile QR</div>
+                <div class="funnel-step-val" id="funnelQr">0</div>
+                <div class="funnel-step-rate" id="funnelQrRate">0%</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category Breakdown & Popularity Tables -->
+          <div class="grid-2-col">
+            <!-- Category Interactions -->
+            <div class="card-panel">
+              <h3>Category Interactions</h3>
+              <p class="text-secondary">Frequency of shopper garment interaction by category.</p>
+              <div class="cat-meter-list" id="anCategoryBreakdown">
+                <div class="text-muted">No interactions recorded.</div>
+              </div>
+            </div>
+
+            <!-- Top Scanned Garments -->
+            <div class="card-panel">
+              <h3>Top Scanned Garments</h3>
+              <p class="text-secondary">Physical garments most frequently brought to the mirror.</p>
+              <div class="table-container">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>SKU</th>
+                      <th>Product</th>
+                      <th class="text-right">Scans</th>
+                    </tr>
+                  </thead>
+                  <tbody id="anTopScannedTable">
+                    <tr><td colspan="3" class="text-center text-muted">No scan data</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Look Products & Privacy Notice -->
+          <div class="grid-2-col">
+            <div class="card-panel">
+              <h3>Top Outfit Building Pieces</h3>
+              <p class="text-secondary">Garments most added by customers to their curated looks.</p>
+              <div class="table-container">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>SKU</th>
+                      <th>Product</th>
+                      <th class="text-right">Added to Look</th>
+                    </tr>
+                  </thead>
+                  <tbody id="anTopLookTable">
+                    <tr><td colspan="3" class="text-center text-muted">No look data</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="privacy-notice-panel">
+              <div class="privacy-notice-icon">🛡️</div>
+              <div class="privacy-notice-content">
+                <h4>Privacy-Safe Retail Intelligence Guarantee</h4>
+                <p>MeroX Store Analytics collects exclusively non-PII operational event counts (sessions, SKU scans, try-on launches, and anonymized look tokens). No facial landmarks, camera video frames, shopper names, phone numbers, or authentication tokens are ever persisted or transmitted. Compliant with retail privacy regulations.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ================= EDIT PRODUCT MODAL ================= -->
+  <div id="editProductModal" class="admin-modal-overlay hidden">
+    <div class="admin-modal edit-modal-card">
+      <div class="modal-header">
+        <div>
+          <h2 id="editModalTitle">Edit Product</h2>
+          <span class="text-muted" id="editModalSubtitle">Modify retail product details</span>
+        </div>
+        <button type="button" class="modal-close-btn" onclick="closeEditModal()">×</button>
+      </div>
+
+      <form id="editProductForm" onsubmit="event.preventDefault(); handleEditProductSubmit();">
+        <input type="hidden" id="editProductId">
+
+        <div class="form-row">
+          <div class="form-group flex-2">
+            <label for="editName">Product Title *</label>
+            <input type="text" id="editName" required>
+          </div>
+          <div class="form-group flex-1">
+            <label for="editBrand">Brand Name</label>
+            <input type="text" id="editBrand">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="editCategory">Category *</label>
+            <select id="editCategory" required>
+              <option value="jeans">Jeans / Denim Bottoms</option>
+              <option value="shirt">Shirts</option>
+              <option value="tshirt">T-Shirts</option>
+              <option value="cap">Caps &amp; Hats</option>
+              <option value="goggles">Goggles &amp; Eyewear</option>
+              <option value="shoe">Shoes &amp; Footwear</option>
+            </select>
+          </div>
+
+          <div class="form-group flex-1">
+            <label for="editPrice">Price (INR ₹) *</label>
+            <input type="number" id="editPrice" min="1" step="1" required>
+          </div>
+
+          <div class="form-group flex-1">
+            <label for="editDiscount">Discount (%)</label>
+            <input type="number" id="editDiscount" min="0" max="90" step="1">
+          </div>
+
+          <div class="form-group flex-1">
+            <label for="editStock">Stock Quantity *</label>
+            <input type="number" id="editStock" min="0" step="1" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="editSku">SKU (Read Only)</label>
+            <input type="text" id="editSku" readonly class="input-readonly">
+          </div>
+          <div class="form-group flex-1">
+            <label for="editBarcode">Barcode (Read Only)</label>
+            <input type="text" id="editBarcode" readonly class="input-readonly">
+          </div>
+          <div class="form-group flex-1">
+            <label for="editStoreId">Store Assignment</label>
+            <select id="editStoreId">
+              <option value="STORE-MUM-01">STORE-MUM-01: Mumbai Phoenix Mall</option>
+              <option value="STORE-BLR-02">STORE-BLR-02: Bengaluru Orion Mall</option>
+              <option value="STORE-DEL-03">STORE-DEL-03: Delhi Select Citywalk</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="editLocation">Location / Aisle</label>
+            <input type="text" id="editLocation">
+          </div>
+
+          <div class="form-group flex-1">
+            <label for="editTryOnType">Try-On Type</label>
+            <select id="editTryOnType">
+              <option value="garment_preview">Garment Preview</option>
+              <option value="footwear_preview">Footwear Preview</option>
+              <option value="goggles">Goggles (2D AR)</option>
+              <option value="cap">Cap (2D AR)</option>
+              <option value="none">None</option>
+            </select>
+          </div>
+
+          <div class="form-group flex-1">
+            <label for="editTryOnStatus">Try-On Status</label>
+            <select id="editTryOnStatus">
+              <option value="available">Available</option>
+              <option value="coming_soon">Coming Soon</option>
+              <option value="none">None</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="editDescription">Description</label>
+          <textarea id="editDescription" rows="2"></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="admin-btn admin-btn-emerald">Save Changes</button>
+          <button type="button" class="admin-btn admin-btn-subtle" onclick="closeEditModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= QUICK STOCK ADJUST MODAL ================= -->
+  <div id="quickStockModal" class="admin-modal-overlay hidden">
+    <div class="admin-modal stock-modal-card">
+      <div class="modal-header">
+        <h3 id="quickStockTitle">Adjust Stock</h3>
+        <button type="button" class="modal-close-btn" onclick="closeQuickStockModal()">×</button>
+      </div>
+      <div class="stock-adjust-body">
+        <p id="quickStockProductInfo" class="text-secondary"></p>
+        <div class="stock-input-row">
+          <button type="button" class="stock-step-btn" onclick="stepQuickStock(-5)">-5</button>
+          <button type="button" class="stock-step-btn" onclick="stepQuickStock(-1)">-1</button>
+          <input type="number" id="quickStockInput" min="0" step="1" class="stock-number-input">
+          <button type="button" class="stock-step-btn" onclick="stepQuickStock(+1)">+1</button>
+          <button type="button" class="stock-step-btn" onclick="stepQuickStock(+5)">+5</button>
+        </div>
+        <div class="quick-stock-presets">
+          <button type="button" class="admin-btn admin-btn-subtle admin-btn-sm" onclick="setQuickStockVal(0)">Out of Stock (0)</button>
+          <button type="button" class="admin-btn admin-btn-subtle admin-btn-sm" onclick="setQuickStockVal(5)">Low Stock (5)</button>
+          <button type="button" class="admin-btn admin-btn-subtle admin-btn-sm" onclick="setQuickStockVal(20)">Replenish (20)</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="admin-btn admin-btn-emerald" onclick="saveQuickStock()">Save Stock Level</button>
+        <button type="button" class="admin-btn admin-btn-subtle" onclick="closeQuickStockModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= TRY-ON ASSET PREVIEW MODAL ================= -->
+  <div id="tryonPreviewModal" class="admin-modal-overlay hidden">
+    <div class="admin-modal preview-modal-card">
+      <div class="modal-header">
+        <h3 id="tryonPreviewTitle">Try-On Asset Preview</h3>
+        <button type="button" class="modal-close-btn" onclick="closeTryonPreviewModal()">×</button>
+      </div>
+      <div class="tryon-preview-content">
+        <div class="tryon-preview-stage" id="tryonPreviewStage">
+          <img id="tryonPreviewImg" src="" alt="Try-On Asset">
+        </div>
+        <div class="tryon-preview-meta" id="tryonPreviewMeta"></div>
+      </div>
+      <div class="modal-footer">
+        <a href="dashboard.html" target="_blank" class="admin-btn admin-btn-purple">
+          <span>🪞</span> Test Live in Smart Mirror
+        </a>
+        <button type="button" class="admin-btn admin-btn-subtle" onclick="closeTryonPreviewModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS: Base Catalog -> Auth -> Analytics -> Session -> Store Admin Controller -->
+  <script src="products.js"></script>
+  <script src="auth.js"></script>
+  <script src="analytics.js"></script>
+  <script src="session.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

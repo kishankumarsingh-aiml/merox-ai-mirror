@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MeroX 3D Showroom – Option 2 (Experimental 3D Experience)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:," />
+
+  <!-- Option 2 3D Showroom Stylesheet -->
+  <link rel="stylesheet" href="dashboard-option2.css" />
+
+  <!-- Firebase v8 SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+  <!-- MeroX Core Engine Scripts (Phase 1–15 Protected Baseline) -->
+  <script src="auth.js"></script>
+  <script src="products.js"></script>
+  <script src="analytics.js"></script>
+  <script src="session.js"></script>
+  <script src="modules.js"></script>
+  <script src="camera.js"></script>
+  <script src="rox-ai.js"></script>
+  <script src="subscription.js"></script>
+  <script src="dashboard.js"></script>
+
+  <!-- Option 2 Experimental 3D Additions -->
+  <script src="rox-vision.js"></script>
+  <script src="dashboard-option2.js"></script>
+</head>
+
+<body>
+  <!-- Ambient Specular Studio Lighting Background -->
+  <div class="ambient-bg-layer" aria-hidden="true">
+    <div class="ambient-orb orb-primary"></div>
+    <div class="ambient-orb orb-secondary"></div>
+    <div class="subtle-grid"></div>
+  </div>
+
+  <!-- ================= 1. OPTION 2 FLOATING HEADER ================= -->
+  <header class="opt2-header" role="banner">
+    <a href="dashboard-option2.html" class="opt2-brand" aria-label="MeroX 3D Showroom Home">
+      <span class="opt2-logo-text">MeroX</span>
+      <span class="opt2-subtitle">AI PERSONAL STYLE INTELLIGENCE</span>
+    </a>
+
+    <!-- Center Large Search Bar -->
+    <div class="opt2-search-container" role="search">
+      <input 
+        type="search" 
+        id="opt2SearchInput" 
+        class="opt2-search-bar" 
+        placeholder="Search fashion, products or ask roX-AI..." 
+        aria-label="Search fashion products or ask roX-AI" 
+      />
+      <button id="opt2SearchBtn" class="opt2-search-btn" title="Submit Search" aria-label="Search">🔍</button>
+    </div>
+
+    <!-- Right Navigation Elements -->
+    <nav class="opt2-nav-actions" aria-label="Main Navigation">
+      <button class="opt2-nav-btn accent" onclick="toggleOption2RoxDrawer()" title="Consult roX-AI Fashion Stylist">
+        <span>🤖 roX-AI</span>
+      </button>
+      <button class="opt2-nav-btn" onclick="openRoxVisionModal(1)" title="Open roX Vision 3D Studio">
+        <span>👁️ 3D Product</span>
+      </button>
+      <button class="opt2-nav-btn" onclick="openFeatureModal('cloth')" title="Curate your personal lookbook">
+        <span>✨ Your Looks</span>
+      </button>
+      <button class="opt2-nav-btn" onclick="openFeatureModal('profile')" title="Open account profile and preferences">
+        <span>👤 Profile</span>
+      </button>
+      <!-- Option 1 ⇄ Option 2 Quick Switcher -->
+      <a href="dashboard.html" class="version-switcher-pill" title="Switch to Option 1: Classic Showroom">
+        <span>⬅ Option 1</span>
+      </a>
+    </nav>
+  </header>
+
+  <!-- ================= 2. OPTION 2 HERO SECTION ================= -->
+  <section class="opt2-hero" aria-labelledby="heroHeading">
+    <div class="hero-left">
+      <div class="hero-badge-pill">
+        <span class="badge-dot-live"></span>
+        <span>✦ roX-AI Style Intelligence v2.4 Active</span>
+      </div>
+
+      <h1 id="heroHeading" class="hero-title-3d">
+        Your Style.
+        <span>Now in 3D.</span>
+      </h1>
+
+      <p class="hero-subtext">
+        Explore products, visualize your look and discover personalized fashion powered by MeroX AI.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#collectionSection" class="btn-primary-3d">
+          <span>Explore Collection</span>
+          <span>➔</span>
+        </a>
+        <button class="btn-secondary-3d" onclick="openSmartMirrorHud()">
+          <span>🪞 Try Smart Mirror</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 3D Hero Parallax Visual Stage -->
+    <div class="hero-visual-stage" id="heroVisualStage">
+      <div class="hero-3d-rings" aria-hidden="true"></div>
+
+      <div class="hero-floating-card" id="heroParallaxCard" onclick="openRoxVisionModal(1)" title="Click to launch interactive 3D roX Vision Studio">
+        <div class="hero-card-img-wrap">
+          <img src="images/jeans1.jpeg" alt="Featured Product - Blue Jeans" />
+          <div class="hero-card-scan-line"></div>
+        </div>
+
+        <div class="hero-card-meta">
+          <div>
+            <div class="hero-card-name">Blue Jeans</div>
+            <div class="hero-card-tag">Denim Bottoms • Premium Wash</div>
+          </div>
+          <div class="hero-card-price">₹1,499</div>
+        </div>
+
+        <div class="hero-card-cta-pill">
+          <span>👁️ Launch roX Vision 3D Studio</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. 10 MAJOR 3D FEATURE CARDS HUB ================= -->
+  <section class="opt2-features-section" aria-labelledby="featuresHeading">
+    <div class="section-header-3d">
+      <span class="section-label-pill">Core Intelligence</span>
+      <h2 id="featuresHeading" class="section-heading-3d">Smart Mirror Feature Hub</h2>
+    </div>
+
+    <div class="opt2-features-grid">
+      <!-- 01 SMART MIRROR -->
+      <div class="opt2-feature-card" onclick="openSmartMirrorHud()" role="button" tabindex="0" aria-label="01 Smart Mirror Mode">
+        <div class="card-number-tag">01</div>
+        <div class="card-icon-3d">🪞</div>
+        <div class="card-title-3d">SMART MIRROR</div>
+        <div class="card-desc-3d">Commercial Retail Kiosk full-screen camera viewfinder, HUD controls, and barcode scanner.</div>
+        <div class="card-status-badge">● Kiosk Ready</div>
+      </div>
+
+      <!-- 02 VIRTUAL TRY-ON -->
+      <div class="opt2-feature-card" onclick="openFeatureModal('tryon')" role="button" tabindex="0" aria-label="02 Virtual Try-On">
+        <div class="card-number-tag">02</div>
+        <div class="card-icon-3d">🕶️</div>
+        <div class="card-title-3d">VIRTUAL TRY-ON</div>
+        <div class="card-desc-3d">Live AR multi-garment fitting with real-time face tracking and exponential moving average stabilizer.</div>
+        <div class="card-status-badge">● Live AR</div>
+      </div>
+
+      <!-- 03 roX-AI PERSONAL STYLIST -->
+      <div class="opt2-feature-card" onclick="toggleOption2RoxDrawer()" role="button" tabindex="0" aria-label="03 roX-AI Personal Stylist">
+        <div class="card-number-tag">03</div>
+        <div class="card-icon-3d">🤖</div>
+        <div class="card-title-3d">roX-AI STYLIST</div>
+        <div class="card-desc-3d">Offline expert fashion advice, occasion dress codes, silhouette analysis, and outfit builders.</div>
+        <div class="card-status-badge">● AI Active</div>
+      </div>
+
+      <!-- 04 3D PRODUCT VIEW (roX Vision) -->
+      <div class="opt2-feature-card" onclick="openRoxVisionModal(1)" role="button" tabindex="0" aria-label="04 3D Product View">
+        <div class="card-number-tag">04</div>
+        <div class="card-icon-3d">👁️</div>
+        <div class="card-title-3d">3D PRODUCT VIEW</div>
+        <div class="card-desc-3d">roX Vision studio: interactive multi-axis rotation, zoom, studio specular lighting, and materials.</div>
+        <div class="card-status-badge">● 3D Studio</div>
+      </div>
+
+      <!-- 05 FASHION COLLECTION -->
+      <div class="opt2-feature-card" onclick="window.location.href='search.html'" role="button" tabindex="0" aria-label="05 Fashion Collection">
+        <div class="card-number-tag">05</div>
+        <div class="card-icon-3d">🛍️</div>
+        <div class="card-title-3d">FASHION COLLECTION</div>
+        <div class="card-desc-3d">Authoritative 30-piece retail catalog across Jeans, Shirts, T-Shirts, Caps, Shoes, and Goggles.</div>
+        <div class="card-status-badge">● Catalog Verified</div>
+      </div>
+
+      <!-- 06 BUILD MY LOOK -->
+      <div class="opt2-feature-card" onclick="openFeatureModal('cloth')" role="button" tabindex="0" aria-label="06 Build My Look">
+        <div class="card-number-tag">06</div>
+        <div class="card-icon-3d">✨</div>
+        <div class="card-title-3d">BUILD MY LOOK</div>
+        <div class="card-desc-3d">Color harmony matching, top-bottom silhouette pairing, and QR session transfer to phone.</div>
+        <div class="card-status-badge">● Smart Synergy</div>
+      </div>
+
+      <!-- 07 SKIN CARE -->
+      <div class="opt2-feature-card" onclick="openFeatureModal('skin')" role="button" tabindex="0" aria-label="07 Skin Care Module">
+        <div class="card-number-tag">07</div>
+        <div class="card-icon-3d">🧴</div>
+        <div class="card-title-3d">SKIN CARE</div>
+        <div class="card-desc-3d">Optical skin tone detection, seasonal palette recommendations, and dermatological color matching.</div>
+        <div class="card-status-badge prototype">Prototype Module</div>
+      </div>
+
+      <!-- 08 FITNESS -->
+      <div class="opt2-feature-card" onclick="openFeatureModal('fitness')" role="button" tabindex="0" aria-label="08 Fitness & Posture">
+        <div class="card-number-tag">08</div>
+        <div class="card-icon-3d">⚡</div>
+        <div class="card-title-3d">FITNESS</div>
+        <div class="card-desc-3d">Body posture alignment feedback, shoulder-to-hip ratio tailoring, and activewear guidance.</div>
+        <div class="card-status-badge prototype">Prototype Module</div>
+      </div>
+
+      <!-- 09 HAIRSTYLE -->
+      <div class="opt2-feature-card" onclick="openFeatureModal('hair')" role="button" tabindex="0" aria-label="09 Hairstyle & Face Contouring">
+        <div class="card-number-tag">09</div>
+        <div class="card-icon-3d">✂️</div>
+        <div class="card-title-3d">HAIRSTYLE</div>
+        <div class="card-desc-3d">Facial structure analysis (Oval, Square, Round) and eyewear-hair harmony pairing.</div>
+        <div class="card-status-badge prototype">Prototype Module</div>
+      </div>
+
+      <!-- 10 PROFESSIONAL OUTFITS -->
+      <div class="opt2-feature-card" onclick="openFeatureModal('professional')" role="button" tabindex="0" aria-label="10 Professional Outfits">
+        <div class="card-number-tag">10</div>
+        <div class="card-icon-3d">👔</div>
+        <div class="card-title-3d">PROFESSIONAL OUTFITS</div>
+        <div class="card-desc-3d">Executive boardroom curation, interview attire standards, and business casual configurations.</div>
+        <div class="card-status-badge">● Executive Suite</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. PRODUCT DISCOVERY & 3D CARDS ================= -->
+  <section id="collectionSection" class="opt2-catalog-section" aria-labelledby="catalogHeading">
+    <div class="section-header-3d">
+      <span class="section-label-pill">Showroom Catalog</span>
+      <h2 id="catalogHeading" class="section-heading-3d">3D Fashion Discovery</h2>
+    </div>
+
+    <!-- Category Filter Pills -->
+    <div class="category-pills-bar" role="tablist" aria-label="Fashion Categories">
+      <button class="cat-filter-pill active" data-category="all" role="tab" aria-selected="true">All Collections</button>
+      <button class="cat-filter-pill" data-category="shirt" role="tab" aria-selected="false">Shirts</button>
+      <button class="cat-filter-pill" data-category="tshirt" role="tab" aria-selected="false">T-Shirts</button>
+      <button class="cat-filter-pill" data-category="jeans" role="tab" aria-selected="false">Jeans & Denim</button>
+      <button class="cat-filter-pill" data-category="shoe" role="tab" aria-selected="false">Shoes & Sneakers</button>
+      <button class="cat-filter-pill" data-category="goggles" role="tab" aria-selected="false">Goggles & Shades</button>
+      <button class="cat-filter-pill" data-category="cap" role="tab" aria-selected="false">Caps & Headwear</button>
+    </div>
+
+    <!-- 3D Product Cards Grid -->
+    <div id="opt2ProductGrid" class="opt2-product-grid" aria-live="polite">
+      <!-- Injected dynamically via dashboard-option2.js with fallback content -->
+    </div>
+  </section>
+
+  <!-- ================= 5. roX VISION 3D STUDIO MODAL ================= -->
+  <div id="roxVisionModal" class="rox-vision-modal hidden" role="dialog" aria-modal="true" aria-labelledby="roxVisionName">
+    <div class="rox-vision-modal-box">
+      <!-- Left Viewport Pane -->
+      <div class="rox-vision-viewport-pane">
+        <!-- Top Viewport HUD -->
+        <div class="rox-vision-top-hud">
+          <div class="rox-vision-badge">roX Vision 3D Studio</div>
+          <div class="rox-vision-angle-toggles" role="group" aria-label="Perspective Angles">
+            <button class="rox-angle-btn active" data-angle="front" onclick="roxVisionSetAngle('front')">Front</button>
+            <button class="rox-angle-btn" data-angle="side" onclick="roxVisionSetAngle('side')">Side</button>
+            <button class="rox-angle-btn" data-angle="back" onclick="roxVisionSetAngle('back')">Back</button>
+          </div>
+        </div>
+
+        <!-- 3D Stage Container -->
+        <div id="roxVisionViewport" class="rox-vision-stage-container">
+          <div id="roxVisionLighting" class="rox-vision-lighting-layer"></div>
+          <div id="roxVisionStage" class="rox-vision-stage">
+            <div class="rox-vision-card-face">
+              <img id="roxVisionImage" src="images/jeans1.jpeg" alt="3D Studio Item" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Studio Control Bar -->
+        <div class="rox-vision-controls-bar">
+          <div class="rox-ctrl-tools">
+            <button class="rox-ctrl-btn" onclick="roxVisionResetView()" title="Reset Studio View (↺)">↺</button>
+            <button class="rox-ctrl-btn" onclick="roxVisionZoomIn()" title="Zoom In (＋)">＋</button>
+            <button class="rox-ctrl-btn" onclick="roxVisionZoomOut()" title="Zoom Out (−)">−</button>
+            <button class="rox-ctrl-btn" onclick="roxVisionToggleFullscreen()" title="Toggle Fullscreen (⛶)">⛶</button>
+          </div>
+          <span class="rox-hint-text">🖱️ Drag to rotate • Wheel to zoom • Double-click to reset</span>
+        </div>
+      </div>
+
+      <!-- Right Specification & Actions Pane -->
+      <div class="rox-vision-details-pane">
+        <button class="rox-vision-close-btn" onclick="closeRoxVisionModal()" title="Close 3D Studio" aria-label="Close Studio">✕</button>
+
+        <div>
+          <span id="roxVisionCategory" class="rox-det-category">DENIM BOTTOMS</span>
+          <h2 id="roxVisionName" class="rox-det-name">Blue Jeans</h2>
+          <div id="roxVisionPrice" class="rox-det-price">₹1,499</div>
+        </div>
+
+        <!-- Product Specs Table -->
+        <div class="rox-specs-table">
+          <div class="rox-spec-row">
+            <span class="spec-label">Brand:</span>
+            <span id="roxVisionBrand" class="spec-val">MeroX Denim</span>
+          </div>
+          <div class="rox-spec-row">
+            <span class="spec-label">Primary Color:</span>
+            <span id="roxVisionColor" class="spec-val">Blue</span>
+          </div>
+          <div class="rox-spec-row">
+            <span class="spec-label">Fabric / Material:</span>
+            <span id="roxVisionMaterial" class="spec-val">100% Ring-Spun Denim</span>
+          </div>
+          <div class="rox-spec-row">
+            <span class="spec-label">Store Availability:</span>
+            <span id="roxVisionStock" class="spec-val">In Stock (Floor 2)</span>
+          </div>
+        </div>
+
+        <div>
+          <span class="spec-label" style="font-size: 12px; font-weight: 700;">Available Sizes</span>
+          <div id="roxVisionSizes" class="rox-sizes-box">
+            <span class="size-pill selected">30</span>
+            <span class="size-pill">32</span>
+            <span class="size-pill">34</span>
+            <span class="size-pill">36</span>
+          </div>
+        </div>
+
+        <div>
+          <span class="spec-label" style="font-size: 12px; font-weight: 700;">Stylist Overview</span>
+          <p id="roxVisionDesc" class="rox-det-desc">
+            Classic premium wash denim with relaxed comfort and flexible fit. Pairs seamlessly with tailored shirts and white sneakers.
+          </p>
+        </div>
+
+        <div class="rox-vision-actions">
+          <button id="roxVisionBtnTryOn" class="btn-vision-tryon">
+            <span>🕶️ Try On Live in Mirror</span>
+          </button>
+          <button id="roxVisionBtnAddLook" class="btn-vision-addlook">
+            <span>✨ Add to Curated Look</span>
+          </button>
+        </div>
+
+        <p class="rox-honest-disclosure">
+          ✦ Interactive 3D Multi-Axis Studio view rendering authentic high-resolution catalog imagery with dynamic studio lighting and spatial depth.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 6. roX-AI SLIDE DRAWER OPTION 2 ================= -->
+  <aside id="roxAiDrawer" class="rox-drawer-container" aria-label="roX-AI Stylist Assistant">
+    <div class="rox-drawer-header">
+      <div class="rox-ai-branding">
+        <div class="rox-ai-orb-pulse"></div>
+        <div>
+          <div class="rox-ai-title">roX-AI Assistant</div>
+          <div class="rox-ai-sub">MeroX Personal Stylist</div>
+        </div>
+      </div>
+      <button class="rox-drawer-close" onclick="toggleOption2RoxDrawer()" aria-label="Close Assistant">✕</button>
+    </div>
+
+    <!-- Quick Action Chips -->
+    <div class="rox-quick-chips-wrap" role="group" aria-label="Quick AI Style Prompts">
+      <button class="rox-chip-btn" onclick="sendOption2RoxChip('Find My Style')">✨ Find My Style</button>
+      <button class="rox-chip-btn" onclick="sendOption2RoxChip('Build My Outfit')">👔 Build Outfit</button>
+      <button class="rox-chip-btn" onclick="sendOption2RoxChip('Complete My Look')">🎯 Complete Look</button>
+      <button class="rox-chip-btn" onclick="sendOption2RoxChip('View in 3D')">👁️ View in 3D</button>
+      <button class="rox-chip-btn" onclick="sendOption2RoxChip('Suggest something under ₹2000')">💰 Under ₹2000</button>
+    </div>
+
+    <!-- Messages Container -->
+    <div id="roxMessages" class="rox-chat-messages" role="log" aria-live="polite">
+      <div class="msg bot">
+        Hello! I am **roX-AI**, your personal smart mirror stylist. Ask me for outfit pairing recommendations, occasion dress codes, or tap **View in 3D** to inspect garments in roX Vision Studio.
+      </div>
+    </div>
+
+    <!-- Input Bar -->
+    <div class="rox-chat-input-bar">
+      <input type="text" id="roxUserInput" class="rox-chat-input" placeholder="Ask roX-AI style advice..." aria-label="Message to roX-AI" />
+      <button id="roxSendBtn" class="rox-send-btn" title="Send Question" aria-label="Send">➔</button>
+    </div>
+  </aside>
+
+  <!-- ================= 7. PROTECTED CORE MODALS ================= -->
+  <!-- Feature Modal (TryOn, Profile, Skincare, Cloth, Hair, Yoga, Fitness) -->
+  <div id="featureModal" class="modal-backdrop hidden" onclick="closeFeatureModalOnBackdrop(event)">
+    <div class="modal-box">
+      <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 id="featureModalTitle" style="color: #fff; font-size: 20px;">Feature</h3>
+        <button onclick="closeFeatureModal()" style="background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;">✕</button>
+      </div>
+      <div id="featureModalBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Barcode / QR Scanner Modal -->
+  <div id="scannerModal" class="modal-backdrop hidden" onclick="closeScannerModalOnBackdrop(event)">
+    <div class="modal-box" style="max-width: 500px; text-align: center;">
+      <h3 style="color: #fff; margin-bottom: 12px;">Scan Garment Barcode / RFID</h3>
+      <div style="background: #000; border-radius: 12px; height: 260px; display: flex; align-items: center; justify-content: center; position: relative;">
+        <span style="color: #00ffe0; font-size: 13px;">Camera Viewfinder Active</span>
+        <div style="position: absolute; width: 70%; height: 2px; background: #00ffe0; box-shadow: 0 0 10px #00ffe0; animation: scanLineAnim 2s infinite;"></div>
+      </div>
+      <button onclick="closeScannerModal()" style="margin-top: 16px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 10px 24px; border-radius: 999px; cursor: pointer;">Close Scanner</button>
+    </div>
+  </div>
+
+  <!-- Session Timeout Modal -->
+  <div id="sessionTimeoutModal" class="modal-backdrop hidden">
+    <div class="modal-box" style="max-width: 440px; text-align: center;">
+      <h3 style="color: #fff; font-size: 20px; margin-bottom: 8px;">Are you still styling?</h3>
+      <p style="color: #94a3b8; font-size: 14px; margin-bottom: 20px;">Your session will end in <span id="sessionCountdown" style="color: #00ffe0; font-weight: 700;">15</span> seconds to protect your privacy.</p>
+      <div style="display: flex; gap: 12px; justify-content: center;">
+        <button id="sessionKeepStylingBtn" style="background: #00ffe0; color: #070a11; font-weight: 700; border: none; padding: 10px 20px; border-radius: 999px; cursor: pointer;">Keep Styling</button>
+        <button id="sessionResetNowBtn" style="background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 999px; cursor: pointer;">Reset Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Retail Smart Mirror Fullscreen Kiosk HUD -->
+  <div id="smartMirrorHud" class="retail-kiosk-hud hidden">
+    <div style="padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1);">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 22px; font-weight: 900; color: #fff;">MeroX Mirror Kiosk</span>
+        <span style="background: rgba(0,255,224,0.15); color: #00ffe0; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 800;">LIVE HUD</span>
+      </div>
+      <button class="kiosk-reset-btn" onclick="closeSmartMirrorHud()" style="background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #f87171; padding: 8px 18px; border-radius: 999px; cursor: pointer; font-weight: 700;">Exit Mirror Mode</button>
+    </div>
+
+    <div style="flex: 1; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; padding: 24px;">
+      <div style="background: #000; border-radius: 20px; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center;">
+        <span style="color: #64748b; font-size: 16px;">High-Definition Kiosk Camera Viewport</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px;">
+        <div class="kiosk-action-tile" onclick="openScannerModal()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 16px; cursor: pointer;">
+          <div style="font-weight: 800; color: #fff;">1. Scan Garment Barcode</div>
+          <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Camera or handheld barcode reader</div>
+        </div>
+        <div class="kiosk-action-tile" onclick="openTryOnFromMirror()" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 16px; cursor: pointer;">
+          <div style="font-weight: 800; color: #fff;">2. Virtual Fitting Room</div>
+          <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Live AR overlay on reflection</div>
+        </div>
+        <div class="kiosk-action-tile" onclick="openFeatureModal('professional')" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 16px; cursor: pointer;">
+          <div style="font-weight: 800; color: #fff;">3. Fashion Stylist Engine</div>
+          <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">roX-AI personalized recommendations</div>
+        </div>
+        <div class="kiosk-action-tile" onclick="openFeatureModal('store')" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 16px; cursor: pointer;">
+          <div style="font-weight: 800; color: #fff;">4. Browse Store Inventory</div>
+          <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Live stock availability on floor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 8. FOOTER ================= -->
+  <footer class="opt2-footer" role="contentinfo">
+    <div class="opt2-footer-links">
+      <a href="dashboard-option2.html" class="opt2-footer-link">Option 2 (3D Showroom)</a>
+      <a href="dashboard.html" class="opt2-footer-link">Option 1 (Classic Showroom)</a>
+      <a href="pricing.html" class="opt2-footer-link">Membership & Pricing</a>
+      <a href="search.html" class="opt2-footer-link">Catalog Discover</a>
+      <a href="admin.html" class="opt2-footer-link">Store Admin</a>
+      <a href="look.html" class="opt2-footer-link">Mobile Lookbook</a>
+    </div>
+    <div class="opt2-attribution">
+      MeroX Retail Smart Mirror Platform • Architecture & Platform Owner: <strong>Kishan Kumar Singh</strong>
+    </div>
+  </footer>
+</body>
+</html>

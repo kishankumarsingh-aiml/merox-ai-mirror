@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MeroX Membership — Personal Style Intelligence</title>
+  <link rel="stylesheet" href="pricing.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+
+  <!-- Background Ambient Glow -->
+  <div class="pricing-ambient-bg" aria-hidden="true">
+    <div class="ambient-orb orb-cyan"></div>
+    <div class="ambient-orb orb-purple"></div>
+    <div class="ambient-orb orb-gold"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="pricing-header">
+    <div class="pricing-brand" onclick="window.location.href='dashboard.html'" style="cursor: pointer;">
+      <h1>MeroX</h1>
+      <span>Style Intelligence</span>
+    </div>
+
+    <nav class="pricing-nav">
+      <a href="dashboard.html">Home</a>
+      <a href="search.html">Discover</a>
+      <a href="dashboard.html#mirror" onclick="localStorage.setItem('merox_open_kiosk', 'true')">Smart Mirror</a>
+      <a href="admin.html">Store Admin</a>
+      <a href="pricing.html" class="active nav-cta">Membership</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="pricing-hero">
+      <div class="pricing-badge">
+        ✦ MEROX MEMBERSHIP TIERS
+      </div>
+      <h2>
+        Elevate Your Aesthetic.<br>
+        <span>Choose Your Style Intelligence.</span>
+      </h2>
+      <p>
+        Experience next-generation AI personal styling, real-time smart mirror virtual try-on, and custom wardrobe curation tailored to your physical proportions.
+      </p>
+    </section>
+
+    <!-- 4 Tiers 3D Cards Grid -->
+    <section class="pricing-grid" aria-label="Membership Pricing Plans">
+
+      <!-- 1. FREE TIER -->
+      <article class="pricing-card" id="card_FREE">
+        <h3 class="card-name">Free</h3>
+        <p class="card-tagline">Essential style discovery and standard smart mirror preview.</p>
+
+        <div class="card-price-wrap">
+          <span class="card-price">₹0</span>
+          <span class="card-period">/ month</span>
+        </div>
+
+        <ul class="card-features">
+          <li><span class="check">✓</span> Basic MeroX dashboard & catalog</li>
+          <li><span class="check">✓</span> 30 physical store items preview</li>
+          <li><span class="check">✓</span> Standard search & category filters</li>
+          <li><span class="check">✓</span> Basic outfit recommendations</li>
+          <li><span class="check">✓</span> Limited roX-AI styling (5 prompts/day)</li>
+          <li><span class="check">✓</span> Up to 3 Saved Looks in wardrobe</li>
+        </ul>
+
+        <button type="button" class="card-cta-btn current" id="btn_FREE" onclick="window.MeroXSubscription.openCheckoutModal('FREE')">
+          Current Plan
+        </button>
+      </article>
+
+      <!-- 2. MEROX PRO (MOST POPULAR) -->
+      <article class="pricing-card popular" id="card_PRO">
+        <div class="card-tier-badge popular-badge">MOST POPULAR</div>
+        <h3 class="card-name">MeroX Pro</h3>
+        <p class="card-tagline">Our signature AI stylist experience for individual fashion enthusiasts.</p>
+
+        <div class="card-price-wrap">
+          <span class="card-price">₹399</span>
+          <span class="card-period">/ month</span>
+        </div>
+
+        <ul class="card-features">
+          <li><span class="check">✓</span> Everything in Free tier</li>
+          <li><span class="check">✓</span> <strong>Unlimited</strong> style discovery</li>
+          <li><span class="check">✓</span> <strong>Advanced roX-AI stylist</strong> (unlimited)</li>
+          <li><span class="check">✓</span> Personalized 8-occasion outfit matching</li>
+          <li><span class="check">✓</span> Complete My Look styling engine</li>
+          <li><span class="check">✓</span> Style preferences & adaptive feed</li>
+          <li><span class="check">✓</span> Up to <strong>25 Saved Looks</strong></li>
+          <li><span class="check">✓</span> Priority Try-On AR rendering pipeline</li>
+        </ul>
+
+        <button type="button" class="card-cta-btn primary" id="btn_PRO" onclick="window.MeroXSubscription.openCheckoutModal('PRO')">
+          Upgrade to Pro
+        </button>
+      </article>
+
+      <!-- 3. MEROX PRO+ -->
+      <article class="pricing-card" id="card_PRO_PLUS">
+        <div class="card-tier-badge" style="background: rgba(129, 140, 248, 0.25); border: 1px solid #818cf8; color: #818cf8;">PRO+</div>
+        <h3 class="card-name">MeroX Pro+</h3>
+        <p class="card-tagline">Enhanced geometric proportions & smart store wardrobe synchronization.</p>
+
+        <div class="card-price-wrap">
+          <span class="card-price">₹499</span>
+          <span class="card-period">/ month</span>
+        </div>
+
+        <ul class="card-features">
+          <li><span class="check">✓</span> Everything in Pro tier</li>
+          <li><span class="check">✓</span> Advanced facial geometry & collar advice</li>
+          <li><span class="check">✓</span> Multi-item Try-On layering (Garment + Cap + Goggles)</li>
+          <li><span class="check">✓</span> Smart wardrobe sync with mall inventory</li>
+          <li><span class="check">✓</span> Up to <strong>50 Saved Looks</strong> with QR export</li>
+          <li><span class="check">✓</span> Priority mirror kiosk session queues</li>
+        </ul>
+
+        <button type="button" class="card-cta-btn" id="btn_PRO_PLUS" onclick="window.MeroXSubscription.openCheckoutModal('PRO_PLUS')">
+          Upgrade to Pro+
+        </button>
+      </article>
+
+      <!-- 4. MEROX ELITE -->
+      <article class="pricing-card luxury" id="card_ELITE">
+        <div class="card-tier-badge elite-badge">ELITE</div>
+        <h3 class="card-name">MeroX Elite</h3>
+        <p class="card-tagline">The ultimate bespoke fashion technology & personal concierge tier.</p>
+
+        <div class="card-price-wrap">
+          <span class="card-price">₹599</span>
+          <span class="card-period">/ month</span>
+        </div>
+
+        <ul class="card-features">
+          <li><span class="check">✓</span> Everything in Pro+ tier</li>
+          <li><span class="check">✓</span> <strong>Full Gemini Pro AI priority</strong> processing</li>
+          <li><span class="check">✓</span> Bespoke style profile & biometric fitting</li>
+          <li><span class="check">✓</span> <strong>Unlimited Saved Looks</strong></li>
+          <li><span class="check">✓</span> VIP Personal Wardrobe Planning Concierge</li>
+          <li><span class="check">✓</span> Exclusive runway collections & early store drops</li>
+        </ul>
+
+        <button type="button" class="card-cta-btn gold" id="btn_ELITE" onclick="window.MeroXSubscription.openCheckoutModal('ELITE')">
+          Join Elite
+        </button>
+      </article>
+
+    </section>
+
+    <!-- Plan Comparison Section -->
+    <section class="comparison-section">
+      <h3>Detailed Plan Comparison</h3>
+      <p>Transparent feature breakdown across our 4 style intelligence tiers.</p>
+
+      <div class="comparison-table-wrap">
+        <table class="comparison-table" id="comparisonTable">
+          <thead>
+            <tr>
+              <th>Feature Capability</th>
+              <th>Free (₹0)</th>
+              <th style="color: var(--merox-accent);">Pro (₹399)</th>
+              <th style="color: #818cf8;">Pro+ (₹499)</th>
+              <th style="color: #f59e0b;">Elite (₹599)</th>
+            </tr>
+          </thead>
+          <tbody id="comparisonTableBody">
+            <!-- Dynamically populated via subscription.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="subscription.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Render comparison table
+      const matrix = window.MeroXSubscription.getComparisonMatrix();
+      const tbody = document.getElementById("comparisonTableBody");
+      if (tbody && matrix) {
+        let html = "";
+        matrix.forEach(cat => {
+          html += `<tr class="comparison-cat-row"><td colspan="5">${cat.category}</td></tr>`;
+          cat.features.forEach(f => {
+            html += `
+              <tr>
+                <td>${f.name}</td>
+                <td>${f.free}</td>
+                <td style="font-weight: 600; color: #00ffe0;">${f.pro}</td>
+                <td style="font-weight: 600; color: #818cf8;">${f.pro_plus}</td>
+                <td style="font-weight: 600; color: #f59e0b;">${f.elite}</td>
+              </tr>
+            `;
+          });
+        });
+        tbody.innerHTML = html;
+      }
+
+      // Update button states based on current plan
+      window.refreshMembershipUi = function() {
+        const curId = window.MeroXSubscription.getCurrentPlanId();
+        ["FREE", "PRO", "PRO_PLUS", "ELITE"].forEach(id => {
+          const btn = document.getElementById("btn_" + id);
+          const card = document.getElementById("card_" + id);
+          if (btn) {
+            if (id === curId) {
+              btn.textContent = "✓ Current Plan";
+              btn.classList.add("current");
+              btn.style.opacity = "0.7";
+            } else {
+              const plan = window.MeroXSubscription.PLANS[id];
+              btn.textContent = plan.ctaText;
+              btn.classList.remove("current");
+              btn.style.opacity = "1";
+            }
+          }
+        });
+      };
+
+      window.refreshMembershipUi();
+    });
+  </script>
+
+</body>
+</html>

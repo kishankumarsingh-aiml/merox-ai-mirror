@@ -1,0 +1,469 @@
+/* =========================================================================
+   MEROX PREMIUM PRICING & 3D MEMBERSHIP STYLESHEET
+   Luxury Fashion Showroom + Futuristic AI Tech
+   ========================================================================= */
+
+:root {
+  --merox-primary: #0f172a;
+  --merox-secondary: #1e293b;
+  --merox-accent: #00ffe0;
+  --merox-accent-purple: #8b5cf6;
+  --merox-accent-gold: #f59e0b;
+  --merox-bg: #080c14;
+  --merox-surface: rgba(15, 23, 42, 0.75);
+  --merox-card-bg: rgba(15, 23, 42, 0.75);
+  --merox-text: #f8fafc;
+  --merox-muted: #94a3b8;
+  --merox-border: rgba(255, 255, 255, 0.12);
+  --merox-radius: 20px;
+  --merox-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5);
+  --merox-transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  background: var(--merox-bg);
+  color: var(--merox-text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Background Ambient Lighting */
+.pricing-ambient-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.28;
+}
+
+.orb-cyan {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #00ffe0, #0284c7);
+  top: -150px;
+  left: 10%;
+}
+
+.orb-purple {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #8b5cf6, #3b82f6);
+  top: 30%;
+  right: -100px;
+}
+
+.orb-gold {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, #f59e0b, #ef4444);
+  bottom: -100px;
+  left: 20%;
+}
+
+/* Header & Navigation */
+.pricing-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(8, 12, 20, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--merox-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 48px;
+}
+
+.pricing-brand h1 {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #ffffff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pricing-brand span {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--merox-accent);
+  font-weight: 600;
+}
+
+.pricing-nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.pricing-nav a {
+  color: var(--merox-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: var(--merox-transition);
+}
+
+.pricing-nav a:hover, .pricing-nav a.active {
+  color: #ffffff;
+}
+
+.nav-cta {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--merox-border);
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: #fff !important;
+}
+
+.nav-cta:hover {
+  background: rgba(0, 255, 224, 0.15) !important;
+  border-color: var(--merox-accent) !important;
+  color: var(--merox-accent) !important;
+}
+
+/* Hero Section */
+.pricing-hero {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 60px 20px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.pricing-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 255, 224, 0.1);
+  border: 1px solid rgba(0, 255, 224, 0.3);
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--merox-accent);
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+.pricing-hero h2 {
+  font-size: 46px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+}
+
+.pricing-hero h2 span {
+  background: linear-gradient(135deg, #00ffe0, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pricing-hero p {
+  color: var(--merox-muted);
+  font-size: 17px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* 3D Pricing Grid */
+.pricing-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  max-width: 1240px;
+  margin: 0 auto 60px;
+  padding: 0 24px;
+}
+
+/* Individual 3D Card */
+.pricing-card {
+  position: relative;
+  background: var(--merox-card-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--merox-border);
+  border-radius: var(--merox-radius);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+  transform: perspective(1000px) translate3d(0, 0, 0);
+  box-shadow: var(--merox-shadow);
+}
+
+.pricing-card:hover {
+  transform: perspective(1000px) translateY(-10px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* Popular Pro Card Elevation */
+.pricing-card.popular {
+  border-color: rgba(0, 255, 224, 0.4);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.90) 0%, rgba(10, 18, 32, 0.95) 100%);
+  box-shadow: 0 20px 45px -10px rgba(0, 255, 224, 0.2);
+  transform: perspective(1000px) translateY(-6px);
+}
+
+.pricing-card.popular:hover {
+  transform: perspective(1000px) translateY(-14px) scale(1.03);
+  box-shadow: 0 30px 60px -10px rgba(0, 255, 224, 0.3);
+}
+
+/* Elite Card Luxury Treatment */
+.pricing-card.luxury {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: linear-gradient(180deg, rgba(24, 18, 10, 0.90) 0%, rgba(15, 23, 42, 0.95) 100%);
+  box-shadow: 0 20px 45px -10px rgba(245, 158, 11, 0.15);
+}
+
+.pricing-card.luxury:hover {
+  transform: perspective(1000px) translateY(-10px) scale(1.02);
+  box-shadow: 0 30px 60px -10px rgba(245, 158, 11, 0.25);
+  border-color: rgba(245, 158, 11, 0.6);
+}
+
+/* Top Floating Pill Badge */
+.card-tier-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.card-tier-badge.popular-badge {
+  background: linear-gradient(135deg, #00ffe0, #0284c7);
+  color: #000;
+  box-shadow: 0 4px 14px rgba(0, 255, 224, 0.4);
+}
+
+.card-tier-badge.elite-badge {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #000;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+}
+
+/* Card Header */
+.card-name {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #ffffff;
+}
+
+.card-tagline {
+  font-size: 13px;
+  color: var(--merox-muted);
+  min-height: 38px;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+/* Price Display */
+.card-price-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--merox-border);
+  padding-bottom: 20px;
+}
+
+.card-price {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #ffffff;
+}
+
+.card-period {
+  font-size: 14px;
+  color: var(--merox-muted);
+}
+
+/* Features List */
+.card-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+  flex-grow: 1;
+}
+
+.card-features li {
+  font-size: 13px;
+  color: #cbd5e1;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.4;
+}
+
+.card-features li span.check {
+  color: var(--merox-accent);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* CTA Buttons */
+.card-cta-btn {
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid var(--merox-border);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  transition: var(--merox-transition);
+}
+
+.card-cta-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.card-cta-btn.primary {
+  background: linear-gradient(135deg, #00ffe0, #0284c7);
+  color: #0b0f1a;
+  border: none;
+  box-shadow: 0 4px 16px rgba(0, 255, 224, 0.25);
+}
+
+.card-cta-btn.primary:hover {
+  box-shadow: 0 8px 24px rgba(0, 255, 224, 0.4);
+  transform: translateY(-2px);
+}
+
+.card-cta-btn.gold {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #0b0f1a;
+  border: none;
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.25);
+}
+
+.card-cta-btn.gold:hover {
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+  transform: translateY(-2px);
+}
+
+.card-cta-btn:disabled, .card-cta-btn.current {
+  opacity: 0.6;
+  cursor: default;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* ================= COMPARISON TABLE ================= */
+.comparison-section {
+  position: relative;
+  z-index: 1;
+  max-width: 1240px;
+  margin: 0 auto 80px;
+  padding: 0 24px;
+}
+
+.comparison-section h3 {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.comparison-section p {
+  text-align: center;
+  color: var(--merox-muted);
+  font-size: 15px;
+  margin-bottom: 40px;
+}
+
+.comparison-table-wrap {
+  background: var(--merox-card-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--merox-border);
+  border-radius: var(--merox-radius);
+  overflow-x: auto;
+  box-shadow: var(--merox-shadow);
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.comparison-table th, .comparison-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.comparison-table th {
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.comparison-table th:first-child {
+  width: 40%;
+}
+
+.comparison-table td:not(:first-child), .comparison-table th:not(:first-child) {
+  text-align: center;
+}
+
+.comparison-cat-row td {
+  background: rgba(255, 255, 255, 0.05);
+  font-weight: 700;
+  color: var(--merox-accent);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+/* Responsive Grid Adjustments */
+@media (max-width: 1100px) {
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .pricing-header {
+    padding: 14px 20px;
+  }
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .pricing-hero h2 {
+    font-size: 32px;
+  }
+}
